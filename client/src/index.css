@@ -103,92 +103,129 @@ body {
   margin-bottom: 22px;
 }
 
-.captcha-display-wrap {
+.turnstile-widget {
+  background: rgba(18, 2, 2, 0.85);
+  border: 1px solid rgba(255, 215, 0, 0.35);
+  border-radius: 6px;
+  padding: 16px 20px;
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 12px;
-  margin-bottom: 20px;
-}
-
-.captcha-canvas {
-  border-radius: 4px;
-  border: 1px solid rgba(255, 215, 0, 0.4);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
-}
-
-.captcha-refresh-btn {
-  background: rgba(70, 0, 0, 0.7);
-  border: 1px solid rgba(255, 215, 0, 0.3);
-  color: var(--gold-br);
-  font-size: 1.3rem;
-  width: 44px;
-  height: 44px;
-  border-radius: 4px;
+  justify-content: space-between;
   cursor: pointer;
+  user-select: none;
+  transition: all 0.25s ease;
+  margin: 10px 0 16px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+}
+
+.turnstile-widget:hover {
+  border-color: rgba(255, 215, 0, 0.65);
+  background: rgba(30, 4, 4, 0.9);
+  box-shadow: 0 4px 20px rgba(255, 215, 0, 0.15);
+}
+
+.turnstile-widget.analyzing,
+.turnstile-widget.verified {
+  cursor: default;
+}
+
+.turnstile-left {
   display: flex;
   align-items: center;
-  justify-content: center;
-  transition: all 0.25s;
-}
-
-.captcha-refresh-btn:hover {
-  background: rgba(255, 215, 0, 0.15);
-  border-color: var(--gold-br);
-  transform: rotate(45deg);
-}
-
-.captcha-form {
-  display: flex;
-  flex-direction: column;
   gap: 14px;
 }
 
-.captcha-input {
-  background: rgba(10, 0, 0, 0.75);
-  border: 1px solid rgba(255, 215, 0, 0.35);
-  border-radius: 4px;
-  padding: 12px 16px;
-  color: var(--gold-br);
-  font-family: 'Cinzel', serif;
-  font-size: 1rem;
-  letter-spacing: 3px;
-  text-align: center;
-  text-transform: uppercase;
-  outline: none;
-  transition: border-color 0.2s, box-shadow 0.2s;
+.turnstile-checkbox {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.captcha-input:focus {
+.checkbox-box {
+  width: 22px;
+  height: 22px;
+  border: 2px solid rgba(255, 215, 0, 0.6);
+  border-radius: 4px;
+  background: rgba(0, 0, 0, 0.3);
+  transition: all 0.2s;
+}
+
+.turnstile-widget:hover .checkbox-box {
   border-color: var(--gold-br);
-  box-shadow: 0 0 12px rgba(255, 215, 0, 0.3);
+  box-shadow: 0 0 8px rgba(255, 215, 0, 0.5);
+}
+
+.captcha-spinner {
+  width: 22px;
+  height: 22px;
+  border: 3px solid rgba(255, 215, 0, 0.2);
+  border-top-color: var(--gold-br);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.checkmark-icon {
+  color: #4CAF50;
+  font-size: 1.4rem;
+  font-weight: bold;
+  animation: scale-in 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.fail-icon {
+  color: #ff5252;
+  font-size: 1.3rem;
+  font-weight: bold;
+}
+
+@keyframes scale-in {
+  from { transform: scale(0); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.turnstile-label {
+  font-family: 'Cinzel', serif;
+  font-size: 0.92rem;
+  letter-spacing: 1px;
+  color: var(--gold-br);
+}
+
+.turnstile-brand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  opacity: 0.65;
+}
+
+.brand-logo {
+  font-size: 1.2rem;
+}
+
+.brand-text {
+  font-size: 0.58rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--text-muted);
 }
 
 .captcha-error {
   color: #ff6b6b;
   font-size: 0.8rem;
-  margin: -4px 0 2px;
+  margin: 4px 0 8px;
 }
 
-.captcha-submit-btn {
-  font-family: 'Cinzel', serif;
-  font-size: 0.85rem;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: #120000;
-  background: linear-gradient(to right, var(--gold), var(--gold-br), var(--gold));
-  border: none;
-  border-radius: 4px;
-  padding: 13px 24px;
-  cursor: pointer;
-  font-weight: 600;
-  box-shadow: 0 2px 10px rgba(255, 215, 0, 0.25);
-  transition: transform 0.2s, box-shadow 0.2s;
-}
-
-.captcha-submit-btn:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 4px 15px rgba(255, 215, 0, 0.45);
+.captcha-security-note {
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  letter-spacing: 0.5px;
+  margin-top: 6px;
+  opacity: 0.7;
 }
 
 /* ============================================================
