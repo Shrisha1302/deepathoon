@@ -1,0 +1,15 @@
+export default function Footer() {
+  const email = 'creamhappy1234@gmail.com'
+
+  return (
+    <footer className="footer">
+      <div className="contact-section">
+        <span className="contact-label">Contact Us:</span>
+        <span className="contact-email-text">{email}</span>
+      </div>
+      <p className="footer-text">
+        🕉&nbsp; Vel Muruga Vel &middot; Om Saravanabhava &middot; Thiruparankundram &nbsp;🕉
+      </p>
+    </footer>
+  )
+}
