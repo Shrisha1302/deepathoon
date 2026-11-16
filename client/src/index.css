@@ -28,7 +28,7 @@ body {
 /* ── Background ─────────────────────────────────────────────── */
 .bg {
   position: fixed; inset: 0;
-  background: url('/images/mrugar.jfif') center / cover no-repeat;
+  background: url('images/mrugar.jfif') center / cover no-repeat;
   z-index: -2;
 }
 .bg-overlay {
