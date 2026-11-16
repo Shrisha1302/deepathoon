@@ -1,22 +1,27 @@
 import { useRef, useEffect, useState, useCallback } from 'react'
 import Blessing from './Blessing'
+import RealisticTorch from './RealisticTorch'
+import PillarFlame from './PillarFlame'
 
 export default function LampScene({ isLit, onLampLit }) {
-  const torchRef  = useRef(null)
-  const wickRef   = useRef(null)
-  const canvasRef = useRef(null)
-  const dragging  = useRef(false)
-  const off       = useRef({ x: 0, y: 0 })
-  const parts     = useRef([])
-  const rafId     = useRef(null)
+  const torchRef     = useRef(null)
+  const pillarTopRef = useRef(null)
+  const canvasRef    = useRef(null)
+  const stageRef     = useRef(null)
+  const audioRef     = useRef(null)
+  const dragging     = useRef(false)
+  const off          = useRef({ x: 0, y: 0 })
+  const parts        = useRef([])
+  const rafId        = useRef(null)
   const [ready, setReady] = useState(false)
+  const [isPlayingAudio, setIsPlayingAudio] = useState(false)
 
   // Place torch bottom-left on mount & resize
   useEffect(() => {
     function place() {
       if (!torchRef.current) return
-      torchRef.current.style.left = '60px'
-      torchRef.current.style.top  = (window.innerHeight - 220) + 'px'
+      torchRef.current.style.left = '45px'
+      torchRef.current.style.top  = (window.innerHeight - 235) + 'px'
       setReady(true)
     }
     place()
@@ -24,15 +29,41 @@ export default function LampScene({ isLit, onLampLit }) {
     return () => window.removeEventListener('resize', place)
   }, [])
 
-  // Canvas size sync
+  // Canvas size sync for brief particle burst
   useEffect(() => {
     const c = canvasRef.current
     if (!c) return
-    const resize = () => { c.width = window.innerWidth; c.height = window.innerHeight }
+    const resize = () => {
+      c.width = window.innerWidth
+      c.height = window.innerHeight
+    }
     resize()
     window.addEventListener('resize', resize)
     return () => window.removeEventListener('resize', resize)
   }, [])
+
+  // Play audio when lamp is lit
+  const playSacredAudio = () => {
+    if (audioRef.current) {
+      audioRef.current.currentTime = 0
+      audioRef.current.volume = 0.85
+      audioRef.current
+        .play()
+        .then(() => setIsPlayingAudio(true))
+        .catch(err => console.log('Audio autoplay prevented:', err))
+    }
+  }
+
+  const toggleAudio = () => {
+    if (!audioRef.current) return
+    if (audioRef.current.paused) {
+      audioRef.current.play()
+      setIsPlayingAudio(true)
+    } else {
+      audioRef.current.pause()
+      setIsPlayingAudio(false)
+    }
+  }
 
   const startDrag = useCallback((cx, cy) => {
     if (isLit || !torchRef.current) return
@@ -52,20 +83,31 @@ export default function LampScene({ isLit, onLampLit }) {
   const endDrag = useCallback((cx, cy) => {
     if (!dragging.current) return
     dragging.current = false
-    if (!wickRef.current || isLit) return
+    if (!pillarTopRef.current || isLit) return
 
-    const tr  = torchRef.current.getBoundingClientRect()
-    const wr  = wickRef.current.getBoundingClientRect()
-    const PAD = 42
+    // Flame head of user's torch is at the top
+    const tr = torchRef.current.getBoundingClientRect()
+    const flameHead = {
+      x: tr.left + tr.width / 2,
+      y: tr.top + 22
+    }
 
-    const hit = !(
-      tr.right  < wr.left   - PAD ||
-      tr.left   > wr.right  + PAD ||
-      tr.bottom < wr.top    - PAD ||
-      tr.top    > wr.bottom + PAD
+    const pr = pillarTopRef.current.getBoundingClientRect()
+    const PAD = 60 // Generous touch/drop zone around pillar top
+
+    const hit = (
+      flameHead.x >= pr.left - PAD &&
+      flameHead.x <= pr.right + PAD &&
+      flameHead.y >= pr.top - PAD &&
+      flameHead.y <= pr.bottom + PAD
     )
-    if (hit) { onLampLit(); burstSparks() }
-  }, [isLit, onLampLit]) // eslint-disable-line react-hooks/exhaustive-deps
+
+    if (hit) {
+      onLampLit()
+      playSacredAudio()
+      burstSparks(pr)
+    }
+  }, [isLit, onLampLit])
 
   // Attach mouse + touch events
   useEffect(() => {
@@ -94,36 +136,51 @@ export default function LampScene({ isLit, onLampLit }) {
     }
   }, [startDrag, moveDrag, endDrag])
 
-  // Fade torch when lit
+  // Fade torch smoothly when lit
   useEffect(() => {
     if (!isLit || !torchRef.current) return
-    torchRef.current.style.transition = 'opacity 0.5s'
+    torchRef.current.style.transition = 'opacity 0.6s'
     torchRef.current.style.opacity    = '0'
     const t = setTimeout(() => {
       if (torchRef.current) torchRef.current.style.display = 'none'
-    }, 500)
+    }, 600)
     return () => clearTimeout(t)
   }, [isLit])
 
-  function burstSparks() {
-    const wr = wickRef.current?.getBoundingClientRect()
-    if (!wr) return
-    const ox   = wr.left + wr.width  / 2
-    const oy   = wr.top  + wr.height / 2
-    const cols = ['#FFD700','#FFA500','#FF8C00','#FFF44F','#FF4500','#FFEC8B']
-    for (let i = 0; i < 90; i++) {
+  // Brief spark burst: Quickly fades out and leaves ZERO lingering sparkles
+  function burstSparks(targetRect) {
+    const pr = targetRect || pillarTopRef.current?.getBoundingClientRect()
+    if (!pr) return
+    const ox   = pr.left + pr.width / 2
+    const oy   = pr.top + 8
+    const cols = ['#FFF44F','#FFD700','#FFA500','#FF7700','#FF3700','#FFFFFF']
+
+    parts.current = []
+    for (let i = 0; i < 45; i++) {
       const ang = Math.random() * Math.PI * 2
-      const spd = 2.5 + Math.random() * 5.5
+      const spd = 2.0 + Math.random() * 4.5
       parts.current.push({
         x: ox, y: oy,
-        vx: Math.cos(ang) * spd, vy: Math.sin(ang) * spd - 2.5,
-        life: 1, decay: 0.014 + Math.random() * 0.024,
-        r: 1.8 + Math.random() * 3.5,
+        vx: Math.cos(ang) * spd,
+        vy: Math.sin(ang) * spd - 2.2,
+        life: 1.0,
+        decay: 0.045 + Math.random() * 0.035, // Fast decay: all disappear in ~0.6-0.8s
+        r: 1.5 + Math.random() * 2.2,
         col: cols[Math.floor(Math.random() * cols.length)]
       })
     }
     if (rafId.current) cancelAnimationFrame(rafId.current)
     drawSparks()
+
+    // Enforce 100% canvas cleanup after 850ms so NO sparkles ever stay on screen
+    setTimeout(() => {
+      parts.current = []
+      if (rafId.current) cancelAnimationFrame(rafId.current)
+      if (canvasRef.current) {
+        const ctx = canvasRef.current.getContext('2d')
+        ctx.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height)
+      }
+    }, 850)
   }
 
   function drawSparks() {
@@ -132,66 +189,94 @@ export default function LampScene({ isLit, onLampLit }) {
     ctx.clearRect(0, 0, c.width, c.height)
     parts.current = parts.current.filter(p => p.life > 0)
     for (const p of parts.current) {
-      p.x += p.vx; p.y += p.vy; p.vy += 0.12; p.vx *= 0.99; p.life -= p.decay
+      p.x += p.vx; p.y += p.vy; p.vy += 0.14; p.vx *= 0.98; p.life -= p.decay
       ctx.save()
-      ctx.globalAlpha = p.life
-      ctx.shadowColor = p.col; ctx.shadowBlur = 7
+      ctx.globalAlpha = Math.max(0, p.life)
+      ctx.shadowColor = p.col; ctx.shadowBlur = 6
       ctx.fillStyle   = p.col
-      ctx.beginPath(); ctx.arc(p.x, p.y, p.r * p.life, 0, Math.PI * 2); ctx.fill()
+      ctx.beginPath(); ctx.arc(p.x, p.y, Math.max(0, p.r * p.life), 0, Math.PI * 2); ctx.fill()
       ctx.restore()
     }
-    if (parts.current.length) rafId.current = requestAnimationFrame(drawSparks)
-    else ctx.clearRect(0, 0, c.width, c.height)
+    if (parts.current.length > 0) {
+      rafId.current = requestAnimationFrame(drawSparks)
+    } else {
+      ctx.clearRect(0, 0, c.width, c.height)
+    }
   }
 
   return (
     <>
+      {/* Background Sacred Audio (Plays after lighting the lamp) */}
+      <audio
+        ref={audioRef}
+        id="bgm"
+        src="audio/om_saravanabava.mp3"
+        preload="auto"
+        loop
+      />
+
+      {/* Ephemeral sparks canvas (guaranteed to clear within 850ms) */}
       <canvas ref={canvasRef} className="sparks-canvas" />
 
       <section className="lamp-scene">
-        {!isLit && (
-          <p className="instr">Drag the sacred torch &#8593; to light the Deepathoon</p>
+        {!isLit ? (
+          <p className="instr">
+            🔥 Drag the sacred torch &#8593; to light the Deepathoon pillar
+          </p>
+        ) : (
+          <div className="lit-banner-wrap">
+            <p className="instr lit-banner">
+              ✨ The Sacred Deepathoon is Ignited with Eternal Divine Light ✨
+            </p>
+            {/* Audio control pill */}
+            <button
+              className="audio-control-btn"
+              onClick={toggleAudio}
+              title={isPlayingAudio ? 'Mute Sacred Chant' : 'Play Sacred Chant'}
+            >
+              {isPlayingAudio ? '🔊 Om Saravanabhava' : '🔈 Play Chant'}
+            </button>
+          </div>
         )}
 
-        {/* Deepathoon lamp */}
-        <div className={`deepathoon${isLit ? ' lit' : ''}`}>
-          <div className="flame-wrap" ref={wickRef}>
-            <div className="halo" />
-            <div className="flame-outer" />
-            <div className="wick" />
+        {/* Central Stage with Thiruparankundram Temple & Stone Pillar Painting */}
+        <div className="pillar-stage" ref={stageRef}>
+          <img
+            src="images/thiruparankundram_deepathoon.jpg"
+            alt="Sacred Deepathoon on Thiruparankundram Hilltop"
+            className="pillar-backdrop-img"
+          />
+
+          {/* Flame Zone accurately anchored to top flat face of the stone pillar (46.3% X, 39.4% Y) */}
+          <div
+            ref={pillarTopRef}
+            className={`pillar-flame-zone ${isLit ? 'active' : ''}`}
+            style={{ left: '46.3%', top: '39.4%' }}
+          >
+            {/* Guide beacon pulse hint before being lit */}
+            {!isLit && (
+              <div className="target-beacon-hint">
+                <div className="beacon-ring r1" />
+                <div className="beacon-ring r2" />
+                <div className="beacon-dot" />
+              </div>
+            )}
+
+            {/* Sacred, realistic, size-reduced Karthigai Flame on pillar */}
+            {isLit && <PillarFlame />}
           </div>
-          <div className="l-rim" />
-          <div className="l-bowl" />
-          <div className="l-collar" />
-          <div className="l-shaft-top" />
-          <div className="l-bulge" />
-          <div className="l-shaft-bot" />
-          <div className="l-base" />
         </div>
 
         <Blessing isLit={isLit} />
       </section>
 
-      {/* Draggable temple flame torch (Theevatti / Mashaal) */}
+      {/* Realistic Draggable Temple Torch */}
       <div
         ref={torchRef}
-        className="torch"
+        className="torch-draggable"
         style={{ position: 'fixed', display: 'flex', opacity: ready ? 1 : 0 }}
       >
-        <div className="torch-flame-container">
-          <div className="t-fire-glow" />
-          <div className="t-flame" />
-          <div className="t-cloth-wrap" />
-        </div>
-        <div className="t-brass-cup" />
-        <div className="t-guard-ring" />
-        <div className="t-handle">
-          <div className="t-grip-ridge r1" />
-          <div className="t-grip-ridge r2" />
-          <div className="t-grip-ridge r3" />
-        </div>
-        <div className="t-pommel" />
-        <span className="t-hint">Drag Torch ↑</span>
+        <RealisticTorch />
       </div>
     </>
   )
