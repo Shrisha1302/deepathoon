@@ -10,29 +10,48 @@ const server = http.createServer(app);
 
 app.use(cors());
 
-const io = new Server(server, {
-  cors: { origin: '*', methods: ['GET', 'POST'] }
+// Health check / API status endpoint
+app.get('/', (req, res) => {
+  res.json({
+    status: 'Deepathoon Server Running',
+    count: data.count,
+    active: activeUsers
+  });
 });
 
 // ── Counter persistence ───────────────────────────────────────────────────
 const DATA_FILE = path.join(__dirname, 'counter.json');
-let data = { count: 1134 };
+let data = { count: 1000 };
 
 if (fs.existsSync(DATA_FILE)) {
-  try { data = JSON.parse(fs.readFileSync(DATA_FILE, 'utf8')); }
-  catch { data = { count: 1134 }; }
+  try {
+    data = JSON.parse(fs.readFileSync(DATA_FILE, 'utf8'));
+  } catch {
+    data = { count: 1000 };
+  }
 }
 
 function saveCount() {
-  try { fs.writeFileSync(DATA_FILE, JSON.stringify(data, null, 2)); }
-  catch (e) { console.error('Save error:', e.message); }
+  try {
+    fs.writeFileSync(DATA_FILE, JSON.stringify(data, null, 2));
+  } catch (e) {
+    console.error('Save error:', e.message);
+  }
 }
 
 let activeUsers = 0;
 
 // ── Socket.io ─────────────────────────────────────────────────────────────
+const io = new Server(server, {
+  cors: {
+    origin: '*',
+    methods: ['GET', 'POST']
+  }
+});
+
 io.on('connection', (socket) => {
   activeUsers++;
+  // Send current state to the connected user
   socket.emit('stats', { count: data.count, active: activeUsers });
   socket.broadcast.emit('stats', { count: data.count, active: activeUsers });
 
@@ -48,16 +67,7 @@ io.on('connection', (socket) => {
   });
 });
 
-// ── Serve React build in production ──────────────────────────────────────
-const distPath = path.join(__dirname, '../client/dist');
-if (fs.existsSync(distPath)) {
-  app.use(express.static(distPath));
-  app.get('*', (_req, res) =>
-    res.sendFile(path.join(distPath, 'index.html'))
-  );
-}
-
 const PORT = process.env.PORT || 3001;
-server.listen(PORT, () =>
-  console.log(`Deepathoon server on http://localhost:${PORT}`)
-);
+server.listen(PORT, () => {
+  console.log(`🕉️  Deepathoon server on port ${PORT}`);
+});
