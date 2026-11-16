@@ -150,7 +150,7 @@ export default function LampScene({ isLit, onLampLit }) {
 
       <section className="lamp-scene">
         {!isLit && (
-          <p className="instr">Drag the flame &#8593; to light the Deepathoon</p>
+          <p className="instr">Drag the sacred torch &#8593; to light the Deepathoon</p>
         )}
 
         {/* Deepathoon lamp */}
@@ -172,15 +172,26 @@ export default function LampScene({ isLit, onLampLit }) {
         <Blessing isLit={isLit} />
       </section>
 
-      {/* Draggable torch — fixed positioned via JS */}
+      {/* Draggable temple flame torch (Theevatti / Mashaal) */}
       <div
         ref={torchRef}
         className="torch"
         style={{ position: 'fixed', display: 'flex', opacity: ready ? 1 : 0 }}
       >
-        <div className="t-flame" />
-        <div className="t-stick" />
-        <span className="t-hint">drag ↑</span>
+        <div className="torch-flame-container">
+          <div className="t-fire-glow" />
+          <div className="t-flame" />
+          <div className="t-cloth-wrap" />
+        </div>
+        <div className="t-brass-cup" />
+        <div className="t-guard-ring" />
+        <div className="t-handle">
+          <div className="t-grip-ridge r1" />
+          <div className="t-grip-ridge r2" />
+          <div className="t-grip-ridge r3" />
+        </div>
+        <div className="t-pommel" />
+        <span className="t-hint">Drag Torch ↑</span>
       </div>
     </>
   )
