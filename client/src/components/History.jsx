@@ -1,68 +1,65 @@
-import { useState } from 'react'
-
-const CARDS = [
-  {
-    icon: '🏔️',
-    titleEn: 'The Sacred Abode',
-    titleTa: 'முதல் படைவீடு',
-    textEn: 'Thiruparankundram, nestled in the granite hills near Madurai, is one of the six sacred Arupadai Veedu of Lord Murugan. This temple, over 2,000 years old, was carved entirely into a natural cave — a marvel of Dravidian architecture where Lord Murugan wed the divine Deivanai after vanquishing Soorapadman.',
-    textTa: 'மதுரை மாநகரின் அருகில் கம்பீரமாக அமைந்துள்ள திருப்பரங்குன்றம், முருகப்பெருமானின் ஆறுபடை வீடுகளில் முதன்மையான திருத்தலமாகும். இரண்டாயிரம் ஆண்டுகளுக்கும் பழமையான இக்குடைவரைக் கோயில், சூரபத்மனை வென்ற பின்னர் முருகன் தெய்வானையைத் திருமணம் புரிந்த திவ்வியத் தலமாகும்.'
-  },
-  {
-    icon: '🪔',
-    titleEn: 'Deepathoon — The Pillar of Light',
-    titleTa: 'தீபத்தூண் — அழியா ஜோதி',
-    textEn: "The Deepathoon (Deepam = lamp, Thoon = pillar) is a sacred stone pillar that has stood atop the hill for centuries. Tradition holds that its flame has never been extinguished — a symbol of the undying light of divine knowledge and Lord Murugan's unbroken grace.",
-    textTa: 'தீபத்தூண் (தீபம் = விளக்கு, தூண் = கம்பம்) திருப்பரங்குன்ற மலையின் உச்சியில் நூற்றாண்டுகளாக கம்பீரமாக விளங்கும் புனிதக் கற்றூண். இதன் சுடர் என்றும் அணையாத மெய்ஞானத்தின் குறியீடாகவும், முருகனின் மாறா அருளின் சின்னமாகவும் போற்றப்படுகிறது.'
-  },
-  {
-    icon: '✨',
-    titleEn: 'Karthigai Deepam — Festival of Flames',
-    titleTa: 'கார்த்திகைத் தீபத் திருவிழா',
-    textEn: 'During the Tamil month of Karthigai (Nov–Dec), thousands of oil lamps light up the hill temple in a breathtaking sea of gold. The ritual lighting of the Deepathoon on this auspicious night is believed to wash away lifetimes of karma and bestow moksha upon devotees.',
-    textTa: 'கார்த்திகை மாத பௌர்ணமியில் திருப்பரங்குன்ற மலையெங்கும் லட்சக்கணக்கான திருவிளக்குகள் பொன்னொளிர ஏற்றப்படுகின்றன. இந்நாளில் தீபத்தூணில் மகா தீபம் ஏற்றுவது பவவினைகளை நீக்கி, சகல நன்மைகளையும் முக்தியையும் அருளும் என்பது ஐதீகம்.'
-  },
-  {
-    icon: '🙏',
-    titleEn: 'The Flame as the Soul',
-    titleTa: 'ஆத்ம ஜோதி தத்துவம்',
-    textEn: 'In Hindu tradition the lamp (deepam) represents the eternal Atman — the soul — which, like a flame, never truly dies. At Thiruparankundram the Deepathoon embodies Murugan\'s Vel of light piercing darkness. To light it is an act of sacred surrender, carrying the vibration of "Om Saravanabhava."',
-    textTa: 'இந்து தத்துவத்தில் தீபம் என்பது அழியாத ஆத்மாவைக் குறிக்கிறது. திருப்பரங்குன்றத்தில் எரியும் தீபத்தூண், அஞ்ஞான இருளைக் கிழிக்கும் முருகனின் ஞானவேலின் ஒளிப்பிழம்பாகத் திகழ்கிறது. இதனை ஏற்றுவது பக்தியின் பரிபூரண சரணாகதியாகும்.'
-  }
-]
-
 export default function History() {
-  const [isTamil, setIsTamil] = useState(false)
-
   return (
-    <section className="history">
-      <div className="hist-wrap">
-        <h2 className="hist-title">The Sacred Deepathoon</h2>
-        <p className="hist-sub">The Eternal Flame of Thiruparankundram</p>
+    <section className="article-section">
 
-        {/* Manual translate toggle button */}
-        <div className="hist-translate-row">
-          <button
-            className="translate-btn"
-            onClick={() => setIsTamil(p => !p)}
-            aria-label="Toggle Tamil / English"
-          >
-            {isTamil ? '🌐 English' : '🌐 தமிழில் படிக்க'}
-          </button>
+      {/* ── Row 1: Tamil text LEFT · Gopuram image RIGHT ── */}
+      <div className="article-row">
+        <div className="article-text-col">
+          <p className="article-para">
+            இந்து மதத்தில் ஒரு முக்கியமான அங்கமாக விளங்குவது அதன் சம்பிரதாயங்களும்
+            சடங்குகளும். இவை இந்து மதத்தில் அன்றாடும் நம்மோடு கலந்து வாழ்க்கை
+            முறையாக பழக்கத்தில் உள்ளது. இது உடல் மற்றும் மன ரீதியில் சிறந்த
+            பலனை தருவதோடு நாட்டிற்கும் ஒரு நல்ல எதிர்காலத்தை அமைத்துக் கொடுக்க
+            வழிவகை செய்கிறது.
+          </p>
+          <p className="article-para">
+            மக்களை பக்தி மார்க்கத்திலும் அறம் சார்ந்த வழியிலும் நடத்தி செல்ல
+            இந்த மாதிரியான சடங்குகளும் பிரார்த்தனைகளும் மிகவும் அவசியம்.
+          </p>
         </div>
-
-        <div className="thin-rule" style={{ margin: '0 auto 40px', maxWidth: '120px' }} />
-
-        <div className="cards-grid">
-          {CARDS.map((c, i) => (
-            <div key={i} className="hcard">
-              <span className="hcard-icon">{c.icon}</span>
-              <h3>{isTamil ? c.titleTa : c.titleEn}</h3>
-              <p>{isTamil ? c.textTa : c.textEn}</p>
-            </div>
-          ))}
+        <div className="article-img-col">
+          <img
+            src="images/article_gopuram.jpg"
+            alt="Thiruparankundram Gopuram"
+            className="article-img"
+            loading="lazy"
+          />
         </div>
       </div>
+
+      {/* ── Divider ── */}
+      <div className="article-divider" />
+
+      {/* ── Row 2: Torch image LEFT · Tamil text RIGHT ── */}
+      <div className="article-row row-reverse">
+        <div className="article-img-col">
+          <img
+            src="images/article_torch.jpg"
+            alt="Sacred Deepathoon Torch"
+            className="article-img"
+            loading="lazy"
+          />
+        </div>
+        <div className="article-text-col">
+          <p className="article-para">
+            இந்த சம்பிரதாயங்களில் ஒன்றுதான் கார்த்திகை தீபத்தின் போது வீட்டிலும்,
+            கோவில்களிலும், விளக்கேற்றுவது என்பது. ஒரு சில மலை சார்ந்த கோயில்களில்
+            தொன்று தொட்டு பல நூறு ஆண்டுகளாக அந்த கோயிலுக்கு உரிதான மலை மீது
+            அமைந்திருக்கும் கல் தூணில் ஒரு அகண்ட தீபம் ஏற்றப்படும் வழக்கம்
+            வழிவழியாக கடைப்பிடிக்கப்பட்டுள்ளது.
+          </p>
+          <p className="article-para">
+            இந்த தீபமானது கோயில் அடிவாரத்தில் குடி கொண்டிருக்கும் பக்தர்கள்
+            அனைவரும் கண்டு மனம் உருகி பிரார்த்தனை செய்ய ஏதுவாக அமைந்தது.
+            ஒரு சிலர் வயது மூப்பு காரணமாகவும் உடல் குறைபாடு காரணமாக மலை மீது
+            உள்ள கோயிலுக்கு செல்ல முடியாதவர்கள் இந்த தீபத்தை அங்கு கோயில்
+            கருவறையில் உள்ள கடவுளாக பாவித்து வணங்குவார்கள் — இப்படிப்பட்ட ஒரு
+            புனிதமான வழிமுறையை தடுப்பது பாவமே ஆகும்.
+          </p>
+          <p className="article-author">— சுவாதி ஐயங்கார்</p>
+        </div>
+      </div>
+
     </section>
   )
 }
