@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useEffect } from 'react'
 import Header       from './components/Header'
 import Counter      from './components/Counter'
 import LampScene    from './components/LampScene'
@@ -12,6 +12,16 @@ export default function App() {
   const [isLit, setIsLit] = useState(false)
   const { stats, emitLampLit } = useSocket()
 
+  // Automatic language switcher: cycles between English ('en') and Tamil ('ta') every 2 seconds
+  const [lang, setLang] = useState('en')
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setLang(prev => (prev === 'en' ? 'ta' : 'en'))
+    }, 2000)
+    return () => clearInterval(interval)
+  }, [])
+
   const handleLampLit = useCallback(() => {
     if (isLit) return
     setIsLit(true)
@@ -20,24 +30,24 @@ export default function App() {
 
   return (
     <div className="app">
-      {/* Background */}
+      {/* Spiritual Bright Light Yellow Background Canvas */}
       <div className="bg" />
       <div className="bg-overlay" />
 
-      {/* Real Captcha barrier before entering */}
+      {/* Hindu Devotee Verification Barrier */}
       {!isVerified && (
-        <CaptchaModal onVerified={() => setIsVerified(true)} />
+        <CaptchaModal onVerified={() => setIsVerified(true)} lang={lang} />
       )}
 
-      {/* Main site content once verified */}
+      {/* Main Sanctuary Content */}
       <main className="hero">
-        <Header />
-        <Counter stats={stats} />
-        <LampScene isLit={isLit} onLampLit={handleLampLit} />
+        <Header lang={lang} />
+        <Counter stats={stats} lang={lang} />
+        <LampScene isLit={isLit} onLampLit={handleLampLit} lang={lang} />
       </main>
 
-      <History />
-      <Footer />
+      <History lang={lang} />
+      <Footer lang={lang} />
     </div>
   )
 }

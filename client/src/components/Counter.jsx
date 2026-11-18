@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react'
 
-export default function Counter({ stats }) {
+export default function Counter({ stats, lang }) {
   const numRef  = useRef(null)
   const prevRef = useRef(stats.count)
 
@@ -18,10 +18,16 @@ export default function Counter({ stats }) {
       <span className="counter-num" ref={numRef}>
         {stats.count.toLocaleString('en-IN')}
       </span>
-      <span className="counter-label">souls have lit this flame</span>
+      <span className="counter-label">
+        {lang === 'en'
+          ? 'souls have lit this sacred flame'
+          : 'பக்தர்கள் இந்த புனித ஜோதியை ஏற்றியுள்ளனர்'}
+      </span>
       <span className="counter-live">
         <span className="live-dot" />
-        {stats.active} {stats.active === 1 ? 'person' : 'people'} here now
+        {lang === 'en'
+          ? `${stats.active} ${stats.active === 1 ? 'person' : 'people'} here now`
+          : `${stats.active} பக்தர்கள் இப்போது தரிசிக்கின்றனர்`}
       </span>
     </div>
   )

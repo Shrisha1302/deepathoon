@@ -1,10 +1,10 @@
-export default function RealisticTorch() {
+export default function RealisticTorch({ lang = 'en' }) {
   return (
     <div className="user-torch-wrapper">
       {/* Ambient warm fire aura */}
       <div className="user-torch-glow" />
 
-      {/* The User's Uploaded Torch (Isolated Transparent PNG) */}
+      {/* The User's Uploaded Torch with smaller, proportional flame */}
       <img
         src="images/user_torch.png"
         alt="Sacred Flame Torch"
@@ -12,8 +12,10 @@ export default function RealisticTorch() {
         draggable={false}
       />
 
-      {/* Drag instruction badge */}
-      <span className="user-torch-drag-badge">Drag Torch ↑</span>
+      {/* Drag instruction badge in English & Tamil */}
+      <span className="user-torch-drag-badge">
+        {lang === 'en' ? 'Drag Torch ↑' : 'இழுக்கவும் ↑'}
+      </span>
     </div>
   )
 }
