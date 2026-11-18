@@ -279,14 +279,36 @@ body {
   line-height: 1.15;
 }
 
+/* Subtitle wrap: stacks both texts in one slot, only the visible one shows */
+.site-sub-wrap {
+  position: relative;
+  height: 2.2em;        /* fixed height so layout never jumps */
+  margin-top: 10px;
+  overflow: hidden;
+}
+
+/* Both subtitle strings live on top of each other and cross-fade */
 .site-sub {
   font-family: 'Mukta Malar', 'Cinzel', serif;
   font-size: clamp(0.9rem, 2.2vw, 1.12rem);
   font-weight: 600;
   color: var(--gold-dk);
   letter-spacing: 1.5px;
-  margin-top: 10px;
+  margin: 0;
+  line-height: 2.2em;
 }
+
+/* Each sub-slide is absolutely stacked, opacity-only transition — NO translate / scale */
+.sub-slide {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  text-align: center;
+  transition: opacity 0.9s ease;
+  pointer-events: none;
+}
+
+.sub-slide.sub-visible  { opacity: 1; }
+.sub-slide.sub-hidden   { opacity: 0; }
 
 .header .thin-rule { max-width: 220px; margin: 20px auto 0; }
 
@@ -745,6 +767,42 @@ body {
   font-weight: 600;
   color: var(--gold-dk); letter-spacing: 2px;
   margin-bottom: 0;
+}
+
+/* ── Translate toggle row ────────────────────────────────────── */
+.hist-translate-row {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0 8px;
+}
+
+.translate-btn {
+  font-family: 'Mukta Malar', 'Cinzel', serif;
+  font-size: 0.88rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: var(--temple-red);
+  background: #FFFFFF;
+  border: 1.5px solid #D97706;
+  border-radius: 24px;
+  padding: 8px 22px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0 3px 12px rgba(180, 83, 9, 0.12);
+  transition: all 0.22s ease;
+}
+
+.translate-btn:hover {
+  background: #FEF3C7;
+  border-color: var(--saffron);
+  box-shadow: 0 5px 18px rgba(230, 81, 0, 0.22);
+  transform: translateY(-1px);
+}
+
+.translate-btn:active {
+  transform: translateY(0);
 }
 
 .cards-grid {

@@ -3,7 +3,7 @@ import Blessing from './Blessing'
 import RealisticTorch from './RealisticTorch'
 import PillarFlame from './PillarFlame'
 
-export default function LampScene({ isLit, onLampLit, lang = 'en' }) {
+export default function LampScene({ isLit, onLampLit, torchLang = 'en' }) {
   const torchRef     = useRef(null)
   const pillarTopRef = useRef(null)
   const canvasRef    = useRef(null)
@@ -219,31 +219,24 @@ export default function LampScene({ isLit, onLampLit, lang = 'en' }) {
       <canvas ref={canvasRef} className="sparks-canvas" />
 
       <section className="lamp-scene">
-        {/* Prominent, highly visible instruction banner alternating in English and Tamil every 2s */}
+        {/* Static English instruction banner */}
         {!isLit ? (
           <div className="instr-banner-wrap">
             <p className="instr prominent-banner">
-              {lang === 'en'
-                ? '🔥 Drag the sacred torch to the top of the pillar to light the Deepathoon'
-                : '🔥 தீபத்தை ஏற்ற புனித தீப்பந்தத்தை தூணின் உச்சிக்கு இழுக்கவும்'}
+              🔥 Drag the sacred torch to the top of the pillar to light the Deepathoon
             </p>
           </div>
         ) : (
           <div className="lit-banner-wrap">
             <p className="instr lit-banner">
-              {lang === 'en'
-                ? '✨ The Sacred Deepathoon is Ignited with Eternal Divine Light ✨'
-                : '✨ புனித தீபத்தூண் நித்திய தெய்வீக ஜோதியுடன் ஒளிர்ந்தது ✨'}
+              ✨ The Sacred Deepathoon is Ignited with Eternal Divine Light ✨
             </p>
-            {/* Audio control pill */}
             <button
               className="audio-control-btn"
               onClick={toggleAudio}
               title={isPlayingAudio ? 'Mute Sacred Chant' : 'Play Sacred Chant'}
             >
-              {isPlayingAudio
-                ? (lang === 'en' ? '🔊 Om Saravanabhava' : '🔊 ஓம் சரவணபவ')
-                : (lang === 'en' ? '🔈 Play Sacred Chant' : '🔈 மந்திரத்தை ஒலிக்கவும்')}
+              {isPlayingAudio ? '🔊 Om Saravanabhava' : '🔈 Play Sacred Chant'}
             </button>
           </div>
         )}
@@ -256,30 +249,29 @@ export default function LampScene({ isLit, onLampLit, lang = 'en' }) {
             className="pillar-backdrop-img"
           />
 
-          {/* Flame Zone accurately anchored to top rim of the stone pillar (21.5% X, 30.0% Y) */}
+          {/* Flame Zone anchored to pillar top (21.5% X, 30.0% Y) */}
           <div
             ref={pillarTopRef}
             className={`pillar-flame-zone ${isLit ? 'active' : ''}`}
             style={{ left: '21.5%', top: '30.0%' }}
           >
-            {/* Guide beacon pulse hint before being lit */}
+            {/* Guide beacon — "Light Here" alternates 2s EN/TA */}
             {!isLit && (
               <div className="target-beacon-hint">
                 <div className="beacon-ring r1" />
                 <div className="beacon-ring r2" />
                 <div className="beacon-dot" />
                 <span className="beacon-target-text">
-                  {lang === 'en' ? 'Light Here' : 'இங்கே வைக்கவும்'}
+                  {torchLang === 'en' ? 'Light Here' : 'இங்கே வைக்கவும்'}
                 </span>
               </div>
             )}
 
-            {/* Sacred, realistic Karthigai Flame on pillar */}
             {isLit && <PillarFlame />}
           </div>
         </div>
 
-        <Blessing isLit={isLit} lang={lang} />
+        <Blessing isLit={isLit} />
       </section>
 
       {/* Realistic Draggable Temple Torch */}
@@ -288,7 +280,7 @@ export default function LampScene({ isLit, onLampLit, lang = 'en' }) {
         className="torch-draggable"
         style={{ position: 'fixed', display: 'flex', opacity: ready ? 1 : 0 }}
       >
-        <RealisticTorch lang={lang} />
+        <RealisticTorch torchLang={torchLang} />
       </div>
     </>
   )

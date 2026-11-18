@@ -12,14 +12,16 @@ export default function App() {
   const [isLit, setIsLit] = useState(false)
   const { stats, emitLampLit } = useSocket()
 
-  // Automatic language switcher: cycles between English ('en') and Tamil ('ta') every 2 seconds
-  const [lang, setLang] = useState('en')
+  // Only the header subtitle and torch/beacon auto-alternate.
+  // - subLang: 4s cycle for the subtitle line "Thiruparankundram · Sacred Abode of Lord Murugan"
+  // - torchLang: 2s cycle for torch drag badge + "Light Here" beacon label
+  const [subLang, setSubLang] = useState('en')
+  const [torchLang, setTorchLang] = useState('en')
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setLang(prev => (prev === 'en' ? 'ta' : 'en'))
-    }, 2000)
-    return () => clearInterval(interval)
+    const sub = setInterval(() => setSubLang(p => p === 'en' ? 'ta' : 'en'), 4000)
+    const torch = setInterval(() => setTorchLang(p => p === 'en' ? 'ta' : 'en'), 2000)
+    return () => { clearInterval(sub); clearInterval(torch) }
   }, [])
 
   const handleLampLit = useCallback(() => {
@@ -30,24 +32,24 @@ export default function App() {
 
   return (
     <div className="app">
-      {/* Spiritual Bright Light Yellow Background Canvas */}
       <div className="bg" />
       <div className="bg-overlay" />
 
-      {/* Hindu Devotee Verification Barrier */}
+      {/* Hindu Devotee Verification — always English */}
       {!isVerified && (
-        <CaptchaModal onVerified={() => setIsVerified(true)} lang={lang} />
+        <CaptchaModal onVerified={() => setIsVerified(true)} />
       )}
 
-      {/* Main Sanctuary Content */}
       <main className="hero">
-        <Header lang={lang} />
-        <Counter stats={stats} lang={lang} />
-        <LampScene isLit={isLit} onLampLit={handleLampLit} lang={lang} />
+        {/* subLang only for the subtitle line */}
+        <Header subLang={subLang} />
+        <Counter stats={stats} />
+        <LampScene isLit={isLit} onLampLit={handleLampLit} torchLang={torchLang} />
       </main>
 
-      <History lang={lang} />
-      <Footer lang={lang} />
+      {/* History has its own manual translate toggle */}
+      <History />
+      <Footer />
     </div>
   )
 }

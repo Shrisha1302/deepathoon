@@ -1,3 +1,5 @@
+import { useState } from 'react'
+
 const CARDS = [
   {
     icon: '🏔️',
@@ -29,26 +31,34 @@ const CARDS = [
   }
 ]
 
-export default function History({ lang = 'en' }) {
+export default function History() {
+  const [isTamil, setIsTamil] = useState(false)
+
   return (
     <section className="history">
       <div className="hist-wrap">
-        <h2 className="hist-title">
-          {lang === 'en' ? 'The Sacred Deepathoon' : 'புனித தீபத்தூண் வரலாறு'}
-        </h2>
-        <p className="hist-sub">
-          {lang === 'en'
-            ? 'The Eternal Flame of Thiruparankundram'
-            : 'திருப்பரங்குன்றத்தின் அழியா திருவிளக்கு'}
-        </p>
-        <div className="thin-rule" style={{ margin: '0 auto 48px', maxWidth: '120px' }} />
+        <h2 className="hist-title">The Sacred Deepathoon</h2>
+        <p className="hist-sub">The Eternal Flame of Thiruparankundram</p>
+
+        {/* Manual translate toggle button */}
+        <div className="hist-translate-row">
+          <button
+            className="translate-btn"
+            onClick={() => setIsTamil(p => !p)}
+            aria-label="Toggle Tamil / English"
+          >
+            {isTamil ? '🌐 English' : '🌐 தமிழில் படிக்க'}
+          </button>
+        </div>
+
+        <div className="thin-rule" style={{ margin: '0 auto 40px', maxWidth: '120px' }} />
 
         <div className="cards-grid">
           {CARDS.map((c, i) => (
             <div key={i} className="hcard">
               <span className="hcard-icon">{c.icon}</span>
-              <h3>{lang === 'en' ? c.titleEn : c.titleTa}</h3>
-              <p>{lang === 'en' ? c.textEn : c.textTa}</p>
+              <h3>{isTamil ? c.titleTa : c.titleEn}</h3>
+              <p>{isTamil ? c.textTa : c.textEn}</p>
             </div>
           ))}
         </div>

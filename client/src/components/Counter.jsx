@@ -1,13 +1,13 @@
 import { useEffect, useRef } from 'react'
 
-export default function Counter({ stats, lang }) {
+export default function Counter({ stats }) {
   const numRef  = useRef(null)
   const prevRef = useRef(stats.count)
 
   useEffect(() => {
     if (numRef.current && stats.count !== prevRef.current) {
       numRef.current.classList.remove('bump')
-      void numRef.current.offsetWidth   // force reflow
+      void numRef.current.offsetWidth
       numRef.current.classList.add('bump')
       prevRef.current = stats.count
     }
@@ -18,16 +18,10 @@ export default function Counter({ stats, lang }) {
       <span className="counter-num" ref={numRef}>
         {stats.count.toLocaleString('en-IN')}
       </span>
-      <span className="counter-label">
-        {lang === 'en'
-          ? 'souls have lit this sacred flame'
-          : 'பக்தர்கள் இந்த புனித ஜோதியை ஏற்றியுள்ளனர்'}
-      </span>
+      <span className="counter-label">souls have lit this sacred flame</span>
       <span className="counter-live">
         <span className="live-dot" />
-        {lang === 'en'
-          ? `${stats.active} ${stats.active === 1 ? 'person' : 'people'} here now`
-          : `${stats.active} பக்தர்கள் இப்போது தரிசிக்கின்றனர்`}
+        {stats.active} {stats.active === 1 ? 'person' : 'people'} here now
       </span>
     </div>
   )
