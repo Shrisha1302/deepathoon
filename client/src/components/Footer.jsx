@@ -1,5 +1,5 @@
 export default function Footer() {
-  const email = 'creamhappy1234@gmail.com'
+  const email = 'Deepam@deepathoon.com'
   return (
     <footer className="footer">
       <div className="contact-section">

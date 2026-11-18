@@ -2,8 +2,16 @@ export default function History() {
   return (
     <section className="article-section">
 
-      {/* ── Row 1: Tamil text LEFT · Gopuram image RIGHT ── */}
+      {/* ── Row 1: Gopuram image LEFT · Tamil text RIGHT ── */}
       <div className="article-row">
+        <div className="article-img-col">
+          <img
+            src="images/article_gopuram.jpg"
+            alt="Thiruparankundram Gopuram"
+            className="article-img"
+            loading="lazy"
+          />
+        </div>
         <div className="article-text-col">
           <p className="article-para">
             இந்து மதத்தில் ஒரு முக்கியமான அங்கமாக விளங்குவது அதன் சம்பிரதாயங்களும்
@@ -17,20 +25,12 @@ export default function History() {
             இந்த மாதிரியான சடங்குகளும் பிரார்த்தனைகளும் மிகவும் அவசியம்.
           </p>
         </div>
-        <div className="article-img-col">
-          <img
-            src="images/article_gopuram.jpg"
-            alt="Thiruparankundram Gopuram"
-            className="article-img"
-            loading="lazy"
-          />
-        </div>
       </div>
 
       {/* ── Divider ── */}
       <div className="article-divider" />
 
-      {/* ── Row 2: Torch image LEFT · Tamil text RIGHT ── */}
+      {/* ── Row 2: Tamil text LEFT · Torch image RIGHT ── */}
       <div className="article-row row-reverse">
         <div className="article-img-col">
           <img
