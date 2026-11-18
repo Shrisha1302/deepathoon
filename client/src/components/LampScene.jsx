@@ -109,40 +109,87 @@ export default function LampScene({ isLit, onLampLit, torchLang = 'en' }) {
     }
   }, [isLit, onLampLit])
 
-  // Attach mouse + touch events
+  // Attach mouse + touch events (only active when not lit)
   useEffect(() => {
+    if (isLit) {
+      // Ensure dragging is stopped and cleanup if lit
+      dragging.current = false
+      return
+    }
+
     const torch = torchRef.current
     if (!torch) return
-    const md = e => { e.preventDefault(); startDrag(e.clientX, e.clientY) }
-    const mm = e => moveDrag(e.clientX, e.clientY)
-    const mu = e => endDrag(e.clientX, e.clientY)
-    const ts = e => { e.preventDefault(); const t = e.touches[0]; startDrag(t.clientX, t.clientY) }
-    const tm = e => { e.preventDefault(); const t = e.touches[0]; moveDrag(t.clientX, t.clientY) }
-    const te = e => { const t = e.changedTouches[0]; endDrag(t.clientX, t.clientY) }
 
-    torch.addEventListener('mousedown', md)
-    document.addEventListener('mousemove', mm)
-    document.addEventListener('mouseup', mu)
-    torch.addEventListener('touchstart', ts, { passive: false })
-    document.addEventListener('touchmove', tm, { passive: false })
-    document.addEventListener('touchend', te)
-    return () => {
-      torch.removeEventListener('mousedown', md)
-      document.removeEventListener('mousemove', mm)
-      document.removeEventListener('mouseup', mu)
-      torch.removeEventListener('touchstart', ts)
-      document.removeEventListener('touchmove', tm)
-      document.removeEventListener('touchend', te)
+    const handleMouseDown = e => {
+      e.preventDefault()
+      startDrag(e.clientX, e.clientY)
     }
-  }, [startDrag, moveDrag, endDrag])
+
+    const handleMouseMove = e => {
+      if (!dragging.current) return
+      moveDrag(e.clientX, e.clientY)
+    }
+
+    const handleMouseUp = e => {
+      if (!dragging.current) return
+      endDrag(e.clientX, e.clientY)
+    }
+
+    const handleTouchStart = e => {
+      // Prevent default only when touching the torch directly
+      if (e.touches.length === 1) {
+        e.preventDefault()
+        const t = e.touches[0]
+        startDrag(t.clientX, t.clientY)
+      }
+    }
+
+    const handleTouchMove = e => {
+      // CRITICAL: ONLY prevent default if actively dragging the torch!
+      // If not dragging, allow native page scrolling on mobile!
+      if (!dragging.current) return
+      if (e.cancelable) e.preventDefault()
+      const t = e.touches[0]
+      moveDrag(t.clientX, t.clientY)
+    }
+
+    const handleTouchEnd = e => {
+      if (!dragging.current) return
+      const t = e.changedTouches[0]
+      endDrag(t.clientX, t.clientY)
+    }
+
+    torch.addEventListener('mousedown', handleMouseDown)
+    window.addEventListener('mousemove', handleMouseMove)
+    window.addEventListener('mouseup', handleMouseUp)
+
+    torch.addEventListener('touchstart', handleTouchStart, { passive: false })
+    window.addEventListener('touchmove', handleTouchMove, { passive: false })
+    window.addEventListener('touchend', handleTouchEnd)
+    window.addEventListener('touchcancel', handleTouchEnd)
+
+    return () => {
+      torch.removeEventListener('mousedown', handleMouseDown)
+      window.removeEventListener('mousemove', handleMouseMove)
+      window.removeEventListener('mouseup', handleMouseUp)
+
+      torch.removeEventListener('touchstart', handleTouchStart)
+      window.removeEventListener('touchmove', handleTouchMove)
+      window.removeEventListener('touchend', handleTouchEnd)
+      window.removeEventListener('touchcancel', handleTouchEnd)
+    }
+  }, [isLit, startDrag, moveDrag, endDrag])
 
   // Fade torch smoothly when lit
   useEffect(() => {
     if (!isLit || !torchRef.current) return
+    torchRef.current.style.pointerEvents = 'none'
     torchRef.current.style.transition = 'opacity 0.6s'
     torchRef.current.style.opacity    = '0'
     const t = setTimeout(() => {
-      if (torchRef.current) torchRef.current.style.display = 'none'
+      if (torchRef.current) {
+        torchRef.current.style.display = 'none'
+      }
     }, 600)
     return () => clearTimeout(t)
   }, [isLit])

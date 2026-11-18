@@ -22,14 +22,25 @@
   --text-muted:    #6D3D18;
 }
 
-html { scroll-behavior: smooth; }
+html {
+  scroll-behavior: smooth;
+}
 
 body {
   font-family: 'Mukta Malar', 'Noto Serif Tamil', 'Cinzel', serif;
   background: var(--bg-spiritual);
   color: var(--text-main);
-  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
   min-height: 100vh;
+  -webkit-overflow-scrolling: touch;
+}
+
+.app {
+  width: 100%;
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
 }
 
 /* ── Spiritual Bright Light Yellow Background Canvas ───────── */
@@ -809,19 +820,16 @@ body {
 .article-img {
   width: 100%;
   height: auto;
-  border-radius: 10px;
+  border-radius: 12px;
   display: block;
   object-fit: cover;
   box-shadow: 0 8px 28px rgba(120, 53, 15, 0.18);
   border: 2px solid rgba(217, 119, 6, 0.22);
-  /* Mobile: show full image naturally */
-  max-height: 280px;
-  object-position: center top;
 }
 
 @media (min-width: 720px) {
   .article-img {
-    max-height: 420px;
+    max-height: 440px;
     object-position: center;
   }
 }
@@ -910,8 +918,12 @@ body {
 
 /* ── Mobile-first global tweaks ──────────────────────────────── */
 @media (max-width: 600px) {
-  /* Hero padding tighter on small screens */
-  .hero { padding: 44px 16px 44px; }
+  /* Hero flows naturally on mobile so scrolling down is seamless */
+  .hero {
+    min-height: auto;
+    justify-content: flex-start;
+    padding: 24px 14px 32px;
+  }
 
   /* Blessing smaller */
   .bless-box { padding: 16px 18px; }
@@ -925,10 +937,13 @@ body {
     text-align: center;
   }
 
-  /* Stage fills screen edge-to-edge */
+  /* Stage fills screen edge-to-edge with beautiful framing */
   .pillar-stage {
-    border-radius: 8px;
+    width: 100%;
+    aspect-ratio: 1024 / 576;
+    border-radius: 10px;
     border-width: 2px;
+    margin-bottom: 20px;
   }
 
   /* Counter tighter */
@@ -938,11 +953,16 @@ body {
   /* Title legible */
   .site-title { font-size: 2.6rem; }
 
-  /* Article rows: single-column, comfortable spacing */
-  .article-row  { padding: 0 16px; }
+  /* Article rows: single-column, image fully shown without cropping */
+  .article-row  { padding: 0 14px; }
   .article-para { font-size: 1rem; line-height: 1.9; }
-  .article-img  { max-height: 220px; border-radius: 8px; }
-  .article-text-col { padding: 20px 0 0; }
+  .article-img  {
+    width: 100%;
+    height: auto;
+    max-height: none; /* Show full image, no awkward cropping! */
+    border-radius: 10px;
+  }
+  .article-text-col { padding: 18px 0 0; }
   .article-divider  { margin: 24px auto; }
 
   /* Torch badge readable */
