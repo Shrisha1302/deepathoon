@@ -1,7 +1,7 @@
 export default function Header({ subLang }) {
   return (
     <header className="header">
-      <span className="om" aria-hidden="true">🕉</span>
+      <span className="om" aria-hidden="true">ॐ</span>
       {/* Title is strictly in Tamil only */}
       <h1 className="site-title">தீபத்தூண்</h1>
       {/* Subtitle softly cross-fades between EN and TA every 4s — no bounce, no shake */}

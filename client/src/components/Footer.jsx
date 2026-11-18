@@ -7,7 +7,7 @@ export default function Footer() {
         <span className="contact-email-text">{email}</span>
       </div>
       <p className="footer-text">
-        🕉&nbsp; Vel Muruga Vel &middot; Om Saravanabhava &middot; Thiruparankundram &nbsp;🕉
+        ॐ&nbsp; Vel Muruga Vel &middot; Om Saravanabhava &middot; Thiruparankundram &nbsp;ॐ
       </p>
     </footer>
   )

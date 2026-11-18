@@ -16,12 +16,18 @@ export default function LampScene({ isLit, onLampLit, torchLang = 'en' }) {
   const [ready, setReady] = useState(false)
   const [isPlayingAudio, setIsPlayingAudio] = useState(false)
 
-  // Place torch bottom-left on mount & resize
+  // Place torch bottom-left on desktop, bottom-right on mobile so pillar is clear
   useEffect(() => {
     function place() {
       if (!torchRef.current) return
-      torchRef.current.style.left = '45px'
-      torchRef.current.style.top  = (window.innerHeight - 235) + 'px'
+      const isMobile = window.innerWidth <= 600
+      if (isMobile) {
+        torchRef.current.style.left = (window.innerWidth - 75) + 'px'
+        torchRef.current.style.top  = (window.innerHeight - 150) + 'px'
+      } else {
+        torchRef.current.style.left = '45px'
+        torchRef.current.style.top  = (window.innerHeight - 220) + 'px'
+      }
       setReady(true)
     }
     place()
@@ -86,14 +92,15 @@ export default function LampScene({ isLit, onLampLit, torchLang = 'en' }) {
     if (!pillarTopRef.current || isLit) return
 
     // Flame head of user's torch
+    const isMobile = window.innerWidth <= 600
     const tr = torchRef.current.getBoundingClientRect()
     const flameHead = {
       x: tr.left + tr.width / 2,
-      y: tr.top + 18
+      y: tr.top + (isMobile ? 12 : 18)
     }
 
     const pr = pillarTopRef.current.getBoundingClientRect()
-    const PAD = 65 // Generous touch/drop zone around pillar top
+    const PAD = isMobile ? 80 : 65 // Generous touch/drop zone around pillar top
 
     const hit = (
       flameHead.x >= pr.left - PAD &&

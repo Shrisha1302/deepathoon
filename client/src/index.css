@@ -479,7 +479,7 @@ body {
   max-width: 920px;
   aspect-ratio: 1024 / 576;
   border-radius: 12px;
-  overflow: hidden;
+  overflow: visible; /* Allows beacon tooltip and flame to breathe without clipping */
   border: 3px solid rgba(217, 119, 6, 0.45);
   box-shadow:
     0 12px 40px rgba(120, 53, 15, 0.22),
@@ -493,6 +493,7 @@ body {
   height: 100%;
   object-fit: cover;
   display: block;
+  border-radius: 9px;
   user-select: none;
   -webkit-user-drag: none;
   transition: filter 1.2s ease;
@@ -503,7 +504,7 @@ body {
   position: absolute;
   width: 50px;
   height: 50px;
-  transform: translate(-50%, -95%);
+  transform: translate(-50%, -100%); /* Base of zone aligns exactly with top rim of pillar */
   display: flex;
   align-items: flex-end;
   justify-content: center;
@@ -511,22 +512,23 @@ body {
   pointer-events: none;
 }
 
-/* ── Beacon Hint: Target Pulsing Indicator ───────────────── */
+/* ── Beacon Hint: Target Pulsing Indicator (Directly on Pillar Rim) ── */
 .target-beacon-hint {
   position: absolute;
   bottom: 0;
   left: 50%;
-  transform: translateX(-50%);
-  width: 48px;
-  height: 48px;
+  transform: translate(-50%, 50%); /* Centers the pulsing beacon precisely on the pillar rim */
+  width: 28px;
+  height: 28px;
   display: flex;
   align-items: center;
   justify-content: center;
+  pointer-events: none;
 }
 
 .beacon-target-text {
   position: absolute;
-  top: -26px;
+  bottom: calc(100% + 6px);
   left: 50%;
   transform: translateX(-50%);
   background: rgba(180, 83, 9, 0.95);
@@ -541,7 +543,7 @@ body {
   border: 1.5px solid #FCD34D;
   box-shadow: 0 3px 10px rgba(0,0,0,0.35);
   pointer-events: none;
-  animation: label-nudge 1.1s ease-in-out infinite;
+  z-index: 20;
 }
 
 .beacon-ring {
@@ -918,58 +920,131 @@ body {
 
 /* ── Mobile-first global tweaks ──────────────────────────────── */
 @media (max-width: 600px) {
-  /* Hero flows naturally on mobile so scrolling down is seamless */
+  /* Hero flows naturally with compact padding so the stage is prominently visible */
   .hero {
     min-height: auto;
     justify-content: flex-start;
-    padding: 24px 14px 32px;
+    padding: 16px 12px 24px;
   }
 
-  /* Blessing smaller */
-  .bless-box { padding: 16px 18px; }
+  /* Compact header on mobile — eliminates vertical waste */
+  .header {
+    margin-bottom: 12px;
+  }
+  .om {
+    font-size: 34px;
+    margin-bottom: 2px;
+  }
+  .site-title {
+    font-size: 2.1rem;
+    line-height: 1.1;
+  }
+  .site-sub-wrap {
+    height: 1.8em;
+    margin-top: 4px;
+  }
+  .site-sub {
+    font-size: 0.8rem;
+    line-height: 1.8em;
+  }
+  .header .thin-rule {
+    margin: 8px auto 0;
+    max-width: 140px;
+  }
 
-  /* Instruction pill wraps nicely */
+  /* Compact counter on mobile */
+  .counter {
+    margin-bottom: 12px;
+    gap: 2px;
+  }
+  .counter-num {
+    font-size: 2.2rem;
+  }
+  .counter-label {
+    font-size: 0.72rem;
+    letter-spacing: 1px;
+  }
+  .counter-live {
+    font-size: 0.68rem;
+    margin-top: 2px;
+  }
+
+  /* Instruction pill: sleek, compact, prominent */
+  .instr-banner-wrap {
+    margin-bottom: 14px;
+  }
   .instr.prominent-banner {
-    font-size: 0.92rem;
-    padding: 10px 18px;
-    border-radius: 40px;
-    max-width: 92vw;
-    text-align: center;
+    font-size: 0.82rem;
+    padding: 8px 16px;
+    border-radius: 30px;
+    max-width: 96vw;
+    line-height: 1.35;
   }
 
-  /* Stage fills screen edge-to-edge with beautiful framing */
+  /* Stage: wide and prominent, no clipping of tooltip */
   .pillar-stage {
     width: 100%;
     aspect-ratio: 1024 / 576;
     border-radius: 10px;
     border-width: 2px;
-    margin-bottom: 20px;
+    margin-bottom: 18px;
+    overflow: visible;
   }
 
-  /* Counter tighter */
-  .counter-num  { font-size: 2.6rem; }
-  .counter-label { font-size: 0.8rem; letter-spacing: 1px; }
+  .beacon-target-text {
+    font-size: 0.62rem;
+    padding: 2px 7px;
+  }
 
-  /* Title legible */
-  .site-title { font-size: 2.6rem; }
+  /* Proportional torch on mobile: doesn't cover the entire pillar */
+  .user-torch-wrapper {
+    width: 48px;
+  }
+  .user-torch-image {
+    height: 112px;
+  }
+  .user-torch-glow {
+    width: 26px;
+    height: 26px;
+    top: 8px;
+  }
+  .user-torch-drag-badge {
+    font-size: 0.65rem;
+    padding: 2px 7px;
+    margin-top: 3px;
+  }
+
+  /* Scaled flame on pillar */
+  .canvas-pillar-flame-wrapper {
+    width: 42px;
+    height: 48px;
+  }
+  .pillar-flame-canvas {
+    width: 32px;
+    height: 38px;
+  }
+  .pillar-stone-rim-light {
+    width: 28px;
+    height: 8px;
+  }
+
+  /* Blessing smaller */
+  .bless-box { padding: 14px 16px; }
+
+  /* Audio pill */
+  .audio-control-btn { font-size: 0.75rem; padding: 6px 14px; }
 
   /* Article rows: single-column, image fully shown without cropping */
   .article-row  { padding: 0 14px; }
-  .article-para { font-size: 1rem; line-height: 1.9; }
+  .article-para { font-size: 0.98rem; line-height: 1.85; }
   .article-img  {
     width: 100%;
     height: auto;
     max-height: none; /* Show full image, no awkward cropping! */
     border-radius: 10px;
   }
-  .article-text-col { padding: 18px 0 0; }
-  .article-divider  { margin: 24px auto; }
-
-  /* Torch badge readable */
-  .user-torch-drag-badge { font-size: 0.72rem; padding: 3px 8px; }
-
-  /* Audio pill */
-  .audio-control-btn { font-size: 0.75rem; padding: 7px 16px; }
+  .article-text-col { padding: 16px 0 0; }
+  .article-divider  { margin: 20px auto; }
 
   /* Footer email wraps */
   .contact-email-text { font-size: 0.82rem; }

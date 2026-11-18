@@ -73,7 +73,7 @@ export default function CaptchaModal({ onVerified }) {
   return (
     <div className="captcha-overlay">
       <div className="captcha-card">
-        <span className="captcha-om">🕉</span>
+        <span className="captcha-om">ॐ</span>
         <h2 className="captcha-title">Devotee Verification</h2>
         <p className="captcha-sub">
           Verifying genuine Hindu devotee presence to enter the sacred Deepathoon sanctuary
