@@ -114,154 +114,93 @@ export default function History() {
       </div>
 
       {/* ============================================================
-          COURT TIMELINE SECTION — ENGLISH
+          UNITING BHARATH — ENGLISH SECTION (By Swathi Iyengar)
           ============================================================ */}
-      <div className="court-timeline-container">
+      <div className="uniting-bharath-container">
         <div className="section-title-wrap">
-          <h2 className="court-timeline-title">
-            Court Timeline for the Deepathoon
+          <h2 className="article-main-title english-title">
+            Uniting Bharath &middot; Uniting all Hindus through this Deepathoon
           </h2>
-          <div className="court-status-pill">
-            <span className="live-badge">LIVE STATUS</span>
-            <span className="status-text">High Court Order Stands · Supreme Court Appeal Pending</span>
-          </div>
-          <div className="thin-rule" style={{ maxWidth: '180px', margin: '14px auto 32px' }} />
+          <div className="thin-rule" style={{ maxWidth: '240px', margin: '14px auto 32px' }} />
         </div>
 
-        {/* ── Timeline Row 1: Vintage Temple Image LEFT · Decisions 1 & 2 RIGHT ── */}
-        <div className="court-row">
-          <div className="court-img-card">
+        {/* ── Row 1: Archival Temple Image LEFT · Text RIGHT ── */}
+        <div className="article-row">
+          <div className="article-img-col">
             <img
               src="images/court_vintage_temple.jpg"
               alt="Archival View of Thiruparankundram Temple"
-              className="court-img"
+              className="article-img"
               loading="lazy"
             />
-            <div className="court-img-caption-box">
-              <span className="court-img-tag">Archival Record</span>
-              <p className="court-img-caption">Thiruparankundram Temple &amp; Hill — 1920 Privy Council Decree Record</p>
-            </div>
+            <span className="img-caption">Thiruparankundram Temple &amp; Sacred Hill of Dharma</span>
           </div>
-          <div className="court-cards-col">
-            <div className="timeline-card">
-              <div className="timeline-header">
-                <span className="timeline-num">1</span>
-                <div>
-                  <h4 className="timeline-event-title">Dec 1, 2025 — Madras High Court (Single Judge)</h4>
-                  <span className="timeline-judge">Justice G.R. Swaminathan</span>
-                </div>
-              </div>
-              <p className="timeline-para">
-                Directed temple management to light the Karthigai Deepam at the Deepathoon, the stone pillar on the lower peak, in addition to the existing practice at Deepa Mandapam near Uchi Pillaiyar Temple.
-              </p>
-              <div className="timeline-points">
-                <strong>The court held:</strong>
-                <ul>
-                  <li>
-                    The pillar is about 50 metres from the Dargah, which is on the higher peak, and falls within temple property as settled by a <strong>1920 decree upheld by the Privy Council</strong>.
-                  </li>
-                  <li>
-                    It was not a survey marker but a <strong>traditional lamp pillar</strong>, with carved designs and a bowl-shaped cavity for oil and wicks.
-                  </li>
-                  <li>
-                    On Dec 3, after non-implementation, the judge also allowed devotees themselves to light it, with CISF security.
-                  </li>
-                </ul>
-              </div>
-            </div>
-
-            <div className="timeline-card">
-              <div className="timeline-header">
-                <span className="timeline-num">2</span>
-                <div>
-                  <h4 className="timeline-event-title">Jan 6, 2026 — Madras High Court (Division Bench)</h4>
-                  <span className="timeline-judge">Justices G. Jayachandran &amp; K.K. Ramakrishnan</span>
-                </div>
-              </div>
-              <p className="timeline-para">
-                Dismissed 20 connected appeals and <strong>upheld the single judge&apos;s order</strong>.
-              </p>
-              <p className="timeline-para">
-                Ruled that the lamp may be lit on the Deepathoon subject to conditions: with a small team, in consultation with ASI and police, and the District Collector coordinating. The number of persons allowed can be regulated after consultation with ASI.
-              </p>
-            </div>
+          <div className="article-text-col">
+            <p className="article-para en">
+              We the proud Hindus true sons and daughters of the Bharat are deeply pained by the development in the Deepathoon issue and the present government elected by the large by the votes casted by the Hindus is approaching the supreme court with some lame excuse to deny the Hindus to follow their faith. Unfair and this is a new form of fascism.
+            </p>
+            <p className="article-para en">
+              However we will sit in our home puja room chanting saravana bhava will light the lamp on the Deepathoon digitally.
+            </p>
+            <p className="article-para en">
+              All you have to do is to pray and drag the light / theepandham to the top of the pillar you will witness Thiru Karthigai Deepam lit by your own heart and seeking blessings of Lord Muruga to you and your family and friends.
+            </p>
           </div>
         </div>
 
         {/* ── Divider ── */}
-        <div className="court-divider" />
+        <div className="article-divider" />
 
-        {/* ── Timeline Row 2: Arguments & Supreme Court LEFT · Night Gopuram Image RIGHT ── */}
-        <div className="court-row row-reverse">
-          <div className="court-img-card">
+        {/* ── Row 2: Text LEFT · Illuminated Gopuram Image RIGHT ── */}
+        <div className="article-row row-reverse">
+          <div className="article-img-col">
             <img
               src="images/court_night_gopuram.jpg"
               alt="Thiruparankundram Gopuram Illuminated with Vel at Night"
-              className="court-img"
+              className="article-img"
               loading="lazy"
             />
-            <div className="court-img-caption-box">
-              <span className="court-img-tag">Sacred Illumination</span>
-              <p className="court-img-caption">Thiruparankundram Gopuram illuminated with radiant Vel at night</p>
-            </div>
+            <span className="img-caption">Thiruparankundram Gopuram with radiant Vel illumination</span>
           </div>
-          <div className="court-cards-col">
-            <div className="timeline-card">
-              <div className="timeline-header">
-                <span className="timeline-num">3</span>
-                <h4 className="timeline-event-title">What the Two Sides Argued</h4>
-              </div>
-              <div className="argument-block petitioner">
-                <h5 className="argument-side">Petitioners / Devotees Argued:</h5>
-                <p className="timeline-para">
-                  Lighting at the Deepathoon was a discontinued temple practice, and the pillar stands on temple land. Prolonged inaction and vague public-order concerns should not override worshippers&apos; rights under Articles 25, 19(1)(a) and 29(1).
-                </p>
-              </div>
-              <div className="argument-block respondent">
-                <h5 className="argument-side">State Government / HR&amp;CE / Dargah / Waqf Board Argued:</h5>
-                <p className="timeline-para">
-                  There is no established custom of lighting at the hilltop pillar. The festival lamp had traditionally been lit for over 150 years at the Deepa Mandapam, not at the hilltop, in accordance with Agamas and the opinion of the Sthanikars. The pillar was a survey pillar, not a lamp pillar, and lighting there raised law-and-order and heritage-protection concerns. The hill is a protected site and any activity must comply with law.
-                </p>
-              </div>
-            </div>
-
-            <div className="timeline-card">
-              <div className="timeline-header">
-                <span className="timeline-num">4</span>
-                <h4 className="timeline-event-title">Supreme Court — So Far</h4>
-              </div>
-              <ul className="sc-milestones">
-                <li>
-                  <strong>Feb 9, 2026 (Separate but related issue):</strong> The Supreme Court refused to interfere with the Madras HC&apos;s Oct 2025 judgment limiting namaz at the dargah to Ramzan and Bakri-Eid only, and upholding the ban on animal sacrifice there. It called it a <em>&ldquo;very very balanced order.&rdquo;</em>
-                </li>
-                <li>
-                  <strong>June 2, 2026 (Contempt plea):</strong> The Supreme Court refused to interfere with the Madras HC order dismissing a plea seeking action against officials for denying permission to light the lamp, but reduced costs on the petitioner from ₹50,000 to ₹5,000.
-                </li>
-                <li>
-                  <strong>June 11, 2026 (Main appeal):</strong> The Tamil Nadu government filed an SLP against the Jan 6 High Court order. The Supreme Court issued notice but <strong>did not stay</strong> the High Court order.
-                </li>
-              </ul>
-            </div>
+          <div className="article-text-col">
+            <p className="article-para en">
+              I am deeply appalled and saddened by the development that is happening in the state of Tamil Nadu, eminent judges quoting the law of the land have permitted the lighting of lamp at the Deepathoon on top of the hill, yet the government elected with the large votes casted by the Hindus denying and betraying the Hindus.
+            </p>
+            <p className="article-para en">
+              I think this is a time for the Hindus to realize their mistake one after other.
+            </p>
+            <p className="article-para en">
+              I request the Prime minister and the Home minister and the great Hindu organisations like RSS and VHP, to lead against such an unfavorable attitude only showed towards Hindus. Is secularism is only binding on Hindus this is a question you have to ask and we the Hindus have to ask you ? As you are elected to protect and serve us.
+            </p>
+            <p className="article-para en">
+              I perceive I foresee the only is to declare Bharat as Hindu Rashtra and Hindus must have the first right Hindus must have a strong voice to protect their identity the heritage the tradition of the country Bharat.
+            </p>
           </div>
         </div>
 
-        {/* ── Summary Box: Current Position ── */}
-        <div className="court-current-position-card">
-          <div className="current-pos-badge">CURRENT POSITION AS OF NOV 2026</div>
-          <ul className="current-pos-list">
-            <li>
-              <strong>High Court Direction in Force:</strong> The Madras High Court&apos;s direction to light the Deepam at the Deepathoon remains in force because there is no stay from the Supreme Court.
-            </li>
-            <li>
-              <strong>Appeal Pending:</strong> The Tamil Nadu government&apos;s appeal is still pending before the Supreme Court.
-            </li>
-            <li>
-              <strong>Political Development:</strong> An impeachment notice moved in Parliament in Dec 2025 against Justice Swaminathan by over 120 MPs was reported but has not resulted in removal.
-            </li>
-          </ul>
-          <div className="current-pos-footer">
-            <em>Because this is ongoing litigation, it is worth checking the Supreme Court cause list / Madras HC site for the next hearing date before Karthigai Deepam this year.</em>
+        {/* ── Full Card: Dharma, Civilization, Unity of All Dharmic Traditions ── */}
+        <div className="article-full-card">
+          <p className="article-para en">
+            There is no Bharath if no Hindus and No Hindus if there tranditions and customs are chocked and stiffled in the name of secularism or imaginary Ghost portrayed by an elected government on the behest of some religious community and appeasement policy.
+          </p>
+
+          <p className="article-para en">
+            Bharath is a very very ancient civilization and the latest two Ithasas Ramayana and Mahabharata are 7000 and 5000 years old. Much before that we have many avatars and the foundation for all these beautiful Ithasas is Santana Dharma. We are facing a situation worse than what Mughals did to Hindus and Sikhs. Today certain Anti Hindu forces are using our own constitution to belittle our faith and traditions and prohibit Hindus to carry out their day to day life including spiritual life using our own law. Is this fair ? I am asking all Hindus, Sikhs, Buddhists, Jain&apos;s.
+          </p>
+
+          <p className="article-para en">
+            Just to give one example The great Mathematician Srinivasa Ramanujam was inspired by a temple in South of India. See how important for us this temple identity is. Hinduism is an unique faith unlike other faiths that Western world and West Asia practices. See the beauty and depth of Hinduism which thrives on live and let live and Universal wellness to all sentient beings. We are the last bastion of Dharma and many forces in the name of religion and secularism wants to weaken this, our Dharmic code using our own law and constitution.
+          </p>
+
+          <p className="article-para en">
+            This is like termite eating the wood inside out. Enough of this atrocities directed against Hindus. I appeal to my brothers of Buddhist, Sikh and Jain traditions and other faith that was born in Bharath to unite together and build a strong community of Dharma and strong Bharatiya traditions and customs.
+          </p>
+
+          <div className="unity-slogan-box">
+            <span className="unity-slogan-text">Jai Hind &middot; Bharath Mata Ki Jai</span>
           </div>
+
+          <p className="article-author">— Swathi Iyengar</p>
         </div>
       </div>
 

@@ -890,371 +890,50 @@ body {
   margin-top: 8px;
 }
 
-/* Court timeline styles */
-.court-timeline-container {
-  max-width: 1080px;
+/* Uniting Bharath Section styles */
+.uniting-bharath-container {
+  max-width: 920px;
   margin: 64px auto 0;
+  padding-top: 48px;
   border-top: 2px dashed rgba(217, 119, 6, 0.35);
-  padding: 48px 20px 0;
 }
 
-.court-timeline-title {
-  font-family: 'Cinzel Decorative', 'Cinzel', serif;
-  font-size: clamp(1.4rem, 4vw, 2.2rem);
-  font-weight: 800;
-  color: var(--temple-red);
-  letter-spacing: 1px;
-  margin-bottom: 8px;
-}
-
-.court-status-pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  background: #FFFFFF;
-  border: 1.5px solid #D97706;
-  border-radius: 24px;
-  padding: 6px 16px;
-  box-shadow: 0 3px 12px rgba(180, 83, 9, 0.12);
-  margin-top: 6px;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-.live-badge {
-  background: #DC2626;
-  color: #FFFFFF;
-  font-size: 0.68rem;
-  font-weight: 800;
-  padding: 2px 8px;
-  border-radius: 10px;
-  letter-spacing: 1px;
-  animation: pulse-ring 2s infinite;
-}
-
-.status-text {
+.article-main-title.english-title {
   font-family: 'Cinzel', serif;
-  font-size: 0.82rem;
-  font-weight: 700;
-  color: var(--gold-dk);
-}
-
-/* Dedicated alternating grid for court timeline */
-.court-row {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 24px;
-  margin-bottom: 32px;
-}
-
-@media (min-width: 860px) {
-  .court-row {
-    grid-template-columns: 360px 1fr;
-    gap: 36px;
-    align-items: start;
-    margin-bottom: 40px;
-  }
-
-  .court-row.row-reverse {
-    grid-template-columns: 1fr 360px;
-  }
-
-  .court-row.row-reverse .court-img-card {
-    order: 2;
-  }
-
-  .court-row.row-reverse .court-cards-col {
-    order: 1;
-  }
-}
-
-/* Elegant framed card for each image */
-.court-img-card {
-  background: #FFFFFF;
-  border: 1.5px solid rgba(217, 119, 6, 0.28);
-  border-radius: 14px;
-  padding: 12px;
-  box-shadow: 0 6px 22px rgba(180, 83, 9, 0.1);
-  display: flex;
-  flex-direction: column;
-}
-
-@media (min-width: 860px) {
-  .court-img-card {
-    position: sticky;
-    top: 28px;
-  }
-}
-
-.court-img {
-  width: 100%;
-  height: auto;
-  max-height: 420px;
-  object-fit: cover;
-  border-radius: 10px;
-  display: block;
-  box-shadow: 0 4px 14px rgba(120, 53, 15, 0.12);
-}
-
-.court-img-caption-box {
-  padding: 12px 6px 4px;
-  text-align: center;
-}
-
-.court-img-tag {
-  display: inline-block;
-  font-family: 'Cinzel', serif;
-  font-size: 0.72rem;
+  font-size: clamp(1.25rem, 3.8vw, 1.95rem);
   font-weight: 800;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  color: var(--temple-red);
-  background: #FEF3C7;
-  padding: 3px 12px;
-  border-radius: 12px;
-  border: 1px solid rgba(217, 119, 6, 0.3);
-  margin-bottom: 6px;
-}
-
-.court-img-caption {
-  font-size: 0.82rem;
-  color: var(--text-muted);
-  line-height: 1.45;
-  font-style: italic;
-  font-family: system-ui, -apple-system, sans-serif;
-}
-
-/* Column holding the stacked cards */
-.court-cards-col {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-/* Timeline Cards */
-.timeline-card {
-  background: #FFFFFF;
-  border: 1.5px solid rgba(217, 119, 6, 0.28);
-  border-radius: 14px;
-  padding: 24px 28px;
-  box-shadow: 0 4px 18px rgba(180, 83, 9, 0.08);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.timeline-card:hover {
-  box-shadow: 0 6px 24px rgba(180, 83, 9, 0.14);
-  transform: translateY(-2px);
-}
-
-.timeline-header {
-  display: flex;
-  align-items: flex-start;
-  gap: 14px;
-  margin-bottom: 14px;
-  padding-bottom: 10px;
-  border-bottom: 1px solid rgba(217, 119, 6, 0.15);
-}
-
-.timeline-num {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 32px;
-  height: 32px;
-  background: linear-gradient(135deg, #FF6F00, #D84315);
-  color: #FFFFFF;
-  font-weight: 800;
-  font-size: 0.9rem;
-  border-radius: 50%;
-  flex-shrink: 0;
-  box-shadow: 0 2px 8px rgba(216, 67, 21, 0.3);
-}
-
-.timeline-event-title {
-  font-family: 'Cinzel', serif;
-  font-size: 1.08rem;
-  font-weight: 700;
   color: var(--temple-red);
   letter-spacing: 0.5px;
   line-height: 1.35;
 }
 
-.timeline-judge {
-  display: block;
-  font-size: 0.8rem;
-  color: var(--gold-dk);
-  font-style: italic;
-  margin-top: 3px;
-  font-family: system-ui, -apple-system, sans-serif;
-}
-
-.timeline-para {
-  font-family: system-ui, -apple-system, sans-serif;
-  font-size: 0.94rem;
-  line-height: 1.75;
+.article-para.en {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: clamp(0.96rem, 3vw, 1.05rem);
+  font-weight: 500;
+  line-height: 1.85;
   color: var(--text-main);
-  margin-bottom: 12px;
+  text-align: left;
 }
 
-.timeline-para:last-child {
-  margin-bottom: 0;
-}
-
-.timeline-points {
-  font-family: system-ui, -apple-system, sans-serif;
-  font-size: 0.92rem;
-  color: var(--text-main);
-  line-height: 1.7;
-}
-
-.timeline-points ul {
-  list-style: none;
-  margin: 10px 0 0 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.timeline-points ul li {
-  position: relative;
-  padding-left: 20px;
-}
-
-.timeline-points ul li::before {
-  content: "•";
-  position: absolute;
-  left: 0;
-  color: var(--gold-br);
-  font-size: 1.2rem;
-  line-height: 1;
-  top: 1px;
-}
-
-.sc-milestones {
-  list-style: none;
-  margin: 10px 0 0 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.sc-milestones li {
-  position: relative;
-  padding-left: 20px;
-  font-family: system-ui, -apple-system, sans-serif;
-  font-size: 0.92rem;
-  line-height: 1.7;
-  color: var(--text-main);
-}
-
-.sc-milestones li::before {
-  content: "◆";
-  position: absolute;
-  left: 0;
-  top: 2px;
-  color: var(--saffron-bright);
-  font-size: 0.75rem;
-}
-
-.argument-block {
-  padding: 14px 18px;
-  border-radius: 10px;
-  margin-bottom: 14px;
-}
-
-.argument-block:last-child {
-  margin-bottom: 0;
-}
-
-.argument-block.petitioner {
-  background: #FFFBEB;
-  border-left: 4px solid #16A34A;
-}
-
-.argument-block.respondent {
-  background: #FEF2F2;
-  border-left: 4px solid #DC2626;
-}
-
-.argument-side {
-  font-family: 'Cinzel', serif;
-  font-size: 0.88rem;
-  font-weight: 700;
-  margin-bottom: 6px;
-  color: var(--gold-dk);
-}
-
-.court-divider {
-  width: 100%;
-  max-width: 100%;
-  height: 1.5px;
-  background: linear-gradient(to right, transparent, rgba(217, 119, 6, 0.35), transparent);
-  margin: 12px 0 36px;
-}
-
-/* Summary Card */
-.court-current-position-card {
-  max-width: 100%;
-  margin: 40px auto 0;
-  padding: 30px 34px;
-  background: linear-gradient(145deg, #FFFFFF, #FFFBEB);
-  border: 2px solid #D97706;
-  border-radius: 14px;
-  box-shadow: 0 6px 24px rgba(180, 83, 9, 0.12);
-}
-
-.current-pos-badge {
-  display: inline-block;
-  background: linear-gradient(135deg, #B45309, #991B1B);
-  color: #FFFFFF;
-  font-family: 'Cinzel', serif;
-  font-size: 0.82rem;
-  font-weight: 800;
-  letter-spacing: 1.5px;
-  padding: 5px 16px;
-  border-radius: 14px;
-  margin-bottom: 16px;
-}
-
-.current-pos-list {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  font-family: system-ui, -apple-system, sans-serif;
-  font-size: 0.94rem;
-  line-height: 1.7;
-  color: var(--text-main);
-}
-
-.current-pos-list li {
-  position: relative;
-  padding-left: 24px;
-}
-
-.current-pos-list li::before {
-  content: "✓";
-  position: absolute;
-  left: 0;
-  top: 1px;
-  color: #16A34A;
-  font-weight: 800;
-  font-size: 0.95rem;
-}
-
-.current-pos-footer {
-  margin-top: 18px;
-  padding-top: 14px;
-  border-top: 1px dashed rgba(217, 119, 6, 0.3);
-  font-size: 0.86rem;
-  color: var(--gold-dk);
+.unity-slogan-box {
   text-align: center;
-  font-style: italic;
-  font-family: system-ui, -apple-system, sans-serif;
+  margin: 20px 0 10px;
+  padding: 14px 20px;
+  background: linear-gradient(135deg, #FFFBEB, #FEF3C7);
+  border-radius: 10px;
+  border: 1.5px solid rgba(217, 119, 6, 0.35);
+  box-shadow: 0 4px 14px rgba(180, 83, 9, 0.08);
+}
+
+.unity-slogan-text {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(1rem, 3.5vw, 1.25rem);
+  font-weight: 800;
+  color: var(--temple-red);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  text-shadow: 0 0 12px rgba(217, 119, 6, 0.2);
 }
 
 /* Each alternating row */
@@ -1559,23 +1238,9 @@ body {
     margin-left: 14px;
     margin-right: 14px;
   }
-  .court-current-position-card {
-    padding: 20px 16px;
-    margin-left: 0;
-    margin-right: 0;
-  }
-  .court-timeline-container {
+  .uniting-bharath-container {
     margin-top: 40px;
-    padding: 32px 14px 0;
-  }
-  .court-timeline-title {
-    font-size: 1.45rem;
-  }
-  .court-status-pill {
-    padding: 6px 12px;
-  }
-  .status-text {
-    font-size: 0.74rem;
+    padding-top: 32px;
   }
 
   /* Footer email wraps */
