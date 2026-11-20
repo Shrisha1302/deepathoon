@@ -755,14 +755,323 @@ body {
   font-size: 0.95rem;
 }
 
+/* ── Post-Lighting Footer Container (Blessing + Refresh in right corner) ── */
+.lit-footer-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 920px;
+  margin-top: 18px;
+  gap: 20px;
+}
+
+.refresh-again-wrap {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.refresh-again-btn {
+  background: linear-gradient(145deg, #FFFFFF, #FFF9EB);
+  border: 1.5px solid rgba(217, 119, 6, 0.45);
+  border-radius: 12px;
+  padding: 12px 18px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(180, 83, 9, 0.14);
+  transition: all 0.25s ease;
+  text-align: left;
+}
+
+.refresh-again-btn:hover {
+  background: #FEF3C7;
+  border-color: var(--saffron-bright);
+  box-shadow: 0 6px 22px rgba(230, 81, 0, 0.25);
+  transform: translateY(-2px);
+}
+
+.refresh-again-icon {
+  font-size: 1.4rem;
+}
+
+.refresh-again-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.refresh-again-en {
+  font-family: 'Cinzel', serif;
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: var(--temple-red);
+  letter-spacing: 0.5px;
+}
+
+.refresh-again-ta {
+  font-family: 'Mukta Malar', sans-serif;
+  font-size: 0.74rem;
+  font-weight: 600;
+  color: var(--gold-dk);
+}
+
 /* ============================================================
-   ARTICLE SECTION (replaces History cards)
+   ARTICLE SECTION (Tamil Tradition + English Court Timeline)
    Mobile-first: stacks vertically. Desktop: side-by-side.
    ============================================================ */
 .article-section {
   background: linear-gradient(180deg, #FFFDF5 0%, #FEF3C7 100%);
   border-top: 2px solid rgba(217, 119, 6, 0.2);
   padding: 48px 0 60px;
+}
+
+.section-title-wrap {
+  text-align: center;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+.article-main-title {
+  font-family: 'Mukta Malar', 'Noto Serif Tamil', serif;
+  font-size: clamp(1.4rem, 4vw, 2.1rem);
+  font-weight: 800;
+  color: var(--temple-red);
+  letter-spacing: 0.5px;
+  text-shadow: 0 0 20px rgba(217, 119, 6, 0.2);
+}
+
+.article-sub-heading {
+  font-family: 'Mukta Malar', 'Noto Serif Tamil', serif;
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--temple-red);
+  margin-bottom: 14px;
+}
+
+.article-full-card {
+  max-width: 920px;
+  margin: 32px auto 0;
+  padding: 32px;
+  background: #FFFFFF;
+  border: 1.5px solid rgba(217, 119, 6, 0.25);
+  border-radius: 12px;
+  box-shadow: 0 6px 24px rgba(180, 83, 9, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.article-quote {
+  border-left: 4px solid var(--saffron);
+  background: #FFFBEB;
+  padding: 16px 20px;
+  border-radius: 0 8px 8px 0;
+  font-family: 'Cinzel', serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--temple-red);
+  letter-spacing: 1px;
+  margin: 8px 0;
+  box-shadow: inset 0 0 12px rgba(217, 119, 6, 0.05);
+}
+
+.img-caption {
+  display: block;
+  font-size: 0.76rem;
+  font-style: italic;
+  color: var(--text-muted);
+  text-align: center;
+  margin-top: 8px;
+}
+
+/* Court timeline styles */
+.court-timeline-container {
+  margin-top: 60px;
+  border-top: 2px dashed rgba(217, 119, 6, 0.35);
+  padding-top: 48px;
+}
+
+.court-timeline-title {
+  font-family: 'Cinzel Decorative', 'Cinzel', serif;
+  font-size: clamp(1.4rem, 4vw, 2.2rem);
+  font-weight: 800;
+  color: var(--temple-red);
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+}
+
+.court-status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: #FFFFFF;
+  border: 1.5px solid #D97706;
+  border-radius: 24px;
+  padding: 6px 16px;
+  box-shadow: 0 3px 12px rgba(180, 83, 9, 0.12);
+  margin-top: 6px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.live-badge {
+  background: #DC2626;
+  color: #FFFFFF;
+  font-size: 0.68rem;
+  font-weight: 800;
+  padding: 2px 8px;
+  border-radius: 10px;
+  letter-spacing: 1px;
+  animation: pulse-ring 2s infinite;
+}
+
+.status-text {
+  font-family: 'Cinzel', serif;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--gold-dk);
+}
+
+.timeline-card {
+  background: #FFFFFF;
+  border: 1.5px solid rgba(217, 119, 6, 0.25);
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 4px 18px rgba(180, 83, 9, 0.08);
+}
+
+.timeline-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.timeline-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  background: linear-gradient(135deg, #FF6F00, #D84315);
+  color: #FFFFFF;
+  font-weight: 800;
+  font-size: 0.85rem;
+  border-radius: 50%;
+  flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(216, 67, 21, 0.3);
+}
+
+.timeline-event-title {
+  font-family: 'Cinzel', serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--temple-red);
+  letter-spacing: 0.5px;
+}
+
+.timeline-judge {
+  display: block;
+  font-size: 0.78rem;
+  color: var(--gold-dk);
+  font-style: italic;
+  margin-top: 2px;
+}
+
+.timeline-para {
+  font-family: system-ui, -apple-system, sans-serif;
+  font-size: 0.92rem;
+  line-height: 1.75;
+  color: var(--text-main);
+  margin-bottom: 10px;
+}
+
+.timeline-points {
+  font-family: system-ui, -apple-system, sans-serif;
+  font-size: 0.9rem;
+  color: var(--text-main);
+  line-height: 1.7;
+}
+
+.timeline-points ul,
+.sc-milestones {
+  margin: 8px 0 0 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.argument-block {
+  padding: 12px 16px;
+  border-radius: 8px;
+  margin-bottom: 12px;
+}
+
+.argument-block.petitioner {
+  background: #FFFBEB;
+  border-left: 3px solid #16A34A;
+}
+
+.argument-block.respondent {
+  background: #FEF2F2;
+  border-left: 3px solid #DC2626;
+}
+
+.argument-side {
+  font-family: 'Cinzel', serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  margin-bottom: 6px;
+  color: var(--gold-dk);
+}
+
+.court-current-position-card {
+  max-width: 920px;
+  margin: 36px auto 0;
+  padding: 28px;
+  background: linear-gradient(145deg, #FFFFFF, #FFFBEB);
+  border: 2px solid #D97706;
+  border-radius: 12px;
+  box-shadow: 0 6px 24px rgba(180, 83, 9, 0.12);
+}
+
+.current-pos-badge {
+  display: inline-block;
+  background: linear-gradient(135deg, #B45309, #991B1B);
+  color: #FFFFFF;
+  font-family: 'Cinzel', serif;
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  padding: 4px 14px;
+  border-radius: 14px;
+  margin-bottom: 16px;
+}
+
+.current-pos-list {
+  margin-left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-family: system-ui, -apple-system, sans-serif;
+  font-size: 0.92rem;
+  line-height: 1.7;
+  color: var(--text-main);
+}
+
+.current-pos-footer {
+  margin-top: 16px;
+  padding-top: 12px;
+  border-top: 1px dashed rgba(217, 119, 6, 0.3);
+  font-size: 0.85rem;
+  color: var(--gold-dk);
+  text-align: center;
 }
 
 /* Each alternating row */
@@ -1028,7 +1337,23 @@ body {
     height: 8px;
   }
 
-  /* Blessing smaller */
+  /* Blessing & Refresh container on mobile */
+  .lit-footer-container {
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+  .refresh-again-wrap {
+    width: 100%;
+    justify-content: center;
+  }
+  .refresh-again-btn {
+    padding: 10px 16px;
+    width: 100%;
+    max-width: 340px;
+    justify-content: center;
+  }
+
   .bless-box { padding: 14px 16px; }
 
   /* Audio pill */
@@ -1045,6 +1370,26 @@ body {
   }
   .article-text-col { padding: 16px 0 0; }
   .article-divider  { margin: 20px auto; }
+
+  .article-full-card,
+  .court-current-position-card {
+    padding: 20px 16px;
+    margin-left: 14px;
+    margin-right: 14px;
+  }
+  .court-timeline-container {
+    margin-top: 40px;
+    padding-top: 32px;
+  }
+  .court-timeline-title {
+    font-size: 1.45rem;
+  }
+  .court-status-pill {
+    padding: 6px 12px;
+  }
+  .status-text {
+    font-size: 0.74rem;
+  }
 
   /* Footer email wraps */
   .contact-email-text { font-size: 0.82rem; }
