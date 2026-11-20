@@ -1,0 +1,28 @@
+# Deepathoon LiteSpeed / Apache Configuration
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+  RewriteRule ^index\.html$ - [L]
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule . /index.html [L]
+</IfModule>
+
+# Correct MIME Types & Audio Streaming
+<IfModule mod_mime.c>
+  AddType audio/mpeg .mp3
+  AddType application/javascript .js
+  AddType text/css .css
+  AddType image/jpeg .jpg .jpeg
+  AddType image/png .png
+</IfModule>
+
+# Cache-Control headers
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType image/jpeg "access plus 1 month"
+  ExpiresByType image/png "access plus 1 month"
+  ExpiresByType audio/mpeg "access plus 1 month"
+  ExpiresByType text/css "access plus 1 week"
+  ExpiresByType application/javascript "access plus 1 week"
+</IfModule>
