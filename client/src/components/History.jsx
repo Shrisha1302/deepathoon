@@ -129,17 +129,20 @@ export default function History() {
         </div>
 
         {/* ── Timeline Row 1: Vintage Temple Image LEFT · Decisions 1 & 2 RIGHT ── */}
-        <div className="article-row">
-          <div className="article-img-col">
+        <div className="court-row">
+          <div className="court-img-card">
             <img
               src="images/court_vintage_temple.jpg"
               alt="Archival View of Thiruparankundram Temple"
-              className="article-img"
+              className="court-img"
               loading="lazy"
             />
-            <span className="img-caption">Archival record of Thiruparankundram Temple</span>
+            <div className="court-img-caption-box">
+              <span className="court-img-tag">Archival Record</span>
+              <p className="court-img-caption">Thiruparankundram Temple &amp; Hill — 1920 Privy Council Decree Record</p>
+            </div>
           </div>
-          <div className="article-text-col">
+          <div className="court-cards-col">
             <div className="timeline-card">
               <div className="timeline-header">
                 <span className="timeline-num">1</span>
@@ -167,7 +170,7 @@ export default function History() {
               </div>
             </div>
 
-            <div className="timeline-card" style={{ marginTop: '20px' }}>
+            <div className="timeline-card">
               <div className="timeline-header">
                 <span className="timeline-num">2</span>
                 <div>
@@ -186,20 +189,23 @@ export default function History() {
         </div>
 
         {/* ── Divider ── */}
-        <div className="article-divider" />
+        <div className="court-divider" />
 
         {/* ── Timeline Row 2: Arguments & Supreme Court LEFT · Night Gopuram Image RIGHT ── */}
-        <div className="article-row row-reverse">
-          <div className="article-img-col">
+        <div className="court-row row-reverse">
+          <div className="court-img-card">
             <img
               src="images/court_night_gopuram.jpg"
               alt="Thiruparankundram Gopuram Illuminated with Vel at Night"
-              className="article-img"
+              className="court-img"
               loading="lazy"
             />
-            <span className="img-caption">Thiruparankundram Gopuram with radiant Vel illumination</span>
+            <div className="court-img-caption-box">
+              <span className="court-img-tag">Sacred Illumination</span>
+              <p className="court-img-caption">Thiruparankundram Gopuram illuminated with radiant Vel at night</p>
+            </div>
           </div>
-          <div className="article-text-col">
+          <div className="court-cards-col">
             <div className="timeline-card">
               <div className="timeline-header">
                 <span className="timeline-num">3</span>
@@ -219,7 +225,7 @@ export default function History() {
               </div>
             </div>
 
-            <div className="timeline-card" style={{ marginTop: '20px' }}>
+            <div className="timeline-card">
               <div className="timeline-header">
                 <span className="timeline-num">4</span>
                 <h4 className="timeline-event-title">Supreme Court — So Far</h4>
