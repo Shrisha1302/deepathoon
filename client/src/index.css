@@ -1017,6 +1017,187 @@ body {
   border-top: 2px dashed rgba(217, 119, 6, 0.35);
 }
 
+/* ============================================================
+   MULTILINGUAL INTRO CARD (Hindi, French, Sinhala, German)
+   ============================================================ */
+.multilingual-intro-card {
+  max-width: 920px;
+  margin: 0 auto 36px;
+  padding: 24px 28px;
+  background: linear-gradient(145deg, #FFFFFF, #FFFBEB);
+  border: 1.5px solid rgba(217, 119, 6, 0.35);
+  border-radius: 14px;
+  box-shadow: 0 6px 24px rgba(180, 83, 9, 0.1);
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.multilingual-intro-card:hover {
+  box-shadow: 0 8px 30px rgba(180, 83, 9, 0.16);
+  border-color: var(--saffron-bright);
+}
+
+.multilingual-top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 18px;
+  padding-bottom: 12px;
+  border-bottom: 1px dashed rgba(217, 119, 6, 0.25);
+}
+
+.multilingual-tabs {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.multilingual-tab-btn {
+  font-family: inherit;
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 5px 12px;
+  border-radius: 16px;
+  border: 1px solid rgba(217, 119, 6, 0.3);
+  background: #FFFDF5;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.multilingual-tab-btn:hover {
+  background: #FEF3C7;
+  color: var(--temple-red);
+  border-color: var(--saffron-bright);
+}
+
+.multilingual-tab-btn.active {
+  background: linear-gradient(135deg, #EA580C, #991B1B);
+  color: #FFFFFF;
+  border-color: #FDE68A;
+  box-shadow: 0 2px 8px rgba(234, 88, 12, 0.3);
+}
+
+.multilingual-status-pill {
+  font-family: 'Cinzel', serif;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  padding: 3px 10px;
+  border-radius: 12px;
+  background: #FEF3C7;
+  color: var(--gold-dk);
+  border: 1px solid rgba(217, 119, 6, 0.25);
+}
+
+.status-paused {
+  color: var(--temple-red);
+  font-weight: 800;
+}
+
+.multilingual-content-area {
+  min-height: 110px;
+  transition: opacity 0.22s ease, transform 0.22s ease;
+}
+
+.multilingual-content-area.fade-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.multilingual-content-area.fade-out {
+  opacity: 0;
+  transform: translateY(4px);
+}
+
+.multilingual-heading-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.multilingual-deepam-icon {
+  font-size: 1.3rem;
+  line-height: 1;
+}
+
+.multilingual-heading {
+  font-size: clamp(1.15rem, 3.2vw, 1.45rem);
+  font-weight: 800;
+  color: var(--temple-red);
+  letter-spacing: 0.5px;
+}
+
+.multilingual-heading.font-hi {
+  font-family: 'Noto Sans Devanagari', sans-serif;
+}
+
+.multilingual-heading.font-si {
+  font-family: 'Noto Serif Sinhala', sans-serif;
+}
+
+.multilingual-heading.font-fr,
+.multilingual-heading.font-de {
+  font-family: 'Cinzel', serif;
+}
+
+.multilingual-body {
+  font-size: clamp(0.96rem, 2.8vw, 1.05rem);
+  line-height: 1.8;
+  color: var(--text-main);
+}
+
+.multilingual-body.font-hi {
+  font-family: 'Noto Sans Devanagari', sans-serif;
+  line-height: 1.85;
+}
+
+.multilingual-body.font-si {
+  font-family: 'Noto Serif Sinhala', sans-serif;
+  line-height: 1.95;
+}
+
+.multilingual-body.font-fr,
+.multilingual-body.font-de {
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+/* 8-second animated progress bar */
+.multilingual-progress-track {
+  width: 100%;
+  height: 3px;
+  background: rgba(217, 119, 6, 0.15);
+  border-radius: 2px;
+  margin-top: 18px;
+  overflow: hidden;
+}
+
+.multilingual-progress-bar {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #FF6F00, #991B1B);
+  border-radius: 2px;
+}
+
+.multilingual-progress-bar.running {
+  animation: progress8s 8s linear forwards;
+}
+
+.multilingual-progress-bar.paused {
+  animation: progress8s 8s linear forwards;
+  animation-play-state: paused;
+}
+
+@keyframes progress8s {
+  from { width: 0%; }
+  to { width: 100%; }
+}
+
 .article-main-title.english-title {
   font-family: 'Cinzel', serif;
   font-size: clamp(1.25rem, 3.8vw, 1.95rem);
@@ -1164,6 +1345,44 @@ body {
   padding: 36px 20px;
   border-top: 2px solid rgba(217, 119, 6, 0.25);
   display: flex; flex-direction: column; align-items: center; gap: 16px;
+}
+
+/* ── Back to Top Button in Footer ─────────────────────────── */
+.back-to-top-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: linear-gradient(135deg, #FFFBEB, #FEF3C7);
+  color: var(--temple-red);
+  border: 1.5px solid rgba(217, 119, 6, 0.45);
+  border-radius: 24px;
+  padding: 10px 24px;
+  font-family: 'Mukta Malar', 'Cinzel', serif;
+  font-size: 0.88rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(180, 83, 9, 0.1);
+  transition: all 0.25s ease;
+  margin-bottom: 6px;
+}
+
+.back-to-top-btn:hover {
+  background: linear-gradient(135deg, #EA580C, #991B1B);
+  color: #FFFFFF;
+  border-color: #FDE68A;
+  box-shadow: 0 6px 20px rgba(234, 88, 12, 0.35);
+  transform: translateY(-3px);
+}
+
+.back-to-top-icon {
+  font-size: 0.8rem;
+  line-height: 1;
+  transition: transform 0.2s ease;
+}
+
+.back-to-top-btn:hover .back-to-top-icon {
+  transform: translateY(-2px);
 }
 
 .contact-section {
@@ -1364,6 +1583,23 @@ body {
   .uniting-bharath-container {
     margin-top: 40px;
     padding-top: 32px;
+  }
+  .multilingual-intro-card {
+    padding: 18px 14px;
+    margin-left: 14px;
+    margin-right: 14px;
+    margin-bottom: 24px;
+  }
+  .multilingual-top-bar {
+    justify-content: center;
+  }
+  .multilingual-status-pill {
+    font-size: 0.68rem;
+  }
+  .back-to-top-btn {
+    width: 100%;
+    max-width: 320px;
+    justify-content: center;
   }
 
   /* Footer email wraps */

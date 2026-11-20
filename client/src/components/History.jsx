@@ -1,3 +1,5 @@
+import MultilingualIntro from './MultilingualIntro'
+
 export default function History() {
   return (
     <section className="article-section">
@@ -125,8 +127,11 @@ export default function History() {
           <h2 className="article-main-title english-title">
             Uniting Bharath &middot; Uniting all Hindus through this Deepathoon
           </h2>
-          <div className="thin-rule" style={{ maxWidth: '240px', margin: '14px auto 32px' }} />
+          <div className="thin-rule" style={{ maxWidth: '240px', margin: '14px auto 24px' }} />
         </div>
+
+        {/* ── Multilingual Rotating Intro (Hindi, French, Sinhala, German · 8s cycle · pause on hover) ── */}
+        <MultilingualIntro />
 
         {/* ── Row 1: Archival Temple Image LEFT · Text RIGHT ── */}
         <div className="article-row">
