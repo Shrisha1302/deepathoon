@@ -337,7 +337,7 @@ export default function LampScene({ isLit, onLampLit, torchLang = 'en' }) {
                 <span className="refresh-again-icon">🔄</span>
                 <div className="refresh-again-text">
                   <span className="refresh-again-en">Refresh to light again</span>
-                  <span className="refresh-again-ta">மீண்டும் ஏற்ற பக்கத்தை புதுப்பிக்கவும்</span>
+                  <span className="refresh-again-ta">மீண்டும் ஏற்ற, பக்கத்தை புதுப்பிக்கவும்.</span>
                 </div>
               </button>
             </div>
