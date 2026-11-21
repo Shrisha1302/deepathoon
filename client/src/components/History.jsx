@@ -130,7 +130,7 @@ export default function History() {
           <div className="thin-rule" style={{ maxWidth: '240px', margin: '14px auto 24px' }} />
         </div>
 
-        {/* ── Multilingual Rotating Intro (Hindi, French, Sinhala, German · 8s cycle · pause on hover) ── */}
+        {/* ── Multilingual Intro ── */}
         <MultilingualIntro />
 
         {/* ── Row 1: Archival Temple Image LEFT · Text RIGHT ── */}
@@ -146,13 +146,13 @@ export default function History() {
           </div>
           <div className="article-text-col">
             <p className="article-para en">
-              We the proud Hindus true sons and daughters of the Bharat are deeply pained by the development in the Deepathoon issue and the present government elected by the large by the votes casted by the Hindus is approaching the supreme court with some lame excuse to deny the Hindus to follow their faith. Unfair and this is a new form of fascism.
+              We the proud Hindus, true sons and daughters of the Bharat are deeply pained by the development in the Deepathoon issue and the present government elected by the large by the votes casted by the Hindus is approaching the supreme court with some lame excuse to deny the Hindus to follow their faith. Unfair and this is a new form of anti Hindu politics played to appease certain community.
             </p>
             <p className="article-para en">
-              However we will sit in our home puja room chanting saravana bhava will light the lamp on the Deepathoon digitally.
+              However we will sit in our puja room chanting saravana bhava will light the lamp on the Deepathoon digitally.
             </p>
             <p className="article-para en">
-              All you have to do is to pray and drag the light / theepandham to the top of the pillar you will witness Thiru Karthigai Deepam lit by your own heart and seeking blessings of Lord Muruga to you and your family and friends.
+              All you have to do is to pray and drag the lamp/ theepandham to the top of the pillar and you will witness Thiru Karthigai Deepam lit by your own heart and seeking blessings of Lord Muruga to you and your family and friends.
             </p>
           </div>
         </div>
@@ -173,16 +173,37 @@ export default function History() {
           </div>
           <div className="article-text-col">
             <p className="article-para en">
-              I am deeply appalled and saddened by the development that is happening in the state of Tamil Nadu, eminent judges quoting the law of the land have permitted the lighting of lamp at the Deepathoon on top of the hill, yet the government elected with the large votes casted by the Hindus denying and betraying the Hindus.
+              I am deeply appalled and saddened by the development that is happening in the state of Tamil Nadu, eminent judges quoting the law of the land have permitted the lighting of lamp at the Deepathoon on top of the hill, yet the government elected with the large votes casted by the Hindus denying and betraying the Hindus But the Hindus will rise above all this petty politics.
             </p>
             <p className="article-para en">
-              I think this is a time for the Hindus to realize their mistake one after other.
+              I think this is a time for the Hindus to realize their mistake one after other, and make small weekly groups to debate their future and how to elect future governments.
             </p>
             <p className="article-para en">
-              I request the Prime minister and the Home minister and the great Hindu organisations like RSS and VHP, to lead against such an unfavorable attitude only showed towards Hindus. Is secularism is only binding on Hindus this is a question you have to ask and we the Hindus have to ask you ? As you are elected to protect and serve us.
+              I request the Prime minister and the Home minister and the great Hindu organisations like RSS and VHP, to lead against such an unfavorable attitude only showed towards Hindus. Is secularism is only binding on Hindus this is a question you have to ask and we the Hindus have to ask you, as you are elected to protect and serve us.
+            </p>
+          </div>
+        </div>
+
+        {/* ── Divider ── */}
+        <div className="article-divider" />
+
+        {/* ── Row 3: Hilltop Deepam Flame Image LEFT · Text RIGHT ── */}
+        <div className="article-row">
+          <div className="article-img-col">
+            <img
+              src="images/hilltop_deepam_flame.jpg"
+              alt="Sacred Hilltop Karthigai Deepam Blazing atop Thiruparankundram"
+              className="article-img"
+              loading="lazy"
+            />
+            <span className="img-caption">Sacred Hilltop Karthigai Deepam flame lit with devotion</span>
+          </div>
+          <div className="article-text-col">
+            <p className="article-para en">
+              I perceive and I foresee the only way is to declare Bharat as Hindu Rashtra and Hindus must have the first right. Hindus must support temples and priests, the defenders of the faith. There are many anti national forces wants to ridicule the priest community, as they are easy target and they are the gate keeper of Hindu faith. So protect and patronage the temples, Ashrams, Priests, and Vedic schools. Even a small sum of contribution will go a long way. Visit temples, buy flowers and coconuts from Hindu vendors outside the temple and offer to the Lord. If you see a Hindu saint or Sadhu offer a meal. Support Hindu cause.
             </p>
             <p className="article-para en">
-              I perceive I foresee the only is to declare Bharat as Hindu Rashtra and Hindus must have the first right Hindus must have a strong voice to protect their identity the heritage the tradition of the country Bharat.
+              Hindus must have a strong voice to protect their identity and their heritage the tradition of the country Bharat. Hinduism is inclusive and shows deep respects to others religions.
             </p>
           </div>
         </div>
@@ -194,7 +215,7 @@ export default function History() {
           </p>
 
           <p className="article-para en">
-            Bharath is a very very ancient civilization and the latest two Ithasas Ramayana and Mahabharata are 7000 and 5000 years old. Much before that we have many avatars and the foundation for all these beautiful Ithasas is Santana Dharma. We are facing a situation worse than what Mughals did to Hindus and Sikhs. Today certain Anti Hindu forces are using our own constitution to belittle our faith and traditions and prohibit Hindus to carry out their day to day life including spiritual life using our own law. Is this fair ? I am asking all Hindus, Sikhs, Buddhists, Jain&apos;s.
+            Bharath is a very very ancient civilization and the latest two Ithasas Ramayana and Mahabharata are 7000 and 5000 years old. Much before that we have many avatars and the foundation for all these beautiful Ithasas is Santana Dharma. We are facing a situation worse than what Mughals did to Hindus and Sikhs. Today certain Anti Hindu forces are using our own constitution to belittle our faith and traditions and prohibit Hindus to carry out their day to day life including spiritual life using our own law. Is this fair ? I am asking all Hindus, Sikhs, Buddhists, Jain&apos;s. Let&apos;s join hands and save Bharath.
           </p>
 
           <p className="article-para en">
