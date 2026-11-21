@@ -157,8 +157,7 @@ export default function DevoteeConnect({ isLit }) {
         </div>
 
         <p className="devotee-footer-desc">
-          Enter your email to receive future updates and announcements on <strong>deepathoon.com</strong>.
-          <span className="devotee-mini-note"> (No name needed — only your email)</span>
+          Enter your email to receive future updates on <strong>deepathoon.com</strong> (no name needed).
         </p>
 
         {/* Form */}
@@ -232,10 +231,6 @@ export default function DevoteeConnect({ isLit }) {
             </button>
           </div>
         )}
-
-        <div className="devotee-footer-privacy">
-          🔒 Stored directly in Google Spreadsheet &middot; Purely for Sacred Updates
-        </div>
 
       </div>
     </div>
