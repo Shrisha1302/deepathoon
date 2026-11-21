@@ -179,7 +179,7 @@ export default function History() {
               I think this is a time for the Hindus to realize their mistake one after other, and make small weekly groups to debate their future and how to elect future governments.
             </p>
             <p className="article-para en">
-              I request the Prime minister and the Home minister and the great Hindu organisations like RSS and VHP, to lead against such an unfavorable attitude only showed towards Hindus. Is secularism is only binding on Hindus this is a question you have to ask and we the Hindus have to ask you, as you are elected to protect and serve us.
+              I request the Prime minister and the Home minister and the great Hindu organisations like RSS and VHP, to lead against such an unfavorable attitude only showed towards Hindus. Is secularism is only binding on Hindus this is a question you have to ask and we the Hindus have to ask you,v as you are elected to protect and serve us.
             </p>
           </div>
         </div>
@@ -208,18 +208,44 @@ export default function History() {
           </div>
         </div>
 
+        {/* ── Divider ── */}
+        <div className="article-divider" />
+
+        {/* ── Row 4: Text LEFT · Sacred Heritage Artwork RIGHT ── */}
+        <div className="article-row row-reverse">
+          <div className="article-img-col">
+            <img
+              src="images/thiruparankundram_painting.jpg"
+              alt="Thiruparankundram Sacred Hill & Ancient Sanatana Heritage"
+              className="article-img"
+              loading="lazy"
+            />
+            <span className="img-caption">Thiruparankundram Sacred Hill &amp; Ancient Sanatana Heritage</span>
+          </div>
+          <div className="article-text-col">
+            <p className="article-para en">
+              There is no Bharath if no Hindus and No Hindus if there tranditions and customs are chocked and stiffled in the name of secularism or imaginary Ghost portrayed by an elected government on the behest of some religious community and appeasement policy.
+            </p>
+            <p className="article-para en">
+              Bharath is a very very ancient civilization and the latest two Ithasas Ramayana and Mahabharata are 7000 and 5000 years old. Much before that we have many avatars and the foundation for all these beautiful Ithasas is Santana Dharma.
+            </p>
+            <p className="article-para en">
+              We are facing a situation worse than what Mughals did to Hindus and Sikhs.
+            </p>
+            <p className="article-para en">
+              Today certain Anti Hindu forces are using our own constitution to belittle our faith and traditions and prohibit Hindus to carry out their day to day life including spiritual life using our own law. Is this fair ? I am asking all Hindus, Sikhs, Buddhists, Jain&apos;s. Let&apos;s join hands and save Bharath.
+            </p>
+          </div>
+        </div>
+
         {/* ── Full Card: Dharma, Civilization, Unity of All Dharmic Traditions ── */}
         <div className="article-full-card">
           <p className="article-para en">
-            There is no Bharath if no Hindus and No Hindus if there tranditions and customs are chocked and stiffled in the name of secularism or imaginary Ghost portrayed by an elected government on the behest of some religious community and appeasement policy.
+            Just to give one example The great Mathematician Srinivasa Ramanujam was inspired by a temple in South of India. See how important for us this temple identity is.
           </p>
 
           <p className="article-para en">
-            Bharath is a very very ancient civilization and the latest two Ithasas Ramayana and Mahabharata are 7000 and 5000 years old. Much before that we have many avatars and the foundation for all these beautiful Ithasas is Santana Dharma. We are facing a situation worse than what Mughals did to Hindus and Sikhs. Today certain Anti Hindu forces are using our own constitution to belittle our faith and traditions and prohibit Hindus to carry out their day to day life including spiritual life using our own law. Is this fair ? I am asking all Hindus, Sikhs, Buddhists, Jain&apos;s. Let&apos;s join hands and save Bharath.
-          </p>
-
-          <p className="article-para en">
-            Just to give one example The great Mathematician Srinivasa Ramanujam was inspired by a temple in South of India. See how important for us this temple identity is. Hinduism is an unique faith unlike other faiths that Western world and West Asia practices. See the beauty and depth of Hinduism which thrives on live and let live and Universal wellness to all sentient beings. We are the last bastion of Dharma and many forces in the name of religion and secularism wants to weaken this, our Dharmic code using our own law and constitution.
+            Hinduism is an unique faith unlike other faiths that Western world and West Asia practices. See the beauty and depth of Hinduism which thrives on live and let live and Universal wellness to all sentient beings. We are the last bastion of Dharma and many forces in the name of religion and secularism wants to weaken this, our Dharmic code using our own law and constitution.
           </p>
 
           <p className="article-para en">
