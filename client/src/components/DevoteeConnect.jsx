@@ -6,18 +6,13 @@ export default function DevoteeConnect({ isLit }) {
   const [status, setStatus] = useState('idle') // 'idle' | 'loading' | 'success' | 'error'
   const [statusMsg, setStatusMsg] = useState('')
   const [visitorLocation, setVisitorLocation] = useState(null)
-  const [customSheetUrl, setCustomSheetUrl] = useState('')
-  const [showSettings, setShowSettings] = useState(false)
   const [alreadyRegistered, setAlreadyRegistered] = useState(false)
 
   // 1. Fetch visitor analytics and location silently in the background
   useEffect(() => {
-    // Check if user previously registered in this browser
     try {
       const saved = localStorage.getItem('deepathoon_devotee_registered')
       if (saved) setAlreadyRegistered(true)
-      const storedUrl = localStorage.getItem('deepathoon_sheet_url')
-      if (storedUrl) setCustomSheetUrl(storedUrl)
     } catch {}
 
     const detectLocation = async () => {
@@ -49,7 +44,7 @@ export default function DevoteeConnect({ isLit }) {
         }
       } catch {}
 
-      // Fallback 1: ipwhois.app
+      // Fallback: ipwhois.app
       try {
         const res2 = await fetch('https://ipwhois.app/json/')
         if (res2.ok) {
@@ -68,7 +63,7 @@ export default function DevoteeConnect({ isLit }) {
         }
       } catch {}
 
-      // Fallback 2: Local browser inference
+      // Fallback: local browser inference
       setVisitorLocation({
         ...baseAnalytics,
         ip: 'Direct Visitor',
@@ -82,7 +77,16 @@ export default function DevoteeConnect({ isLit }) {
     detectLocation()
   }, [])
 
-  // 2. Handle devotee email submission
+  // 2. Resolve active Google Sheet URL (from saved localStorage or config.js)
+  const getActiveSheetUrl = () => {
+    try {
+      const saved = localStorage.getItem('deepathoon_sheet_url')
+      if (saved && saved.startsWith('http')) return saved.trim()
+    } catch {}
+    return GOOGLE_SHEET_WEBAPP_URL
+  }
+
+  // 3. Handle devotee email submission
   const handleSubmit = async (e) => {
     e.preventDefault()
     const cleanEmail = email.trim().toLowerCase()
@@ -96,7 +100,6 @@ export default function DevoteeConnect({ isLit }) {
     setStatus('loading')
     setStatusMsg('')
 
-    // Prepare complete data payload with analytics
     const payload = {
       email: cleanEmail,
       timestamp: visitorLocation?.timestamp || new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' }) + ' IST',
@@ -109,7 +112,7 @@ export default function DevoteeConnect({ isLit }) {
       pageUrl: window.location.href
     }
 
-    // A) Always save to browser localStorage safety backup (no data lost!)
+    // A) Browser localStorage backup (so no email is ever lost)
     try {
       const existing = JSON.parse(localStorage.getItem('deepathoon_devotee_submissions') || '[]')
       existing.push(payload)
@@ -117,8 +120,8 @@ export default function DevoteeConnect({ isLit }) {
       localStorage.setItem('deepathoon_devotee_registered', 'true')
     } catch {}
 
-    // B) Post directly to Google Spreadsheet via Google Apps Script Web App
-    const activeSheetUrl = customSheetUrl || GOOGLE_SHEET_WEBAPP_URL
+    // B) Post directly to Google Sheet Web App
+    const activeSheetUrl = getActiveSheetUrl()
     const isReadyUrl = activeSheetUrl && !activeSheetUrl.includes('YOUR_SCRIPT_ID_HERE')
 
     if (isReadyUrl) {
@@ -136,174 +139,105 @@ export default function DevoteeConnect({ isLit }) {
       }
     }
 
-    // Success feedback
     setStatus('success')
     setAlreadyRegistered(true)
-    setStatusMsg('🙏 நன்றி! Your email has been added to the Deepathoon devotee circle.')
-  }
-
-  const handleSaveSheetUrl = (e) => {
-    e.preventDefault()
-    try {
-      localStorage.setItem('deepathoon_sheet_url', customSheetUrl.trim())
-      setShowSettings(false)
-      alert('Google Apps Script Web App URL saved successfully!')
-    } catch {}
+    setStatusMsg('Your email has been safely added to the Deepathoon devotee circle.')
   }
 
   return (
-    <section className="devotee-connect-section" id="devotee-connect">
-      <div className="devotee-connect-container">
+    <div className="devotee-footer-wrap" id="devotee-connect">
+      <div className={`devotee-footer-card ${isLit ? 'lit-glow' : ''}`}>
+        
+        {/* Header */}
+        <div className="devotee-footer-header">
+          <span className="devotee-mini-lamp">🪔</span>
+          <span className="devotee-footer-title">
+            Stay Connected &middot; தீபத்தூண் ஆன்மீகப் பேரவை
+          </span>
+        </div>
 
-        <div className={`devotee-card ${isLit ? 'highlighted' : ''}`}>
-          {/* Sacred Top Icon */}
-          <div className="devotee-icon-wrap">
-            <span className="devotee-icon">🪔</span>
-            {isLit && (
-              <span className="devotee-lit-badge">
-                You have lit the sacred flame!
-              </span>
-            )}
-          </div>
+        <p className="devotee-footer-desc">
+          Enter your email to receive future updates and announcements on <strong>deepathoon.com</strong>.
+          <span className="devotee-mini-note"> (No name needed — only your email)</span>
+        </p>
 
-          {/* Heading */}
-          <h3 className="devotee-heading">
-            Stay Connected with Deepathoon
-          </h3>
-          <p className="devotee-subheading-ta">
-            தீபத்தூண் ஆன்மீகப் பேரவை &middot; புதிய தகவல்களைப் பெற
-          </p>
-
-          <p className="devotee-desc">
-            Enter your email ID to receive divine updates, announcements, and future developments regarding <strong>deepathoon.com</strong>.
-            <br className="desc-break" />
-            <span className="devotee-note-highlight">No names needed — only your email address.</span>
-          </p>
-
-          {/* Form */}
-          {status !== 'success' ? (
-            <form onSubmit={handleSubmit} className="devotee-form">
-              <div className="devotee-input-row">
-                <div className="devotee-input-box">
-                  <span className="input-mail-icon" aria-hidden="true">✉</span>
-                  <input
-                    type="email"
-                    className="devotee-email-field"
-                    placeholder="Enter your email ID / உங்கள் மின்னஞ்சல்..."
-                    value={email}
-                    onChange={(e) => {
-                      setEmail(e.target.value)
-                      if (status === 'error') setStatus('idle')
-                    }}
-                    required
-                    disabled={status === 'loading'}
-                    autoComplete="email"
-                    aria-label="Email address"
-                  />
-                </div>
-
-                <button
-                  type="submit"
-                  className="devotee-submit-btn"
+        {/* Form */}
+        {status !== 'success' ? (
+          <form onSubmit={handleSubmit} className="devotee-footer-form">
+            <div className="devotee-footer-input-row">
+              <div className="devotee-footer-input-box">
+                <span className="devotee-footer-icon" aria-hidden="true">✉</span>
+                <input
+                  type="email"
+                  className="devotee-footer-input"
+                  placeholder="Enter your email ID / உங்கள் மின்னஞ்சல்..."
+                  value={email}
+                  onChange={(e) => {
+                    setEmail(e.target.value)
+                    if (status === 'error') setStatus('idle')
+                  }}
+                  required
                   disabled={status === 'loading'}
-                >
-                  {status === 'loading' ? (
-                    <span className="btn-loading-flex">
-                      <span className="devotee-spinner" /> Connecting...
-                    </span>
-                  ) : (
-                    <span>Subscribe / இணைக 🪔</span>
-                  )}
-                </button>
+                  autoComplete="email"
+                  aria-label="Email address"
+                />
               </div>
 
-              {status === 'error' && (
-                <div className="devotee-msg error">{statusMsg}</div>
-              )}
-
-              {alreadyRegistered && status !== 'error' && (
-                <div className="devotee-already-sub">
-                  ✓ You are already connected. Enter an additional email to register for family or friends.
-                </div>
-              )}
-            </form>
-          ) : (
-            /* Success State */
-            <div className="devotee-success-box">
-              <div className="success-om">🕉️</div>
-              <h4 className="success-title">
-                வெற்றிவேல் முருகனுக்கு அரோகரா!
-              </h4>
-              <p className="success-desc">
-                {statusMsg}
-              </p>
-              {visitorLocation?.city && visitorLocation.city !== 'Unknown City' && (
-                <div className="devotee-location-pill">
-                  📍 Logged from: <strong>{visitorLocation.city}, {visitorLocation.region}, {visitorLocation.country}</strong>
-                </div>
-              )}
-              <p className="success-footer-note">
-                Stored directly in your private Google Spreadsheet. May Lord Muruga bless you and your family!
-              </p>
               <button
-                type="button"
-                className="devotee-add-another-btn"
-                onClick={() => {
-                  setStatus('idle')
-                  setEmail('')
-                  setStatusMsg('')
-                }}
+                type="submit"
+                className="devotee-footer-btn"
+                disabled={status === 'loading'}
               >
-                + Register another email ID
+                {status === 'loading' ? (
+                  <span className="btn-loading-flex">
+                    <span className="devotee-spinner" /> Connecting...
+                  </span>
+                ) : (
+                  <span>Subscribe / இணைக 🪔</span>
+                )}
               </button>
             </div>
-          )}
 
-          {/* Privacy & Google Spreadsheet Direct Sync Notice */}
-          <div className="devotee-privacy-note">
-            <span>🔒 Confidential &middot; Stored directly into Google Spreadsheets &middot; No Spam &middot; Purely for Sacred Updates</span>
+            {status === 'error' && (
+              <div className="devotee-footer-msg error">{statusMsg}</div>
+            )}
+
+            {alreadyRegistered && status !== 'error' && (
+              <div className="devotee-footer-already">
+                ✓ You are connected. Enter an additional email for family or friends if needed.
+              </div>
+            )}
+          </form>
+        ) : (
+          /* Compact Success State */
+          <div className="devotee-footer-success">
+            <span className="footer-success-om">🕉️</span>
+            <span className="footer-success-title">நன்றி! வெற்றிவேல் முருகனுக்கு அரோகரா</span>
+            <p className="footer-success-text">{statusMsg}</p>
+            {visitorLocation?.city && visitorLocation.city !== 'Unknown City' && (
+              <div className="footer-location-tag">
+                📍 Logged from: <strong>{visitorLocation.city}, {visitorLocation.region}, {visitorLocation.country}</strong>
+              </div>
+            )}
             <button
               type="button"
-              className="devotee-settings-btn"
-              onClick={() => setShowSettings(!showSettings)}
-              title="Configure Google Sheet Webhook URL"
-              aria-label="Configure Google Sheet URL"
+              className="devotee-mini-another-btn"
+              onClick={() => {
+                setStatus('idle')
+                setEmail('')
+                setStatusMsg('')
+              }}
             >
-              ⚙
+              + Register another email ID
             </button>
           </div>
+        )}
 
-          {/* Collapsible Admin/Config helper to test or paste Google Apps Script URL */}
-          {showSettings && (
-            <div className="devotee-settings-panel">
-              <p className="settings-panel-title">
-                📊 Google Sheet Connection Setup
-              </p>
-              <p className="settings-panel-desc">
-                Paste your deployed Google Apps Script Web App URL below (starts with <code>https://script.google.com/macros/s/...</code>):
-              </p>
-              <form onSubmit={handleSaveSheetUrl} className="settings-form">
-                <input
-                  type="url"
-                  className="settings-url-input"
-                  placeholder="https://script.google.com/macros/s/AKfy.../exec"
-                  value={customSheetUrl}
-                  onChange={(e) => setCustomSheetUrl(e.target.value)}
-                  required
-                />
-                <button type="submit" className="settings-save-btn">
-                  Save URL
-                </button>
-              </form>
-              <p className="settings-guide-hint">
-                View <code>google-sheets-script.js</code> in the project folder for the 1-minute setup guide.
-              </p>
-            </div>
-          )}
-
+        <div className="devotee-footer-privacy">
+          🔒 Stored directly in Google Spreadsheet &middot; Purely for Sacred Updates
         </div>
 
       </div>
-    </section>
+    </div>
   )
 }

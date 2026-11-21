@@ -1,4 +1,6 @@
-export default function Footer() {
+import DevoteeConnect from './DevoteeConnect'
+
+export default function Footer({ isLit }) {
   const email = 'Deepam@deepathoon.com'
 
   const scrollToTop = () => {
@@ -7,6 +9,9 @@ export default function Footer() {
 
   return (
     <footer className="footer">
+      {/* Devotee Email Collection directly into Google Sheets */}
+      <DevoteeConnect isLit={isLit} />
+
       {/* Back to top widget matching mockup */}
       <div
         className="back-to-top-container"
