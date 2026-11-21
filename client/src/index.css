@@ -1281,37 +1281,45 @@ body {
    FOOTER
    ============================================================ */
 .footer {
+  position: relative;
   background: #FEF3C7;
-  padding: 36px 20px;
+  padding: 28px 24px 30px;
   border-top: 2px solid rgba(217, 119, 6, 0.25);
-  display: flex; flex-direction: column; align-items: center; gap: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
 }
 
-/* ── Back to Top Button in Footer (Matching user mockup) ── */
+/* ── Back to Top Button in Footer (Compact at Right Corner) ── */
 .back-to-top-container {
+  position: absolute;
+  right: 28px;
+  bottom: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  margin-bottom: 12px;
+  gap: 4px;
   cursor: pointer;
   user-select: none;
+  z-index: 10;
 }
 
 .back-to-top-label {
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  font-size: 0.8rem;
+  font-size: 0.65rem;
   font-weight: 700;
-  letter-spacing: 2px;
+  letter-spacing: 1.5px;
   color: #4B5563;
   text-transform: uppercase;
   transition: color 0.2s ease;
+  white-space: nowrap;
 }
 
 .back-to-top-circle-btn {
-  width: 52px;
-  height: 52px;
+  width: 38px;
+  height: 38px;
   border-radius: 50%;
   background: #18181B;
   color: #FFFFFF;
@@ -1320,14 +1328,14 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
-  transition: transform 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.22);
+  transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
 }
 
 .back-to-top-container:hover .back-to-top-circle-btn {
   background: #000000;
-  transform: translateY(-3px) scale(1.06);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+  transform: translateY(-2px) scale(1.08);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
 }
 
 .back-to-top-container:hover .back-to-top-label {
@@ -1335,8 +1343,8 @@ body {
 }
 
 .back-to-top-svg {
-  width: 22px;
-  height: 22px;
+  width: 17px;
+  height: 17px;
   stroke: #FFFFFF;
   transition: transform 0.2s ease;
 }
@@ -1554,7 +1562,23 @@ body {
     justify-content: center;
   }
   .back-to-top-container {
-    margin-bottom: 8px;
+    right: 12px;
+    bottom: 12px;
+  }
+  .back-to-top-circle-btn {
+    width: 34px;
+    height: 34px;
+  }
+  .back-to-top-svg {
+    width: 15px;
+    height: 15px;
+  }
+  .back-to-top-label {
+    font-size: 0.58rem;
+    letter-spacing: 1px;
+  }
+  .footer-text {
+    max-width: calc(100% - 70px);
   }
 
   /* Footer email wraps */

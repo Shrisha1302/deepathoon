@@ -12,7 +12,15 @@ export default function Footer({ isLit }) {
       {/* Devotee Email Collection directly into Google Sheets */}
       <DevoteeConnect isLit={isLit} />
 
-      {/* Back to top widget matching mockup */}
+      <div className="contact-section">
+        <span className="contact-label">Contact Us:</span>
+        <span className="contact-email-text">{email}</span>
+      </div>
+      <p className="footer-text">
+        ॐ&nbsp; Vel Muruga Vel &middot; Om Saravanabhava &middot; Thiruparankundram &nbsp;ॐ
+      </p>
+
+      {/* Back to top widget - compact at right corner */}
       <div
         className="back-to-top-container"
         onClick={scrollToTop}
@@ -48,14 +56,6 @@ export default function Footer({ isLit }) {
           </svg>
         </button>
       </div>
-
-      <div className="contact-section">
-        <span className="contact-label">Contact Us:</span>
-        <span className="contact-email-text">{email}</span>
-      </div>
-      <p className="footer-text">
-        ॐ&nbsp; Vel Muruga Vel &middot; Om Saravanabhava &middot; Thiruparankundram &nbsp;ॐ
-      </p>
     </footer>
   )
 }
