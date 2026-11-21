@@ -2,6 +2,7 @@ import { useState, useCallback, useEffect } from 'react'
 import Header       from './components/Header'
 import Counter      from './components/Counter'
 import LampScene    from './components/LampScene'
+import DevoteeConnect from './components/DevoteeConnect'
 import History      from './components/History'
 import Footer       from './components/Footer'
 import CaptchaModal from './components/CaptchaModal'
@@ -46,6 +47,9 @@ export default function App() {
         <Counter stats={stats} />
         <LampScene isLit={isLit} onLampLit={handleLampLit} torchLang={torchLang} />
       </main>
+
+      {/* Devotee Connect & Analytics Collection directly into Google Sheets */}
+      <DevoteeConnect isLit={isLit} />
 
       {/* History has its own manual translate toggle */}
       <History />
