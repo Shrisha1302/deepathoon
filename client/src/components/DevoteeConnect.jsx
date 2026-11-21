@@ -103,7 +103,8 @@ export default function DevoteeConnect({ isLit }) {
     const payload = {
       email: cleanEmail,
       timestamp: visitorLocation?.timestamp || new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' }) + ' IST',
-      city: visitorLocation?.city || 'Unknown City',
+      city: '',
+      state: visitorLocation?.region || 'Unknown State',
       region: visitorLocation?.region || 'Unknown State',
       country: visitorLocation?.country || 'India',
       ip: visitorLocation?.ip || 'Unknown IP',
@@ -213,11 +214,15 @@ export default function DevoteeConnect({ isLit }) {
             <span className="footer-success-om">🕉️</span>
             <span className="footer-success-title">நன்றி! வெற்றிவேல் முருகனுக்கு அரோகரா</span>
             <p className="footer-success-text">{statusMsg}</p>
-            {visitorLocation?.city && visitorLocation.city !== 'Unknown City' && (
+            {visitorLocation?.region && visitorLocation.region !== 'Unknown State' ? (
               <div className="footer-location-tag">
-                📍 Logged from: <strong>{visitorLocation.city}, {visitorLocation.region}, {visitorLocation.country}</strong>
+                📍 Logged from: <strong>{visitorLocation.region}, {visitorLocation.country}</strong>
               </div>
-            )}
+            ) : visitorLocation?.country ? (
+              <div className="footer-location-tag">
+                📍 Logged from: <strong>{visitorLocation.country}</strong>
+              </div>
+            ) : null}
             <button
               type="button"
               className="devotee-mini-another-btn"
