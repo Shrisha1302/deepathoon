@@ -1,4 +1,5 @@
 import DevoteeConnect from './DevoteeConnect'
+import CourtReferences from './CourtReferences'
 
 export default function Footer({ isLit }) {
   const email = 'Deepam@deepathoon.com'
@@ -9,6 +10,9 @@ export default function Footer({ isLit }) {
 
   return (
     <footer className="footer">
+      {/* Court References */}
+      <CourtReferences />
+
       {/* Devotee Email Collection directly into Google Sheets */}
       <DevoteeConnect isLit={isLit} />
 
