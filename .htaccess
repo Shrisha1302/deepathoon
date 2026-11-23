@@ -1,27 +1,88 @@
-# Deepathoon LiteSpeed / Apache Configuration
+# ============================================================
+# DEEPATHOON SECURITY & SERVER CONFIGURATION (APACHE & LITESPEED)
+# ============================================================
+
+# 1. PREVENT DIRECTORY BROWSING (Disallows listing files in directories)
+Options -Indexes
+
+# 2. DISABLE SERVER SIGNATURES
+ServerSignature Off
+
+# 3. HTTP TO HTTPS ENFORCEMENT & ROUTING
 <IfModule mod_rewrite.c>
   RewriteEngine On
   RewriteBase /
+
+  # Automatically redirect HTTP to HTTPS
+  RewriteCond %{HTTPS} off
+  RewriteCond %{HTTP:X-Forwarded-Proto} !https
+  RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+  # Block common hacking & exploit query injections
+  RewriteCond %{QUERY_STRING} (<|%3C).*script.*(>|%3E) [NC,OR]
+  RewriteCond %{QUERY_STRING} (\\.\.\/|\\.\.\\) [NC,OR]
+  RewriteCond %{QUERY_STRING} (GLOBALS|_REQUEST|eval\(|base64_) [NC]
+  RewriteRule ^(.*)$ - [F,L]
+
+  # SPA Routing (Single Page App fallback)
   RewriteRule ^index\.html$ - [L]
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
   RewriteRule . /index.html [L]
 </IfModule>
 
-# Correct MIME Types & Audio Streaming
+# 4. HTTP SECURITY HEADERS (Defends against XSS, Clickjacking, MIME attacks)
+<IfModule mod_headers.c>
+  # Prevent Clickjacking (iframe embedding)
+  Header set X-Frame-Options "SAMEORIGIN"
+
+  # Prevent MIME-type Sniffing
+  Header set X-Content-Type-Options "nosniff"
+
+  # Cross-Site Scripting Filter
+  Header set X-XSS-Protection "1; mode=block"
+
+  # Referrer Policy
+  Header set Referrer-Policy "strict-origin-when-cross-origin"
+
+  # Restrict unauthorized hardware/sensor access
+  Header set Permissions-Policy "geolocation=(self), camera=(), microphone=()"
+</IfModule>
+
+# 5. BLOCK ACCESS TO HIDDEN & CONFIGURATION FILES
+<FilesMatch "^\.">
+  Order allow,deny
+  Deny from all
+</FilesMatch>
+
+<FilesMatch "(package\.json|package-lock\.json|vite\.config\.js|\.env|\.git|\.md)$">
+  Order allow,deny
+  Deny from all
+</FilesMatch>
+
+# 6. RESTRICT DISALLOWED HTTP METHODS
+<LimitExcept GET POST HEAD OPTIONS>
+  Order allow,deny
+  Deny from all
+</LimitExcept>
+
+# 7. MIME TYPES & AUDIO STREAMING
 <IfModule mod_mime.c>
   AddType audio/mpeg .mp3
   AddType application/javascript .js
   AddType text/css .css
   AddType image/jpeg .jpg .jpeg
   AddType image/png .png
+  AddType image/webp .webp
+  AddType image/svg+xml .svg
 </IfModule>
 
-# Cache-Control headers
+# 8. BROWSER CACHING (Fast loading & reduced server load)
 <IfModule mod_expires.c>
   ExpiresActive On
   ExpiresByType image/jpeg "access plus 1 month"
   ExpiresByType image/png "access plus 1 month"
+  ExpiresByType image/webp "access plus 1 month"
   ExpiresByType audio/mpeg "access plus 1 month"
   ExpiresByType text/css "access plus 1 week"
   ExpiresByType application/javascript "access plus 1 week"
