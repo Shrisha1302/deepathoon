@@ -12,7 +12,7 @@
  * 4. Deploy > New Deployment > Web App (Who has access: Anyone)
  * 5. Paste the resulting Web App URL below:
  */
-export const GOOGLE_SHEET_WEBAPP_URL = 'https://script.google.com/macros/s/AKfycbwYOUR_SCRIPT_ID_HERE/exec'
+export const GOOGLE_SHEET_WEBAPP_URL = 'https://script.google.com/macros/s/AKfycbxXe7RUSOql3dZbdeJ5xomxISqILh--9MR4gFiHELoRNwk5atR7T3q4GkX_NQyyCWN_/exec'
 
 // Cloud KV persistent counter endpoints (monotonically protected)
 export const CLOUD_KV_GET = 'https://keyvalue.immanuel.co/api/KeyVal/GetValue/rt4i17ti/deepathoon_count'

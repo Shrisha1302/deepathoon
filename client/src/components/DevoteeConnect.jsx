@@ -77,8 +77,11 @@ export default function DevoteeConnect({ isLit }) {
     detectLocation()
   }, [])
 
-  // 2. Resolve active Google Sheet URL (from saved localStorage or config.js)
+  // 2. Resolve active Google Sheet URL (prioritizes config.js)
   const getActiveSheetUrl = () => {
+    if (GOOGLE_SHEET_WEBAPP_URL && !GOOGLE_SHEET_WEBAPP_URL.includes('YOUR_SCRIPT_ID_HERE')) {
+      return GOOGLE_SHEET_WEBAPP_URL
+    }
     try {
       const saved = localStorage.getItem('deepathoon_sheet_url')
       if (saved && saved.startsWith('http')) return saved.trim()
