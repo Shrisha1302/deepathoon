@@ -93,7 +93,8 @@ function getIP(req) {
 
 const CLOUD_KV_GET = 'https://keyvalue.immanuel.co/api/KeyVal/GetValue/rt4i17ti/deepathoon_count';
 const CLOUD_KV_SET = 'https://keyvalue.immanuel.co/api/KeyVal/UpdateValue/rt4i17ti/deepathoon_count/';
-const BASELINE_COUNT = 98635; // <-- Updated baseline
+const BASELINE_COUNT = 98635; // Hard reset baseline — never go below this
+const MAX_VALID_COUNT = 10000000; // 1 crore sanity ceiling — reject bot-inflated values
 
 // ── Counter persistence ───────────────────────────────────────────────────
 const DATA_FILE = path.join(__dirname, 'counter.json');
@@ -124,8 +125,8 @@ async function syncFromCloud() {
     if (res.ok) {
       const text = await res.text();
       const val = parseInt(text.replace(/[^0-9]/g, ''), 10);
-      // ── SECURITY: Never trust cloud if below our baseline ──
-      if (!isNaN(val) && val >= BASELINE_COUNT && val > data.count) {
+      // ── SECURITY: Reject corrupted/bot-inflated values ──
+      if (!isNaN(val) && val >= BASELINE_COUNT && val <= MAX_VALID_COUNT && val > data.count) {
         console.log(`[Cloud Sync] Updated local count from cloud (${data.count} -> ${val})`);
         data.count = val;
         saveCount();
@@ -203,14 +204,16 @@ io.on('connection', (socket) => {
       return;
     }
 
-    // ── SECURITY: Validate payload – reject non-numeric / malicious data
+    // ── SECURITY: Validate payload – reject non-numeric / corrupted / bot-inflated data
     const parsed = parseInt(clientCount, 10);
-    if (!isNaN(parsed) && parsed > data.count && parsed <= data.count + 1000) {
+    if (!isNaN(parsed) && parsed > data.count && parsed <= data.count + 1000 && parsed <= MAX_VALID_COUNT) {
       // Only accept client suggestion if it's ahead but not suspiciously huge
       data.count = parsed;
     } else {
       data.count++;
     }
+    // Extra guard: never let count exceed sanity ceiling
+    if (data.count > MAX_VALID_COUNT) data.count = BASELINE_COUNT;
     saveCount();
     syncToCloud(data.count);
     io.emit('stats', { count: data.count, active: activeUsers });

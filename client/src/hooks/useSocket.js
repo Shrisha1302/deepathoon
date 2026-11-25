@@ -6,19 +6,32 @@ const RENDER_SERVER_URL = 'https://deepathoon.onrender.com'
 const CLOUD_KV_GET = 'https://keyvalue.immanuel.co/api/KeyVal/GetValue/rt4i17ti/deepathoon_count'
 const CLOUD_KV_SET = 'https://keyvalue.immanuel.co/api/KeyVal/UpdateValue/rt4i17ti/deepathoon_count/'
 const LOCAL_STORAGE_KEY = 'deepathoon_sacred_count'
+
+// ── HARD RESET BOUNDARY ───────────────────────────────────────────────────
+// Any count below this is invalid. Any count above MAX is corrupted/bot spam.
 const BASELINE_COUNT = 98635
+const MAX_VALID_COUNT = 10000000   // 1 crore — sanity ceiling
+
+// Sanitise any value coming from cloud / socket / localStorage
+function sanitise(val) {
+  const n = parseInt(val, 10)
+  if (isNaN(n) || n < BASELINE_COUNT || n > MAX_VALID_COUNT) return BASELINE_COUNT
+  return n
+}
 
 function getStoredCount() {
   try {
     const saved = localStorage.getItem(LOCAL_STORAGE_KEY)
     if (saved) {
-      const num = parseInt(saved, 10)
-      // Always enforce the new baseline — clears out any old stale cached count
-      if (!isNaN(num) && num >= BASELINE_COUNT) return num
+      const n = parseInt(saved, 10)
+      // If stored value is out of range (corrupted / old giant number) wipe it
+      if (isNaN(n) || n < BASELINE_COUNT || n > MAX_VALID_COUNT) {
+        localStorage.removeItem(LOCAL_STORAGE_KEY)
+        return BASELINE_COUNT
+      }
+      return n
     }
   } catch {}
-  // Clear any stale old value below baseline
-  try { localStorage.removeItem(LOCAL_STORAGE_KEY) } catch {}
   return BASELINE_COUNT
 }
 
@@ -34,23 +47,21 @@ export function useSocket() {
   const [stats, setStats] = useState({ count: initialCount, active: 1 })
   const countRef = useRef(initialCount)
 
-  // Keep countRef synchronized with latest count
+  // Keep countRef synchronised with latest count
   useEffect(() => {
     countRef.current = stats.count
   }, [stats.count])
 
-  // 1. Immediately fetch latest cloud count on mount (survives Render cold starts)
+  // 1. Immediately fetch latest cloud count on mount
   useEffect(() => {
     fetch(CLOUD_KV_GET)
       .then(res => res.text())
       .then(text => {
-        const val = parseInt(text.replace(/[^0-9]/g, ''), 10)
-        // Enforce baseline — ignore cloud value if it's below our starting point
-        const effective = (!isNaN(val) && val >= BASELINE_COUNT) ? val : BASELINE_COUNT
-        if (effective > countRef.current) {
-          countRef.current = effective
-          persistCount(effective)
-          setStats(prev => ({ ...prev, count: effective }))
+        const val = sanitise(text.replace(/[^0-9]/g, ''))
+        if (val > countRef.current) {
+          countRef.current = val
+          persistCount(val)
+          setStats(prev => ({ ...prev, count: val }))
         }
       })
       .catch(() => {})
@@ -68,9 +79,9 @@ export function useSocket() {
       })
 
       socketRef.current.on('stats', (data) => {
-        // Enforce monotonicity AND baseline: count can NEVER go backward or below baseline!
         if (data && typeof data.count === 'number') {
-          const highest = Math.max(countRef.current, data.count, BASELINE_COUNT)
+          const incoming = sanitise(data.count)   // ← rejects giant corrupted numbers
+          const highest  = Math.max(countRef.current, incoming)
           countRef.current = highest
           persistCount(highest)
           setStats({
@@ -93,7 +104,6 @@ export function useSocket() {
   }, [])
 
   const emitLampLit = () => {
-    // Strictly increment count by 1 upon lighting
     const newCount = countRef.current + 1
     countRef.current = newCount
     persistCount(newCount)
