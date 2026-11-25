@@ -25,8 +25,8 @@ ServerSignature Off
   RewriteCond %{QUERY_STRING} (union.*select|insert.*into|drop.*table) [NC]
   RewriteRule ^(.*)$ - [F,L]
 
-  # Block suspicious user-agents (bots, scanners)
-  RewriteCond %{HTTP_USER_AGENT} (curl|python-requests|go-http|wget|scrapy|masscan|zgrab|nmap|nikto|sqlmap) [NC]
+  # Block suspicious user-agents (bots, scanners, automated headless tools)
+  RewriteCond %{HTTP_USER_AGENT} (curl|python-requests|go-http|wget|scrapy|masscan|zgrab|nmap|nikto|sqlmap|libwww-perl|java/|headlesschrome|phantomjs|puppeteer|selenium|playwright|postman|insomnia|aiohttp|httpx|httpclient) [NC]
   RewriteRule .* - [F,L]
 
   # SPA Routing (Single Page App fallback)

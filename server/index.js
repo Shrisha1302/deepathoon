@@ -10,7 +10,7 @@ const server = http.createServer(app);
 
 // ── SECURITY: Rate Limiter (simple in-memory, no extra package needed) ────
 const rateLimitMap = new Map(); // ip -> { count, windowStart }
-const RATE_LIMIT   = 30;        // max lamp_lit events per IP per window
+const RATE_LIMIT   = 10;        // max lamp_lit events per IP per minute (strict)
 const RATE_WINDOW  = 60 * 1000; // 1-minute window
 
 function isRateLimited(ip) {
@@ -74,7 +74,11 @@ app.use((req, res, next) => {
 // ── SECURITY: Block bots & scrapers by user-agent ─────────────────────────
 app.use((req, res, next) => {
   const ua = (req.headers['user-agent'] || '').toLowerCase();
-  const badBots = ['curl/', 'python-requests', 'go-http', 'wget/', 'scrapy', 'httrack', 'masscan', 'zgrab'];
+  const badBots = [
+    'curl/', 'python-requests', 'go-http', 'wget/', 'scrapy', 'httrack',
+    'masscan', 'zgrab', 'headlesschrome', 'phantomjs', 'puppeteer',
+    'selenium', 'playwright', 'postman', 'insomnia'
+  ];
   if (badBots.some(b => ua.includes(b))) {
     return res.status(403).json({ error: 'Forbidden' });
   }
@@ -197,22 +201,24 @@ io.on('connection', (socket) => {
   socket.emit('stats', { count: data.count, active: activeUsers });
   socket.broadcast.emit('stats', { count: data.count, active: activeUsers });
 
-  socket.on('lamp_lit', (clientCount) => {
+  let lastLitTime = 0;
+
+  socket.on('lamp_lit', () => {
+    const now = Date.now();
+    // ── SECURITY: 3-second cooldown per socket (prevents spam clicking/scripts)
+    if (now - lastLitTime < 3000) {
+      return;
+    }
+
     // ── SECURITY: Rate limiting per IP ────────────────────────────────
     if (isRateLimited(ip)) {
       console.warn(`[Security] Rate limit hit for ${ip}. Ignoring lamp_lit.`);
       return;
     }
+    lastLitTime = now;
 
-    // ── SECURITY: Validate payload – reject non-numeric / corrupted / bot-inflated data
-    const parsed = parseInt(clientCount, 10);
-    if (!isNaN(parsed) && parsed > data.count && parsed <= data.count + 1000 && parsed <= MAX_VALID_COUNT) {
-      // Only accept client suggestion if it's ahead but not suspiciously huge
-      data.count = parsed;
-    } else {
-      data.count++;
-    }
-    // Extra guard: never let count exceed sanity ceiling
+    // ── SECURITY: Strict increment ONLY. Never trust client-supplied counts!
+    data.count++;
     if (data.count > MAX_VALID_COUNT) data.count = BASELINE_COUNT;
     saveCount();
     syncToCloud(data.count);

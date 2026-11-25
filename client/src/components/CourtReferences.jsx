@@ -25,6 +25,12 @@ export default function CourtReferences() {
       url: 'https://timesofindia.indiatimes.com/city/chennai/wakf-has-no-locus-standi-madras-hc-upholds-order-of-single-bench-to-light-deepam-at-the-deepathoon-atop-thiruparankundram-hill/amp_articleshow/126367820.cms'
     },
     {
+      source: 'The Commune',
+      tag: 'High Court Order',
+      title: '“Deepathoon Is Temple Property, Lighting Lamp Atop Hill Is Tamil Tradition”: What Justice G.R. Swaminathan Told In His Order On Thiruparankundram',
+      url: 'https://thecommunemag.com/deepathoon-is-temple-property-dargah-management-hasnt-demonstrated-how-theyll-be-affected-lighting-lamp-atop-hill-is-tamil-tradition-what-justice-gr-swaminathan-told-in-his-order-on-thirupa/'
+    },
+    {
       source: 'Indian Masterminds',
       tag: 'Judiciary Report',
       title: 'Madras High Court: Thiruparankundram Hill Deepathoon Dispute & Survey Stone Lamp Ruling',
