@@ -2,7 +2,7 @@
 # DEEPATHOON SECURITY & SERVER CONFIGURATION (APACHE & LITESPEED)
 # ============================================================
 
-# 1. PREVENT DIRECTORY BROWSING (Disallows listing files in directories)
+# 1. PREVENT DIRECTORY BROWSING
 Options -Indexes
 
 # 2. DISABLE SERVER SIGNATURES
@@ -20,9 +20,14 @@ ServerSignature Off
 
   # Block common hacking & exploit query injections
   RewriteCond %{QUERY_STRING} (<|%3C).*script.*(>|%3E) [NC,OR]
-  RewriteCond %{QUERY_STRING} (\\.\.\/|\\.\.\\) [NC,OR]
-  RewriteCond %{QUERY_STRING} (GLOBALS|_REQUEST|eval\(|base64_) [NC]
+  RewriteCond %{QUERY_STRING} (\.\./|\.\.\\) [NC,OR]
+  RewriteCond %{QUERY_STRING} (GLOBALS|_REQUEST|eval\(|base64_) [NC,OR]
+  RewriteCond %{QUERY_STRING} (union.*select|insert.*into|drop.*table) [NC]
   RewriteRule ^(.*)$ - [F,L]
+
+  # Block suspicious user-agents (bots, scanners)
+  RewriteCond %{HTTP_USER_AGENT} (curl|python-requests|go-http|wget|scrapy|masscan|zgrab|nmap|nikto|sqlmap) [NC]
+  RewriteRule .* - [F,L]
 
   # SPA Routing (Single Page App fallback)
   RewriteRule ^index\.html$ - [L]
@@ -31,22 +36,35 @@ ServerSignature Off
   RewriteRule . /index.html [L]
 </IfModule>
 
-# 4. HTTP SECURITY HEADERS (Defends against XSS, Clickjacking, MIME attacks)
+# 4. HTTP SECURITY HEADERS
 <IfModule mod_headers.c>
-  # Prevent Clickjacking (iframe embedding)
-  Header set X-Frame-Options "SAMEORIGIN"
+  # Prevent Clickjacking
+  Header always set X-Frame-Options "DENY"
 
   # Prevent MIME-type Sniffing
-  Header set X-Content-Type-Options "nosniff"
+  Header always set X-Content-Type-Options "nosniff"
 
   # Cross-Site Scripting Filter
-  Header set X-XSS-Protection "1; mode=block"
+  Header always set X-XSS-Protection "1; mode=block"
 
   # Referrer Policy
-  Header set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
 
-  # Restrict unauthorized hardware/sensor access
-  Header set Permissions-Policy "geolocation=(self), camera=(), microphone=()"
+  # Restrict hardware/sensor access
+  Header always set Permissions-Policy "geolocation=(), camera=(), microphone=(), payment=(), usb=(), bluetooth=()"
+
+  # HTTP Strict Transport Security (force HTTPS for 1 year)
+  Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+
+  # Content Security Policy — only allow your own origin + socket server
+  Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; media-src 'self'; connect-src 'self' wss: https://keyvalue.immanuel.co https://script.google.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self';"
+
+  # Remove server fingerprinting header
+  Header always unset X-Powered-By
+  Header always unset Server
+
+  # Prevent caching of sensitive pages
+  Header set Cache-Control "no-store, no-cache, must-revalidate" env=REDIRECT_STATUS
 </IfModule>
 
 # 5. BLOCK ACCESS TO HIDDEN & CONFIGURATION FILES
@@ -55,7 +73,7 @@ ServerSignature Off
   Deny from all
 </FilesMatch>
 
-<FilesMatch "(package\.json|package-lock\.json|vite\.config\.js|\.env|\.git|\.md)$">
+<FilesMatch "(package\.json|package-lock\.json|vite\.config\.js|\.env|\.git|\.md|composer\.json|composer\.lock|Dockerfile|docker-compose)$">
   Order allow,deny
   Deny from all
 </FilesMatch>
@@ -86,4 +104,15 @@ ServerSignature Off
   ExpiresByType audio/mpeg "access plus 1 month"
   ExpiresByType text/css "access plus 1 week"
   ExpiresByType application/javascript "access plus 1 week"
+</IfModule>
+
+# 9. LIMIT REQUEST SIZE (Prevent large payload attacks)
+<IfModule mod_reqtimeout.c>
+  RequestReadTimeout header=20-40,MinRate=500 body=20,MinRate=500
+</IfModule>
+LimitRequestBody 10485760
+
+# 10. BLOCK COMMON VULNERABILITY PATHS
+<IfModule mod_rewrite.c>
+  RewriteRule ^(wp-admin|wp-login|xmlrpc|phpmyadmin|admin|shell|\.git|\.env) - [F,L]
 </IfModule>
