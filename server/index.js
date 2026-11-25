@@ -72,13 +72,14 @@ app.use((req, res, next) => {
 });
 
 // ── SECURITY: Block bots & scrapers by user-agent ─────────────────────────
+const badBots = [
+  'curl/', 'python-requests', 'go-http', 'wget/', 'scrapy', 'httrack',
+  'masscan', 'zgrab', 'headlesschrome', 'phantomjs', 'puppeteer',
+  'selenium', 'playwright', 'postman', 'insomnia', 'aiohttp', 'httpx'
+];
+
 app.use((req, res, next) => {
   const ua = (req.headers['user-agent'] || '').toLowerCase();
-  const badBots = [
-    'curl/', 'python-requests', 'go-http', 'wget/', 'scrapy', 'httrack',
-    'masscan', 'zgrab', 'headlesschrome', 'phantomjs', 'puppeteer',
-    'selenium', 'playwright', 'postman', 'insomnia'
-  ];
   if (badBots.some(b => ua.includes(b))) {
     return res.status(403).json({ error: 'Forbidden' });
   }
@@ -134,7 +135,7 @@ async function syncFromCloud() {
         console.log(`[Cloud Sync] Updated local count from cloud (${data.count} -> ${val})`);
         data.count = val;
         saveCount();
-        io.emit('stats', { count: data.count, active: activeUsers });
+        io.emit('stats', { count: data.count, active: getActiveCount() });
       }
     }
   } catch (err) {
@@ -155,14 +156,17 @@ syncFromCloud();
 // Re-sync with cloud store every 5 minutes
 setInterval(syncFromCloud, 5 * 60 * 1000);
 
-let activeUsers = 0;
+// Active unique visitors = number of distinct IP addresses connected
+function getActiveCount() {
+  return Math.max(1, socketConnMap.size);
+}
 
 // Health check / API status endpoint (read-only, no sensitive data)
 app.get('/', (req, res) => {
   res.json({
     status: 'Deepathoon Server Running',
     count: data.count,
-    active: activeUsers
+    active: getActiveCount()
   });
 });
 
@@ -185,6 +189,13 @@ const socketConnMap = new Map(); // ip -> socket count
 const MAX_CONNS_PER_IP = 5;
 
 io.on('connection', (socket) => {
+  // ── SECURITY: Disconnect bot/scraper user-agents at handshake ─────────
+  const ua = (socket.handshake.headers['user-agent'] || '').toLowerCase();
+  if (!ua || badBots.some(b => ua.includes(b))) {
+    socket.disconnect(true);
+    return;
+  }
+
   const ip = getIP(socket.request);
 
   // ── SECURITY: Connection flood protection ─────────────────────────────
@@ -196,10 +207,10 @@ io.on('connection', (socket) => {
   }
   socketConnMap.set(ip, connCount);
 
-  activeUsers++;
-  // Send current state to the connected user
-  socket.emit('stats', { count: data.count, active: activeUsers });
-  socket.broadcast.emit('stats', { count: data.count, active: activeUsers });
+  // Send current state to connected users using unique visitor count (distinct IPs)
+  const currentActive = getActiveCount();
+  socket.emit('stats', { count: data.count, active: currentActive });
+  socket.broadcast.emit('stats', { count: data.count, active: currentActive });
 
   let lastLitTime = 0;
 
@@ -222,18 +233,17 @@ io.on('connection', (socket) => {
     if (data.count > MAX_VALID_COUNT) data.count = BASELINE_COUNT;
     saveCount();
     syncToCloud(data.count);
-    io.emit('stats', { count: data.count, active: activeUsers });
+    io.emit('stats', { count: data.count, active: getActiveCount() });
   });
 
   socket.on('disconnect', () => {
-    activeUsers = Math.max(0, activeUsers - 1);
     const remaining = (socketConnMap.get(ip) || 1) - 1;
     if (remaining <= 0) {
       socketConnMap.delete(ip);
     } else {
       socketConnMap.set(ip, remaining);
     }
-    io.emit('stats', { count: data.count, active: activeUsers });
+    io.emit('stats', { count: data.count, active: getActiveCount() });
   });
 });
 

@@ -41,6 +41,12 @@ export default function CourtReferences() {
       tag: 'High Court Order',
       title: "Madras High Court Allows Deepam Atop Thiruparankundram Hill's Ancient Pillar, Rejects Dargah Claim",
       url: 'https://lawbeat.in/amp/news-updates/madras-high-court-allows-deepam-atop-thiruparankundram-hills-ancient-pillar-rejects-dargah-claim-1544883'
+    },
+    {
+      source: 'ShreeTV Live',
+      tag: 'Live Broadcast',
+      title: '🔴 நேரலை: ஸ்ரீதேவி பூதேவி சமேத ஸ்ரீ கோவிந்தராஜப்பெருமாள் கோவிலில் தீபத்தூணில் தீபம்',
+      url: 'https://www.youtube.com/live/9jDOEbsoVLg?si=iK0256sRjR37WPdy'
     }
   ]
 
