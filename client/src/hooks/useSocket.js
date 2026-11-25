@@ -6,16 +6,19 @@ const RENDER_SERVER_URL = 'https://deepathoon.onrender.com'
 const CLOUD_KV_GET = 'https://keyvalue.immanuel.co/api/KeyVal/GetValue/rt4i17ti/deepathoon_count'
 const CLOUD_KV_SET = 'https://keyvalue.immanuel.co/api/KeyVal/UpdateValue/rt4i17ti/deepathoon_count/'
 const LOCAL_STORAGE_KEY = 'deepathoon_sacred_count'
-const BASELINE_COUNT = 1010
+const BASELINE_COUNT = 98635
 
 function getStoredCount() {
   try {
     const saved = localStorage.getItem(LOCAL_STORAGE_KEY)
     if (saved) {
       const num = parseInt(saved, 10)
+      // Always enforce the new baseline — clears out any old stale cached count
       if (!isNaN(num) && num >= BASELINE_COUNT) return num
     }
   } catch {}
+  // Clear any stale old value below baseline
+  try { localStorage.removeItem(LOCAL_STORAGE_KEY) } catch {}
   return BASELINE_COUNT
 }
 
@@ -42,10 +45,12 @@ export function useSocket() {
       .then(res => res.text())
       .then(text => {
         const val = parseInt(text.replace(/[^0-9]/g, ''), 10)
-        if (!isNaN(val) && val > countRef.current) {
-          countRef.current = val
-          persistCount(val)
-          setStats(prev => ({ ...prev, count: val }))
+        // Enforce baseline — ignore cloud value if it's below our starting point
+        const effective = (!isNaN(val) && val >= BASELINE_COUNT) ? val : BASELINE_COUNT
+        if (effective > countRef.current) {
+          countRef.current = effective
+          persistCount(effective)
+          setStats(prev => ({ ...prev, count: effective }))
         }
       })
       .catch(() => {})
@@ -63,7 +68,7 @@ export function useSocket() {
       })
 
       socketRef.current.on('stats', (data) => {
-        // Enforce monotonicity: count can NEVER go backward!
+        // Enforce monotonicity AND baseline: count can NEVER go backward or below baseline!
         if (data && typeof data.count === 'number') {
           const highest = Math.max(countRef.current, data.count, BASELINE_COUNT)
           countRef.current = highest
