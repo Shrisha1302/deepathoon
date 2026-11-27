@@ -34,8 +34,8 @@ const VIDEOS = [
   },
   {
     id: 4,
-    title: 'Acharya Narahari Swamiji',
-    tamilTitle: 'ஆச்சார்ய நரஹரி சுவாமிஜி',
+    title: 'Sri Sri Narahari Swamiji',
+    tamilTitle: 'ஸ்ரீ ஸ்ரீ நரஹரி சுவாமிஜி',
     description: 'Profound message of Dharmic awakening, temple patronage, and civilizational pride across Bharat.',
     src: getAssetUrl('videos/video4.mp4')
   },
