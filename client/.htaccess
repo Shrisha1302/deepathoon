@@ -1,0 +1,123 @@
+# ============================================================
+# DEEPATHOON SECURITY & SERVER CONFIGURATION (APACHE & LITESPEED)
+# ============================================================
+
+# 1. PREVENT DIRECTORY BROWSING
+Options -Indexes
+
+# 2. DISABLE SERVER SIGNATURES
+ServerSignature Off
+
+# 3. HTTP TO HTTPS ENFORCEMENT & ROUTING
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+
+  # Automatically redirect HTTP to HTTPS
+  RewriteCond %{HTTPS} off
+  RewriteCond %{HTTP:X-Forwarded-Proto} !https
+  RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+  # Block common hacking & exploit query injections
+  RewriteCond %{QUERY_STRING} (<|%3C).*script.*(>|%3E) [NC,OR]
+  RewriteCond %{QUERY_STRING} (\.\./|\.\.\\) [NC,OR]
+  RewriteCond %{QUERY_STRING} (GLOBALS|_REQUEST|eval\(|base64_) [NC,OR]
+  RewriteCond %{QUERY_STRING} (union.*select|insert.*into|drop.*table) [NC]
+  RewriteRule ^(.*)$ - [F,L]
+
+  # Block suspicious user-agents (bots, scanners, automated headless tools)
+  RewriteCond %{HTTP_USER_AGENT} (curl|python-requests|go-http|wget|scrapy|masscan|zgrab|nmap|nikto|sqlmap|libwww-perl|java/|headlesschrome|phantomjs|puppeteer|selenium|playwright|postman|insomnia|aiohttp|httpx|httpclient) [NC]
+  RewriteRule .* - [F,L]
+
+  # SPA Routing (Single Page App fallback)
+  RewriteRule ^index\.html$ - [L]
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule . /index.html [L]
+</IfModule>
+
+# 4. HTTP SECURITY HEADERS
+<IfModule mod_headers.c>
+  # Prevent Clickjacking
+  Header always set X-Frame-Options "DENY"
+
+  # Prevent MIME-type Sniffing
+  Header always set X-Content-Type-Options "nosniff"
+
+  # Cross-Site Scripting Filter
+  Header always set X-XSS-Protection "1; mode=block"
+
+  # Referrer Policy
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+
+  # Restrict hardware/sensor access
+  Header always set Permissions-Policy "geolocation=(), camera=(), microphone=(), payment=(), usb=(), bluetooth=()"
+
+  # HTTP Strict Transport Security (force HTTPS for 1 year)
+  Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+
+  # Content Security Policy — allow self, fonts, socket, Google Sheets, Google Analytics, and media blobs
+  Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://*.google-analytics.com https://*.googletagmanager.com; media-src 'self' blob:; connect-src 'self' wss: https://keyvalue.immanuel.co https://script.google.com https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self';"
+
+  # Remove server fingerprinting header
+  Header always unset X-Powered-By
+  Header always unset Server
+
+  # Prevent caching of sensitive pages
+  Header set Cache-Control "no-store, no-cache, must-revalidate" env=REDIRECT_STATUS
+</IfModule>
+
+# 5. BLOCK ACCESS TO HIDDEN & CONFIGURATION FILES
+<FilesMatch "^\.">
+  Order allow,deny
+  Deny from all
+</FilesMatch>
+
+<FilesMatch "(package\.json|package-lock\.json|vite\.config\.js|\.env|\.git|\.md|composer\.json|composer\.lock|Dockerfile|docker-compose)$">
+  Order allow,deny
+  Deny from all
+</FilesMatch>
+
+# 6. RESTRICT DISALLOWED HTTP METHODS
+<LimitExcept GET POST HEAD OPTIONS>
+  Order allow,deny
+  Deny from all
+</LimitExcept>
+
+# 7. MIME TYPES & AUDIO / VIDEO STREAMING
+<IfModule mod_mime.c>
+  AddType audio/mpeg .mp3
+  AddType video/mp4 .mp4
+  AddType video/webm .webm
+  AddType video/ogg .ogv
+  AddType application/javascript .js
+  AddType text/css .css
+  AddType image/jpeg .jpg .jpeg
+  AddType image/png .png
+  AddType image/webp .webp
+  AddType image/svg+xml .svg
+</IfModule>
+
+# 8. BROWSER CACHING (Fast loading & reduced server load)
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType image/jpeg "access plus 1 month"
+  ExpiresByType image/png "access plus 1 month"
+  ExpiresByType image/webp "access plus 1 month"
+  ExpiresByType audio/mpeg "access plus 1 month"
+  ExpiresByType video/mp4 "access plus 1 month"
+  ExpiresByType video/webm "access plus 1 month"
+  ExpiresByType text/css "access plus 1 week"
+  ExpiresByType application/javascript "access plus 1 week"
+</IfModule>
+
+# 9. LIMIT REQUEST SIZE (Prevent large payload attacks)
+<IfModule mod_reqtimeout.c>
+  RequestReadTimeout header=20-40,MinRate=500 body=20,MinRate=500
+</IfModule>
+LimitRequestBody 10485760
+
+# 10. BLOCK COMMON VULNERABILITY PATHS
+<IfModule mod_rewrite.c>
+  RewriteRule ^(wp-admin|wp-login|xmlrpc|phpmyadmin|admin|shell|\.git|\.env) - [F,L]
+</IfModule>
