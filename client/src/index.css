@@ -2401,5 +2401,132 @@ body {
   }
 }
 
+/* ============================================================
+   ARTICLE PUBLISH DATES & SUPREME COURT ORDER CARD
+   ============================================================ */
+.article-publish-date {
+  font-family: 'Mukta Malar', serif;
+  font-size: 0.84rem;
+  color: var(--gold-dk);
+  opacity: 0.9;
+  margin-top: 6px;
+  font-style: italic;
+  letter-spacing: 0.02em;
+}
+
+.sc-order-section-card {
+  max-width: 1040px;
+  margin: 40px auto 28px;
+  background: linear-gradient(145deg, #FFFFFF, #FFFBEB);
+  border: 2px solid #D97706;
+  border-radius: 16px;
+  padding: 36px 32px;
+  box-shadow: 0 12px 30px rgba(180, 83, 9, 0.12);
+  position: relative;
+  overflow: hidden;
+}
+
+.sc-order-header {
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.sc-order-scales-icon {
+  font-size: 2.2rem;
+  display: block;
+  margin-bottom: 6px;
+}
+
+.sc-order-main-title {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(1.25rem, 2.4vw, 1.75rem);
+  font-weight: 800;
+  color: var(--temple-red);
+  line-height: 1.35;
+  letter-spacing: 0.02em;
+}
+
+.sc-order-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.sc-order-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  background: rgba(254, 243, 199, 0.55);
+  border: 1px solid rgba(217, 119, 6, 0.25);
+  border-radius: 12px;
+  padding: 16px 20px;
+  transition: transform 0.2s, background 0.2s;
+}
+
+.sc-order-item:hover {
+  background: rgba(254, 243, 199, 0.85);
+  transform: translateX(3px);
+  border-color: rgba(217, 119, 6, 0.5);
+}
+
+.sc-order-num {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #D97706, #991B1B);
+  color: #FFFBEB;
+  font-family: 'Cinzel', serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  box-shadow: 0 2px 6px rgba(153, 27, 27, 0.25);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.sc-order-text {
+  font-family: 'Mukta Malar', serif;
+  font-size: 0.98rem;
+  color: var(--text-main);
+  line-height: 1.6;
+}
+
+.sc-order-text strong {
+  color: var(--temple-red);
+  font-weight: 700;
+}
+
+.sc-order-footer {
+  text-align: right;
+  border-top: 1px solid rgba(217, 119, 6, 0.2);
+  padding-top: 14px;
+}
+
+@media (max-width: 768px) {
+  .sc-order-section-card {
+    padding: 24px 16px;
+    margin: 28px 12px 20px;
+  }
+
+  .sc-order-item {
+    padding: 12px 14px;
+    gap: 12px;
+  }
+
+  .sc-order-text {
+    font-size: 0.9rem;
+  }
+
+  .sc-order-num {
+    min-width: 28px;
+    height: 28px;
+    font-size: 0.85rem;
+  }
+}
+
+
 
 

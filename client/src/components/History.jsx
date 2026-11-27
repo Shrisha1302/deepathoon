@@ -117,6 +117,7 @@ export default function History() {
         </div>
 
         <p className="article-author">— சுவாதி ஐயங்கார்</p>
+        <p className="article-publish-date">Published on 23-11-2026</p>
       </div>
 
       {/* ============================================================
@@ -257,6 +258,96 @@ export default function History() {
           </div>
 
           <p className="article-author">— Swathi Iyengar</p>
+          <p className="article-publish-date">Published on 23-11-2026</p>
+        </div>
+      </div>
+
+      {/* ============================================================
+          SUPREME COURT ORDER (10 Key Directions And Observations)
+          ============================================================ */}
+      <div className="sc-order-section-card" id="supreme-court-order">
+        <div className="sc-order-header">
+          <span className="sc-order-scales-icon" aria-hidden="true">⚖️</span>
+          <h3 className="sc-order-main-title">
+            Supreme Court&apos;s Thiruparankundram Deepam Order: 10 Key Directions And Observations
+          </h3>
+          <div className="thin-rule" style={{ maxWidth: '240px', margin: '14px auto 0' }} />
+        </div>
+
+        <div className="sc-order-list">
+          <div className="sc-order-item">
+            <span className="sc-order-num">1</span>
+            <p className="sc-order-text">
+              <strong>#KarthigaiDeepam</strong> be lit at the Deepathoon on November 28, at a time fixed in consultation with the temple sthanikars.
+            </p>
+          </div>
+
+          <div className="sc-order-item">
+            <span className="sc-order-num">2</span>
+            <p className="sc-order-text">
+              Devotees are permitted to light lamps at <strong>#Deepathoon</strong> or at another place on the hilltop at least 50 metres away from the Sikandar Dargah, subject to the safeguards prescribed by the Court.
+            </p>
+          </div>
+
+          <div className="sc-order-item">
+            <span className="sc-order-num">3</span>
+            <p className="sc-order-text">
+              CRPF Commandant is directed to oversee security arrangements, ensuring that worshippers at both the temple and the Dargah can offer prayers without obstruction.
+            </p>
+          </div>
+
+          <div className="sc-order-item">
+            <span className="sc-order-num">4</span>
+            <p className="sc-order-text">
+              Board of Trustees of Arulmigu Subramaniaswamy Temple suspended. Supreme Court appoints former judges Justice S. Vaidyanathan and Justice V. Parthiban as Court Receivers to take charge of its administration.
+            </p>
+          </div>
+
+          <div className="sc-order-item">
+            <span className="sc-order-num">5</span>
+            <p className="sc-order-text">
+              SC vacates its interim stay on the <strong>#MadrasHighCourt</strong> judgment, paving the way for implementation of the directions concerning the lighting of the lamp.
+            </p>
+          </div>
+
+          <div className="sc-order-item">
+            <span className="sc-order-num">6</span>
+            <p className="sc-order-text">
+              Contempt notices issued to Tamil Nadu Chief Secretary, DGP, HR&amp;CE Commissioner and other senior officials, including the Madurai District Collector, police officials, temple Executive Officer and members of the Board of Trustees.
+            </p>
+          </div>
+
+          <div className="sc-order-item">
+            <span className="sc-order-num">7</span>
+            <p className="sc-order-text">
+              The Court directs the officials who have been issued contempt notices to appear personally before it on December 15.
+            </p>
+          </div>
+
+          <div className="sc-order-item">
+            <span className="sc-order-num">8</span>
+            <p className="sc-order-text">
+              Expressing concern over the events in Madurai, the Supreme Court observes that there appears to be &ldquo;a state of administrative chaos in the State of Tamil Nadu, or at least in Madurai District&rdquo;.
+            </p>
+          </div>
+
+          <div className="sc-order-item">
+            <span className="sc-order-num">9</span>
+            <p className="sc-order-text">
+              The Court remarks that executive authorities seem to have acted at the dictates of their &ldquo;political bosses&rdquo; and says that wilful non-compliance with its orders &ldquo;has to be dealt with iron hands&rdquo;.
+            </p>
+          </div>
+
+          <div className="sc-order-item">
+            <span className="sc-order-num">10</span>
+            <p className="sc-order-text">
+              The Court directs the Tamil Nadu Chief Secretary to file an affidavit detailing communications exchanged between the officials concerned, including emails, calls and messages, in relation to the implementation of its earlier order.
+            </p>
+          </div>
+        </div>
+
+        <div className="sc-order-footer">
+          <p className="article-publish-date">Published on 27-11-2026</p>
         </div>
       </div>
 

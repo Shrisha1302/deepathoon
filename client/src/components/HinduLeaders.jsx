@@ -13,22 +13,22 @@ function getAssetUrl(relPath) {
 const VIDEOS = [
   {
     id: 1,
-    title: 'Hindu Leader Speech 1',
-    tamilTitle: 'இந்து தலைவர் உரை 1',
+    title: 'Swathi Kr Iyengar',
+    tamilTitle: 'சுவாதி கே.ஆர். ஐயங்கார்',
     description: 'Sacred discourses on Dharma, temple heritage, and defending Sanatana traditions at Thiruparankundram.',
     src: getAssetUrl('videos/video1.mp4')
   },
   {
     id: 2,
-    title: 'Hindu Leader Speech 2',
-    tamilTitle: 'இந்து தலைவர் உரை 2',
+    title: 'Sri Sri Narahari Swamiji',
+    tamilTitle: 'ஸ்ரீ ஸ்ரீ நரஹரி சுவாமிஜி',
     description: 'Voices of spiritual strength uniting devotees for the preservation of ancient temple rights and rituals.',
     src: getAssetUrl('videos/video2.mp4')
   },
   {
     id: 3,
-    title: 'Hindu Leader Speech 3',
-    tamilTitle: 'இந்து தலைவர் உரை 3',
+    title: 'Hindu Leader',
+    tamilTitle: 'இந்து தலைவர்',
     description: 'Profound messages of Dharmic awakening, temple patronage, and civilizational pride across Bharat.',
     src: getAssetUrl('videos/video3.mp4')
   }
