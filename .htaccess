@@ -56,8 +56,8 @@ ServerSignature Off
   # HTTP Strict Transport Security (force HTTPS for 1 year)
   Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
 
-  # Content Security Policy — allow self, fonts, socket, Google Sheets, and Google Analytics
-  Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://*.google-analytics.com https://*.googletagmanager.com; media-src 'self'; connect-src 'self' wss: https://keyvalue.immanuel.co https://script.google.com https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self';"
+  # Content Security Policy — allow self, fonts, socket, Google Sheets, Google Analytics, and media blobs
+  Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://*.google-analytics.com https://*.googletagmanager.com; media-src 'self' blob:; connect-src 'self' wss: https://keyvalue.immanuel.co https://script.google.com https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self';"
 
   # Remove server fingerprinting header
   Header always unset X-Powered-By
@@ -84,9 +84,12 @@ ServerSignature Off
   Deny from all
 </LimitExcept>
 
-# 7. MIME TYPES & AUDIO STREAMING
+# 7. MIME TYPES & AUDIO / VIDEO STREAMING
 <IfModule mod_mime.c>
   AddType audio/mpeg .mp3
+  AddType video/mp4 .mp4
+  AddType video/webm .webm
+  AddType video/ogg .ogv
   AddType application/javascript .js
   AddType text/css .css
   AddType image/jpeg .jpg .jpeg
@@ -102,6 +105,8 @@ ServerSignature Off
   ExpiresByType image/png "access plus 1 month"
   ExpiresByType image/webp "access plus 1 month"
   ExpiresByType audio/mpeg "access plus 1 month"
+  ExpiresByType video/mp4 "access plus 1 month"
+  ExpiresByType video/webm "access plus 1 month"
   ExpiresByType text/css "access plus 1 week"
   ExpiresByType application/javascript "access plus 1 week"
 </IfModule>

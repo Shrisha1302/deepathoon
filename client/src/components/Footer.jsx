@@ -1,7 +1,7 @@
 import DevoteeConnect from './DevoteeConnect'
 import CourtReferences from './CourtReferences'
 
-export default function Footer({ isLit }) {
+export default function Footer({ isLit, onNavigateHome, onNavigateLeaders, currentPage = 'home' }) {
   const email = 'Deepam@deepathoon.com'
 
   const scrollToTop = () => {
@@ -15,6 +15,25 @@ export default function Footer({ isLit }) {
 
       {/* Devotee Email Collection directly into Google Sheets */}
       <DevoteeConnect isLit={isLit} />
+
+      {/* Page Navigation Links */}
+      <div className="footer-nav-row" aria-label="Footer Navigation">
+        <button
+          type="button"
+          className={`footer-nav-link ${currentPage === 'home' ? 'active' : ''}`}
+          onClick={onNavigateHome}
+        >
+          தீபத்தூண் (Home)
+        </button>
+        <span className="footer-nav-separator" aria-hidden="true">·</span>
+        <button
+          type="button"
+          className={`footer-nav-link ${currentPage === 'leaders' ? 'active' : ''}`}
+          onClick={onNavigateLeaders}
+        >
+          Hindu Leaders (இந்து தலைவர்கள்)
+        </button>
+      </div>
 
       <div className="contact-section">
         <span className="contact-label">Contact Us:</span>

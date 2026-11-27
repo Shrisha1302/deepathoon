@@ -5,11 +5,16 @@ import LampScene    from './components/LampScene'
 import History      from './components/History'
 import Footer       from './components/Footer'
 import CaptchaModal from './components/CaptchaModal'
+import HinduLeaders from './components/HinduLeaders'
 import { useSocket } from './hooks/useSocket'
 
 export default function App() {
   const [isVerified, setIsVerified] = useState(false)
   const [isLit, setIsLit] = useState(false)
+  const [currentPage, setCurrentPage] = useState(() => {
+    const hash = (typeof window !== 'undefined' ? window.location.hash : '').toLowerCase()
+    return hash === '#hindu-leaders' || hash === '#leaders' ? 'leaders' : 'home'
+  })
   const { stats, emitLampLit } = useSocket()
 
   // Only the header subtitle and torch/beacon auto-alternate.
@@ -23,6 +28,25 @@ export default function App() {
     const torch = setInterval(() => setTorchLang(p => p === 'en' ? 'ta' : 'en'), 2000)
     return () => { clearInterval(sub); clearInterval(torch) }
   }, [])
+
+  useEffect(() => {
+    const handleHash = () => {
+      const hash = (window.location.hash || '').toLowerCase()
+      if (hash === '#hindu-leaders' || hash === '#leaders') {
+        setCurrentPage('leaders')
+      } else if (hash === '#home' || hash === '' || hash === '#') {
+        setCurrentPage('home')
+      }
+    }
+    window.addEventListener('hashchange', handleHash)
+    return () => window.removeEventListener('hashchange', handleHash)
+  }, [])
+
+  const setPage = (page) => {
+    setCurrentPage(page)
+    window.location.hash = page === 'leaders' ? 'hindu-leaders' : ''
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
 
   const handleLampLit = useCallback(() => {
     if (isLit) return
@@ -40,16 +64,53 @@ export default function App() {
         <CaptchaModal onVerified={() => setIsVerified(true)} />
       )}
 
-      <main className="hero">
-        {/* subLang only for the subtitle line */}
-        <Header subLang={subLang} />
-        <Counter stats={stats} />
-        <LampScene isLit={isLit} onLampLit={handleLampLit} torchLang={torchLang} />
-      </main>
+      {/* Top Spiritual Navigation Bar */}
+      <nav className="site-top-nav" aria-label="Main Sanctuary Navigation">
+        <div className="site-top-nav-inner">
+          <button
+            type="button"
+            className={`top-nav-item ${currentPage === 'home' ? 'active' : ''}`}
+            onClick={() => setPage('home')}
+          >
+            <span className="top-nav-om" aria-hidden="true">ॐ</span>
+            <span>தீபத்தூண் (Home)</span>
+          </button>
+          <span className="top-nav-divider" aria-hidden="true">·</span>
+          <button
+            type="button"
+            className={`top-nav-item ${currentPage === 'leaders' ? 'active' : ''}`}
+            onClick={() => setPage('leaders')}
+          >
+            <span className="top-nav-icon" aria-hidden="true">🚩</span>
+            <span>Hindu Leaders</span>
+          </button>
+        </div>
+      </nav>
 
-      {/* History has its own manual translate toggle */}
-      <History />
-      <Footer isLit={isLit} />
+      {/* Conditional Rendering between Home Sanctuary and Hindu Leaders */}
+      {currentPage === 'home' ? (
+        <>
+          <main className="hero">
+            {/* subLang only for the subtitle line */}
+            <Header subLang={subLang} />
+            <Counter stats={stats} />
+            <LampScene isLit={isLit} onLampLit={handleLampLit} torchLang={torchLang} />
+          </main>
+          {/* History has its own manual translate toggle */}
+          <History />
+        </>
+      ) : (
+        <main className="leaders-page-main">
+          <HinduLeaders onNavigateHome={() => setPage('home')} />
+        </main>
+      )}
+
+      <Footer
+        isLit={isLit}
+        currentPage={currentPage}
+        onNavigateHome={() => setPage('home')}
+        onNavigateLeaders={() => setPage('leaders')}
+      />
     </div>
   )
 }
