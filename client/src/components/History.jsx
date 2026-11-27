@@ -274,6 +274,17 @@ export default function History() {
           <div className="thin-rule" style={{ maxWidth: '240px', margin: '14px auto 0' }} />
         </div>
 
+        {/* ── Supreme Court Order Official Graphic ── */}
+        <div className="sc-order-image-wrap">
+          <img
+            src="images/sc_order_nov27.jpg"
+            alt="Supreme Court Orders Karthigai Deepam Lighting at Thirupparankundram Hill"
+            className="sc-order-img"
+            loading="lazy"
+          />
+          <div className="sc-order-img-date">Published on 27-11-2026</div>
+        </div>
+
         <div className="sc-order-list">
           <div className="sc-order-item">
             <span className="sc-order-num">1</span>

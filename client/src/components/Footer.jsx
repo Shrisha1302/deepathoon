@@ -31,7 +31,7 @@ export default function Footer({ isLit, onNavigateHome, onNavigateLeaders, curre
           className={`footer-nav-link ${currentPage === 'leaders' ? 'active' : ''}`}
           onClick={onNavigateLeaders}
         >
-          Hindu Leaders (இந்து தலைவர்கள்)
+          Voices of Bharat (பாரதத்தின் குரல்கள்)
         </button>
       </div>
 

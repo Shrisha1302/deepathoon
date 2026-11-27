@@ -2,6 +2,12 @@ export default function CourtReferences() {
   const references = [
     {
       source: 'LiveLaw',
+      tag: 'Supreme Court Order',
+      title: 'Thiruparankundram Row: Supreme Court Orders Lamp Lighting At Deepathoon Tomorrow, Issues Contempt Notice To TN Authorities',
+      url: 'https://www.livelaw.in/top-stories/thiruparankundram-row-supreme-court-orders-lamp-lighting-at-deepathoon-tomorrow-issues-contempt-notice-to-tn-authorities-560277'
+    },
+    {
+      source: 'LiveLaw',
       tag: 'Supreme Court',
       title: 'Thiruparankundram Hill: Supreme Court Stays Madras HC Judgment, Allows Karthigai Lamp Lighting at Deepathoon on Nov 24',
       url: 'https://www.livelaw.in/top-stories/thiruparankundram-hill-supreme-court-stays-madras-hc-judgment-allows-karthigai-lamp-lighting-at-deepathoon-on-nov-24-559296'

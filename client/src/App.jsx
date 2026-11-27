@@ -13,7 +13,7 @@ export default function App() {
   const [isLit, setIsLit] = useState(false)
   const [currentPage, setCurrentPage] = useState(() => {
     const hash = (typeof window !== 'undefined' ? window.location.hash : '').toLowerCase()
-    return hash === '#hindu-leaders' || hash === '#leaders' ? 'leaders' : 'home'
+    return hash === '#voices-of-bharat' || hash === '#hindu-leaders' || hash === '#leaders' ? 'leaders' : 'home'
   })
   const { stats, emitLampLit } = useSocket()
 
@@ -32,7 +32,7 @@ export default function App() {
   useEffect(() => {
     const handleHash = () => {
       const hash = (window.location.hash || '').toLowerCase()
-      if (hash === '#hindu-leaders' || hash === '#leaders') {
+      if (hash === '#voices-of-bharat' || hash === '#hindu-leaders' || hash === '#leaders') {
         setCurrentPage('leaders')
       } else if (hash === '#home' || hash === '' || hash === '#') {
         setCurrentPage('home')
@@ -44,7 +44,7 @@ export default function App() {
 
   const setPage = (page) => {
     setCurrentPage(page)
-    window.location.hash = page === 'leaders' ? 'hindu-leaders' : ''
+    window.location.hash = page === 'leaders' ? 'voices-of-bharat' : ''
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
@@ -82,7 +82,7 @@ export default function App() {
             onClick={() => setPage('leaders')}
           >
             <span className="top-nav-icon" aria-hidden="true">🚩</span>
-            <span>Hindu Leaders</span>
+            <span>Voices of Bharat</span>
           </button>
         </div>
       </nav>

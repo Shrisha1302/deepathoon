@@ -20,17 +20,31 @@ const VIDEOS = [
   },
   {
     id: 2,
-    title: 'Sri Sri Narahari Swamiji',
-    tamilTitle: 'ஸ்ரீ ஸ்ரீ நரஹரி சுவாமிஜி',
-    description: 'Voices of spiritual strength uniting devotees for the preservation of ancient temple rights and rituals.',
+    title: 'Shri. Anandji',
+    tamilTitle: 'ஸ்ரீ ஆனந்த்ஜி',
+    description: 'Spiritual discourse on temple sanctity, historical heritage, and devotee rights.',
     src: getAssetUrl('videos/video2.mp4')
   },
   {
     id: 3,
-    title: 'Hindu Leader',
-    tamilTitle: 'இந்து தலைவர்',
-    description: 'Profound messages of Dharmic awakening, temple patronage, and civilizational pride across Bharat.',
+    title: 'Sri Sri Narahari Swamiji',
+    tamilTitle: 'ஸ்ரீ ஸ்ரீ நரஹரி சுவாமிஜி',
+    description: 'Voices of spiritual strength uniting devotees for the preservation of ancient temple rights and rituals.',
     src: getAssetUrl('videos/video3.mp4')
+  },
+  {
+    id: 4,
+    title: 'Acharya Narahari Swamiji',
+    tamilTitle: 'ஆச்சார்ய நரஹரி சுவாமிஜி',
+    description: 'Profound message of Dharmic awakening, temple patronage, and civilizational pride across Bharat.',
+    src: getAssetUrl('videos/video4.mp4')
+  },
+  {
+    id: 5,
+    title: 'Senior Advocate, Mr. Sai deepak',
+    tamilTitle: 'மூத்த வழக்கறிஞர் திரு. சாய் தீபக்',
+    description: 'Legal defense of sacred traditions, civilizational rights, and constitutional protection for Thiruparankundram Deepathoon.',
+    src: getAssetUrl('videos/video5.mp4')
   }
 ]
 
@@ -78,7 +92,7 @@ export default function HinduLeaders({ onNavigateHome }) {
   }
 
   return (
-    <section className="hindu-leaders-section" aria-label="Hindu Leaders Video Gallery">
+    <section className="hindu-leaders-section" aria-label="Voices of Bharat Video Gallery">
       {/* ── Page Header ── */}
       <div className="hindu-leaders-header">
         <div className="hindu-leaders-back-row">
@@ -93,12 +107,12 @@ export default function HinduLeaders({ onNavigateHome }) {
         </div>
 
         <span className="om" aria-hidden="true">ॐ</span>
-        <h1 className="hindu-leaders-main-title">Hindu Leaders</h1>
+        <h1 className="hindu-leaders-main-title">Voices of Bharat</h1>
         <p className="hindu-leaders-sub-title">
-          இந்து தலைவர்கள் · உரை &amp; தர்ம குரல்
+          பாரதத்தின் குரல்கள் · தர்ம உரை &amp; சனாதன எழுச்சி
         </p>
         <p className="hindu-leaders-tagline">
-          Voices of Revered Gurus, Saints &amp; Dharmic Leaders Standing for Thiruparankundram and Sanatana Heritage
+          Revered Spiritual Gurus, Legal Defenders &amp; Dharmic Leaders Standing for Thiruparankundram Deepam and Sanatana Heritage
         </p>
         <div className="thin-rule" style={{ maxWidth: '280px', margin: '18px auto 36px' }} />
       </div>
