@@ -2110,36 +2110,6 @@ body {
   line-height: 1.55;
 }
 
-.hindu-leaders-picker-bar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 12px;
-  background: linear-gradient(135deg, rgba(254, 243, 199, 0.9), rgba(255, 251, 235, 0.95));
-  border: 1px solid rgba(217, 119, 6, 0.3);
-  border-radius: 12px;
-  padding: 12px 18px;
-  margin-bottom: 28px;
-  box-shadow: 0 4px 12px rgba(180, 83, 9, 0.05);
-}
-
-.picker-bar-left {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.picker-bar-icon {
-  font-size: 1.25rem;
-}
-
-.picker-bar-text {
-  font-size: 0.9rem;
-  color: var(--text-main);
-  line-height: 1.45;
-}
-
 /* ── 3-Column Video Grid ── */
 .hindu-leaders-grid {
   display: grid;
@@ -2285,43 +2255,15 @@ body {
 }
 
 .fallback-msg {
-  font-size: 0.78rem;
+  font-size: 0.8rem;
   color: var(--text-muted);
   line-height: 1.4;
-  margin-bottom: 12px;
   max-width: 280px;
 }
 
-.fallback-msg code {
-  background: rgba(217, 119, 6, 0.15);
-  padding: 1px 4px;
-  border-radius: 4px;
-  font-size: 0.76rem;
-  color: var(--gold-dk);
-}
-
-.fallback-picker-btn {
-  background: linear-gradient(135deg, #D97706, #991B1B);
-  color: #FFFBEB;
-  border: none;
-  font-family: 'Mukta Malar', serif;
-  font-size: 0.8rem;
-  font-weight: 700;
-  padding: 6px 14px;
-  border-radius: 6px;
-  cursor: pointer;
-  box-shadow: 0 2px 6px rgba(153, 27, 27, 0.25);
-  transition: all 0.2s;
-}
-
-.fallback-picker-btn:hover {
-  filter: brightness(1.1);
-  transform: translateY(-1px);
-}
-
-/* ── Card Body & Actions ── */
+/* ── Card Body ── */
 .hindu-leader-card-body {
-  padding: 18px 18px 20px;
+  padding: 18px 18px 22px;
   display: flex;
   flex-direction: column;
   flex: 1;
@@ -2349,73 +2291,7 @@ body {
   font-size: 0.88rem;
   color: var(--text-muted);
   line-height: 1.5;
-  margin-bottom: 16px;
   flex: 1;
-}
-
-.hindu-leader-picker-actions {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-top: auto;
-  padding-top: 12px;
-  border-top: 1px solid rgba(217, 119, 6, 0.18);
-}
-
-.hidden-file-input {
-  display: none !important;
-}
-
-.picker-action-btn {
-  background: #FFFBEB;
-  border: 1px solid var(--gold-br);
-  color: var(--gold-dk);
-  font-family: 'Mukta Malar', serif;
-  font-size: 0.82rem;
-  font-weight: 700;
-  padding: 6px 14px;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-}
-
-.picker-action-btn:hover {
-  background: #FEF3C7;
-  color: var(--temple-red);
-  border-color: var(--temple-red);
-}
-
-.picker-reset-btn {
-  background: transparent;
-  border: 1px dashed rgba(153, 27, 27, 0.4);
-  color: var(--temple-red);
-  font-family: 'Mukta Malar', serif;
-  font-size: 0.78rem;
-  font-weight: 600;
-  padding: 6px 10px;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.picker-reset-btn:hover {
-  background: rgba(153, 27, 27, 0.08);
-}
-
-.picker-filename {
-  font-size: 0.75rem;
-  color: #15803D;
-  margin-top: 6px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.picker-filename span {
-  font-weight: 600;
 }
 
 .hindu-leaders-footer-nav {
