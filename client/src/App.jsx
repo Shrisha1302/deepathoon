@@ -6,6 +6,7 @@ import History      from './components/History'
 import Footer       from './components/Footer'
 import CaptchaModal from './components/CaptchaModal'
 import HinduLeaders from './components/HinduLeaders'
+import LiveStream   from './components/LiveStream'
 import { useSocket } from './hooks/useSocket'
 
 export default function App() {
@@ -96,6 +97,8 @@ export default function App() {
             <Counter stats={stats} />
             <LampScene isLit={isLit} onLampLit={handleLampLit} torchLang={torchLang} />
           </main>
+          {/* Live Stream directly below refresh / hero section */}
+          <LiveStream />
           {/* History has its own manual translate toggle */}
           <History />
         </>
