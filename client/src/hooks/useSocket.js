@@ -1,18 +1,17 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, useCallback } from 'react'
 import { io } from 'socket.io-client'
 
-// Live backend on Render:
+// ── HARD RESET BASELINE REQUESTED BY USER ─────────────────────────────────
+const BASELINE_COUNT = 196783
+const MAX_VALID_COUNT = 50000000   // 5 crore sanity ceiling
+const LOCAL_STORAGE_KEY = 'deepathoon_sacred_count_v2'
+
+// API endpoint on the hosting server (cPanel / Apache / LiteSpeed)
+const API_COUNTER = 'api/counter.php'
+
+// Optional live socket backend
 const RENDER_SERVER_URL = 'https://deepathoon.onrender.com'
-const CLOUD_KV_GET = 'https://keyvalue.immanuel.co/api/KeyVal/GetValue/rt4i17ti/deepathoon_count'
-const CLOUD_KV_SET = 'https://keyvalue.immanuel.co/api/KeyVal/UpdateValue/rt4i17ti/deepathoon_count/'
-const LOCAL_STORAGE_KEY = 'deepathoon_sacred_count'
 
-// ── HARD RESET BOUNDARY ───────────────────────────────────────────────────
-// Any count below this is invalid. Any count above MAX is corrupted/bot spam.
-const BASELINE_COUNT = 98635
-const MAX_VALID_COUNT = 10000000   // 1 crore — sanity ceiling
-
-// Sanitise any value coming from cloud / socket / localStorage
 function sanitise(val) {
   const n = parseInt(val, 10)
   if (isNaN(n) || n < BASELINE_COUNT || n > MAX_VALID_COUNT) return BASELINE_COUNT
@@ -24,9 +23,8 @@ function getStoredCount() {
     const saved = localStorage.getItem(LOCAL_STORAGE_KEY)
     if (saved) {
       const n = parseInt(saved, 10)
-      // If stored value is out of range (corrupted / old giant number) wipe it
       if (isNaN(n) || n < BASELINE_COUNT || n > MAX_VALID_COUNT) {
-        localStorage.removeItem(LOCAL_STORAGE_KEY)
+        localStorage.setItem(LOCAL_STORAGE_KEY, BASELINE_COUNT.toString())
         return BASELINE_COUNT
       }
       return n
@@ -47,41 +45,65 @@ export function useSocket() {
   const [stats, setStats] = useState({ count: initialCount, active: 1 })
   const countRef = useRef(initialCount)
 
-  // Keep countRef synchronised with latest count
+  // Keep countRef synchronized with latest count
   useEffect(() => {
     countRef.current = stats.count
   }, [stats.count])
 
-  // 1. Immediately fetch latest cloud count on mount
-  useEffect(() => {
-    fetch(CLOUD_KV_GET)
-      .then(res => res.text())
-      .then(text => {
-        const val = sanitise(text.replace(/[^0-9]/g, ''))
-        if (val > countRef.current) {
-          countRef.current = val
-          persistCount(val)
-          setStats(prev => ({ ...prev, count: val }))
-        }
+  // Helper: Synchronize with server counter endpoint
+  const syncWithServer = useCallback(async () => {
+    try {
+      const res = await fetch(`${API_COUNTER}?t=${Date.now()}`, {
+        cache: 'no-store',
+        headers: { 'Accept': 'application/json' }
       })
-      .catch(() => {})
+      if (res.ok) {
+        const data = await res.json()
+        if (data && typeof data.count === 'number') {
+          const serverCount = sanitise(data.count)
+          const highest = Math.max(countRef.current, serverCount)
+          countRef.current = highest
+          persistCount(highest)
+
+          setStats({
+            count: highest,
+            active: Math.max(1, data.active || 1)
+          })
+          return
+        }
+      }
+    } catch {
+      // In local preview without PHP or offline, keep current baseline/count
+    }
   }, [])
 
-  // 2. Connect to live Render socket server
+  // 1. Initial fetch on mount + Periodic live polling every 3.5s
+  // This guarantees every user across the world sees the exact same counter in real-time!
+  useEffect(() => {
+    syncWithServer()
+
+    const pollInterval = setInterval(() => {
+      syncWithServer()
+    }, 3500)
+
+    return () => clearInterval(pollInterval)
+  }, [syncWithServer])
+
+  // 2. Connect to live socket server (if available/unsuspended)
   useEffect(() => {
     const serverUrl = import.meta.env.VITE_SERVER_URL || RENDER_SERVER_URL
 
     try {
       socketRef.current = io(serverUrl, {
         transports: ['websocket', 'polling'],
-        timeout: 10000,
-        reconnectionAttempts: 5
+        timeout: 6000,
+        reconnectionAttempts: 3
       })
 
       socketRef.current.on('stats', (data) => {
         if (data && typeof data.count === 'number') {
-          const incoming = sanitise(data.count)   // ← rejects giant corrupted numbers
-          const highest  = Math.max(countRef.current, incoming)
+          const incoming = sanitise(data.count)
+          const highest = Math.max(countRef.current, incoming)
           countRef.current = highest
           persistCount(highest)
           setStats({
@@ -90,33 +112,53 @@ export function useSocket() {
           })
         }
       })
-
-      socketRef.current.on('connect', () => {
-        console.log('Connected to Deepathoon live server!')
-      })
-    } catch (err) {
-      console.warn('Socket connection error:', err)
-    }
+    } catch {}
 
     return () => {
       socketRef.current?.disconnect()
     }
   }, [])
 
-  const emitLampLit = () => {
-    const newCount = countRef.current + 1
-    countRef.current = newCount
-    persistCount(newCount)
-    setStats(prev => ({ ...prev, count: newCount }))
+  // 3. Atomically increment counter when lamp is lit
+  const emitLampLit = useCallback(async () => {
+    // Optimistic UI bump
+    const optimisticCount = countRef.current + 1
+    countRef.current = optimisticCount
+    persistCount(optimisticCount)
+    setStats(prev => ({ ...prev, count: optimisticCount }))
 
-    // Sync to Cloud KV immediately
-    fetch(CLOUD_KV_SET + newCount, { method: 'POST' }).catch(() => {})
+    // Post increment to server-side atomic counter (with flock & IP rate-limit)
+    try {
+      const res = await fetch(API_COUNTER, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({ action: 'increment' })
+      })
 
-    // Sync to Render socket if connected
-    if (socketRef.current && socketRef.current.connected) {
-      socketRef.current.emit('lamp_lit', newCount)
+      if (res.ok) {
+        const data = await res.json()
+        if (data && typeof data.count === 'number') {
+          const confirmedCount = sanitise(data.count)
+          countRef.current = confirmedCount
+          persistCount(confirmedCount)
+          setStats({
+            count: confirmedCount,
+            active: Math.max(1, data.active || 1)
+          })
+        }
+      }
+    } catch {
+      // Offline fallback already updated optimistically
     }
-  }
+
+    // Also notify socket server if connected
+    if (socketRef.current && socketRef.current.connected) {
+      socketRef.current.emit('lamp_lit')
+    }
+  }, [])
 
   return { stats, emitLampLit }
 }

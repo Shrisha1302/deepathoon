@@ -2,8 +2,19 @@
 # DEEPATHOON SECURITY & SERVER CONFIGURATION (APACHE & LITESPEED)
 # ============================================================
 
-# 1. PREVENT DIRECTORY BROWSING
+# 1. PREVENT DIRECTORY BROWSING & PROTECT DATA
 Options -Indexes
+
+# Protect sensitive internal data files from direct web access
+<FilesMatch "^(counter_data|active_visitors|rate_limits)\.json$">
+  <IfModule mod_authz_core.c>
+    Require all denied
+  </IfModule>
+  <IfModule !mod_authz_core.c>
+    Order deny,allow
+    Deny from all
+  </IfModule>
+</FilesMatch>
 
 # 2. DISABLE SERVER SIGNATURES
 ServerSignature Off
