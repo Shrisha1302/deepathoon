@@ -759,7 +759,7 @@ body {
 .lit-footer-container {
   display: flex;
   flex-direction: row;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
   width: 100%;
   max-width: 920px;
@@ -769,9 +769,32 @@ body {
 
 .refresh-again-wrap {
   display: flex;
-  justify-content: flex-end;
-  align-items: center;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-end;
+  gap: 12px;
   flex-shrink: 0;
+}
+
+.refresh-views-video-wrap {
+  width: 100%;
+  max-width: 290px;
+  background: #000;
+  border: 1.5px solid rgba(217, 119, 6, 0.45);
+  border-radius: 14px;
+  box-shadow: 0 6px 20px rgba(180, 83, 9, 0.18);
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.refresh-views-video {
+  width: 100%;
+  max-height: 290px;
+  object-fit: cover;
+  display: block;
+  border-radius: 12px;
 }
 
 .refresh-again-btn {
@@ -1509,17 +1532,22 @@ body {
   .lit-footer-container {
     flex-direction: column;
     align-items: center;
-    gap: 12px;
+    gap: 16px;
   }
   .refresh-again-wrap {
     width: 100%;
+    align-items: center;
     justify-content: center;
   }
   .refresh-again-btn {
     padding: 10px 16px;
     width: 100%;
-    max-width: 340px;
+    max-width: 320px;
     justify-content: center;
+  }
+  .refresh-views-video-wrap {
+    width: 100%;
+    max-width: 320px;
   }
 
   .bless-box { padding: 14px 16px; }
@@ -2569,19 +2597,54 @@ body {
 }
 
 /* ============================================================
-   HOMEPAGE VIDEOS SECTION (Under Light Lamp / Refresh Button)
+   HOMEPAGE VIDEOS SECTION (Above Court References)
    ============================================================ */
 .homepage-videos-section {
-  max-width: 1040px;
-  margin: 36px auto 44px;
+  max-width: 960px;
+  margin: 36px auto 30px;
   padding: 0 20px;
   width: 100%;
+}
+
+.homepage-videos-header {
+  text-align: center;
+  margin-bottom: 22px;
+}
+
+.hp-videos-title-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  justify-content: center;
+}
+
+.hp-flame-icon {
+  font-size: 1.25rem;
+}
+
+.homepage-videos-title {
+  font-family: 'Cinzel', serif;
+  font-size: 1.22rem;
+  font-weight: 700;
+  color: var(--temple-red, #991b1b);
+  letter-spacing: 0.5px;
+  margin: 0;
+}
+
+.homepage-videos-subtitle {
+  font-family: 'Mukta Malar', sans-serif;
+  font-size: 0.88rem;
+  color: var(--gold-dk, #92400e);
+  margin-top: 6px;
+  font-weight: 600;
 }
 
 .homepage-videos-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 24px;
+  gap: 26px;
+  max-width: 820px;
+  margin: 0 auto;
   width: 100%;
 }
 
@@ -2617,7 +2680,7 @@ body {
 
 .hp-badge-title {
   font-family: 'Cinzel', serif;
-  font-size: 0.86rem;
+  font-size: 0.84rem;
   font-weight: 700;
   color: var(--gold-dk, #92400e);
   letter-spacing: 0.03em;
@@ -2630,14 +2693,17 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  aspect-ratio: 16 / 9;
+  aspect-ratio: 9 / 16;
+  max-height: 520px;
+  overflow: hidden;
 }
 
 .homepage-video-player {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   display: block;
+  background: #000;
 }
 
 .homepage-video-footer {
@@ -2658,13 +2724,21 @@ body {
   .homepage-videos-grid {
     grid-template-columns: 1fr;
     gap: 20px;
-    max-width: 540px;
+    max-width: 380px;
     margin: 0 auto;
   }
 
   .homepage-videos-section {
-    margin: 24px auto 36px;
+    margin: 24px auto 28px;
     padding: 0 14px;
+  }
+
+  .homepage-videos-title {
+    font-size: 1.05rem;
+  }
+
+  .homepage-video-wrapper {
+    max-height: 480px;
   }
 }
 

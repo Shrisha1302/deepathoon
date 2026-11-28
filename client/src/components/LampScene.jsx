@@ -340,6 +340,17 @@ export default function LampScene({ isLit, onLampLit, torchLang = 'en' }) {
                   <span className="refresh-again-ta">மீண்டும் ஏற்ற, பக்கத்தை புதுப்பிக்கவும்.</span>
                 </div>
               </button>
+
+              {/* Devotee View Video directly under Refresh Button */}
+              <div className="refresh-views-video-wrap">
+                <video
+                  src="videos/viewsvideo1.mp4"
+                  className="refresh-views-video"
+                  controls
+                  playsInline
+                  preload="metadata"
+                />
+              </div>
             </div>
           )}
         </div>

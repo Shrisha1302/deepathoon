@@ -46,6 +46,17 @@ export default function HomepageVideos() {
 
   return (
     <section className="homepage-videos-section" aria-label="Sacred Deepam Videos">
+      <div className="homepage-videos-header">
+        <div className="hp-videos-title-row">
+          <span className="hp-flame-icon" aria-hidden="true">🪔</span>
+          <h3 className="homepage-videos-title">Sacred Deepathoon Videos &middot; புனித தீபத்தூண் காட்சிகள்</h3>
+          <span className="hp-flame-icon" aria-hidden="true">🪔</span>
+        </div>
+        <p className="homepage-videos-subtitle">
+          Direct hilltop recordings of Karthigai Deepam at Thiruparankundram
+        </p>
+      </div>
+
       <div className="homepage-videos-grid">
         {HOME_VIDEOS.map((item) => (
           <article key={item.id} className="homepage-video-card">

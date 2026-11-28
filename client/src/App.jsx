@@ -4,10 +4,9 @@ import Counter      from './components/Counter'
 import LampScene    from './components/LampScene'
 import History      from './components/History'
 import Footer       from './components/Footer'
-import CaptchaModal   from './components/CaptchaModal'
-import HinduLeaders   from './components/HinduLeaders'
-import HomepageVideos from './components/HomepageVideos'
-import { useSocket }  from './hooks/useSocket'
+import CaptchaModal from './components/CaptchaModal'
+import HinduLeaders from './components/HinduLeaders'
+import { useSocket } from './hooks/useSocket'
 
 export default function App() {
   const [isVerified, setIsVerified] = useState(false)
@@ -97,8 +96,6 @@ export default function App() {
             <Counter stats={stats} />
             <LampScene isLit={isLit} onLampLit={handleLampLit} torchLang={torchLang} />
           </main>
-          {/* 2 Homepage Videos under the light lamp / refresh button */}
-          <HomepageVideos />
           {/* History has its own manual translate toggle */}
           <History />
         </>
