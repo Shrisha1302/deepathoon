@@ -1,6 +1,6 @@
 import DevoteeConnect from './DevoteeConnect'
 import CourtReferences from './CourtReferences'
-import HomepageVideos from './HomepageVideos'
+import CourtVideos from './CourtVideos'
 
 export default function Footer({ isLit, onNavigateHome, onNavigateLeaders, currentPage = 'home' }) {
   const email = 'Deepam@deepathoon.com'
@@ -11,8 +11,8 @@ export default function Footer({ isLit, onNavigateHome, onNavigateLeaders, curre
 
   return (
     <footer className="footer">
-      {/* Homepage Videos (Deepam Videos) - Above Court References */}
-      <HomepageVideos />
+      {/* Videos above Court References */}
+      <CourtVideos />
 
       {/* Court References */}
       <CourtReferences />
