@@ -2558,13 +2558,27 @@ body {
 }
 
 /* ============================================================
-   YOUTUBE LIVE STREAM SECTION
+   YOUTUBE LIVE STREAM SECTION (DUAL CHANNELS)
    ============================================================ */
 .live-stream-section {
-  max-width: 960px;
+  max-width: 1200px;
   margin: 36px auto 48px;
   padding: 0 20px;
   width: 100%;
+}
+
+.live-streams-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+  width: 100%;
+}
+
+@media (max-width: 860px) {
+  .live-streams-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
 }
 
 .live-stream-card {

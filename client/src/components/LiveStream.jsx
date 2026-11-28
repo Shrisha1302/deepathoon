@@ -1,30 +1,55 @@
 export default function LiveStream() {
   return (
-    <section className="live-stream-section" aria-label="Thiruparankundram Deepam Live Stream">
-      <div className="live-stream-card">
-        {/* Live Indicator Header */}
-        <div className="live-stream-badge-row">
-          <span className="live-pulse-dot" />
-          <span className="live-badge-text">LIVE BROADCAST &middot; நேரலை</span>
+    <section className="live-stream-section" aria-label="Thiruparankundram Deepam Live Streams">
+      <div className="live-streams-grid">
+        {/* Live Channel 1 */}
+        <div className="live-stream-card">
+          <div className="live-stream-badge-row">
+            <span className="live-pulse-dot" />
+            <span className="live-badge-text">LIVE BROADCAST 1 &middot; நேரலை 1</span>
+          </div>
+
+          <div className="live-stream-video-container">
+            <iframe
+              src="https://www.youtube-nocookie.com/embed/-7kEwAdzgGQ?autoplay=1&mute=1&playsinline=1&rel=0"
+              title="Thiruparankundram Deepam Live Broadcast 1"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowFullScreen
+              className="live-stream-iframe"
+            />
+          </div>
+
+          <div className="live-stream-footer">
+            <span className="live-stream-title">
+              🔴 நேரலை: திருப்பரங்குன்றம் தீபத்தூண் தீபம் &middot; Live Feed 1
+            </span>
+          </div>
         </div>
 
-        {/* Responsive 16:9 Live Video Player */}
-        <div className="live-stream-video-container">
-          <iframe
-            src="https://www.youtube-nocookie.com/embed/bQenaTqrKNU?autoplay=1&mute=1&playsinline=1&rel=0"
-            title="Thiruparankundram Deepam Live Broadcast"
-            frameBorder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            allowFullScreen
-            className="live-stream-iframe"
-          />
-        </div>
+        {/* Live Channel 2 (Tamil Live Channel) */}
+        <div className="live-stream-card">
+          <div className="live-stream-badge-row">
+            <span className="live-pulse-dot" />
+            <span className="live-badge-text">TAMIL LIVE CHANNEL &middot; தமிழ் நேரலை 2</span>
+          </div>
 
-        {/* Sacred Footer Caption */}
-        <div className="live-stream-footer">
-          <span className="live-stream-title">
-            🔴 நேரலை: திருப்பரங்குன்றம் தீபத்தூண் தீபம் &middot; Thiruparankundram Deepam Live
-          </span>
+          <div className="live-stream-video-container">
+            <iframe
+              src="https://www.youtube-nocookie.com/embed/R9Hd8rlxrZo?autoplay=0&playsinline=1&rel=0"
+              title="Thiruparankundram Tamil Live Channel 2"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowFullScreen
+              className="live-stream-iframe"
+            />
+          </div>
+
+          <div className="live-stream-footer">
+            <span className="live-stream-title">
+              🔴 நேரலை: தமிழ் நேரலை ஒளிபரப்பு &middot; Tamil Live Feed 2
+            </span>
+          </div>
         </div>
       </div>
     </section>
