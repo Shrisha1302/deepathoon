@@ -11,7 +11,7 @@ export default function LiveStream() {
 
           <div className="live-stream-video-container">
             <iframe
-              src="https://www.youtube-nocookie.com/embed/-7kEwAdzgGQ?autoplay=1&mute=1&playsinline=1&rel=0"
+              src="https://www.youtube.com/embed/-7kEwAdzgGQ?autoplay=1&mute=1&playsinline=1&rel=0"
               title="Thiruparankundram Deepam Live Broadcast 1"
               frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -24,6 +24,15 @@ export default function LiveStream() {
             <span className="live-stream-title">
               🔴 நேரலை: திருப்பரங்குன்றம் தீபத்தூண் தீபம் &middot; Live Feed 1
             </span>
+            <a
+              href="https://www.youtube.com/watch?v=-7kEwAdzgGQ"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="live-external-link"
+              title="Watch directly on YouTube"
+            >
+              YouTube ↗
+            </a>
           </div>
         </div>
 
@@ -36,7 +45,7 @@ export default function LiveStream() {
 
           <div className="live-stream-video-container">
             <iframe
-              src="https://www.youtube-nocookie.com/embed/R9Hd8rlxrZo?autoplay=0&playsinline=1&rel=0"
+              src="https://www.youtube.com/embed/R9Hd8rlxrZo?autoplay=0&playsinline=1&rel=0"
               title="Thiruparankundram Tamil Live Channel 2"
               frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -49,6 +58,15 @@ export default function LiveStream() {
             <span className="live-stream-title">
               🔴 நேரலை: தமிழ் நேரலை ஒளிபரப்பு &middot; Tamil Live Feed 2
             </span>
+            <a
+              href="https://www.youtube.com/watch?v=R9Hd8rlxrZo"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="live-external-link"
+              title="Watch directly on YouTube"
+            >
+              YouTube ↗
+            </a>
           </div>
         </div>
       </div>

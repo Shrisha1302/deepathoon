@@ -2669,18 +2669,41 @@ body {
 }
 
 .live-stream-footer {
-  padding: 12px 18px;
+  padding: 10px 16px;
   background: rgba(254, 243, 199, 0.7);
   border-top: 1px solid rgba(217, 119, 6, 0.25);
-  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
 }
 
 .live-stream-title {
   font-family: 'Mukta Malar', 'Noto Serif Tamil', serif;
-  font-size: clamp(0.9rem, 1.8vw, 1.1rem);
+  font-size: clamp(0.85rem, 1.6vw, 1.05rem);
   font-weight: 700;
   color: var(--temple-red, #991b1b);
   letter-spacing: 0.02em;
+}
+
+.live-external-link {
+  font-family: 'Cinzel', serif;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #B45309;
+  background: #FFF;
+  border: 1px solid #D97706;
+  border-radius: 6px;
+  padding: 4px 10px;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.live-external-link:hover {
+  background: #B45309;
+  color: #FFF;
 }
 
 @media (max-width: 600px) {
