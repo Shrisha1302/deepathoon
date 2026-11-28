@@ -20,10 +20,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 }
 
 // 2. Constants & Data Paths
-$BASELINE_COUNT  = 207576;        // Hard reset baseline requested by user
+$BASELINE_COUNT  = 210753;        // Hard reset baseline requested by user
 $MAX_VALID_COUNT = 50000000;      // 5 crore sanity ceiling
 $RATE_LIMIT_SEC  = 2.5;           // Min seconds between increments per IP
-$ACTIVE_WINDOW   = 180;           // 3 minutes window for active visitor tracking
+$ACTIVE_WINDOW   = 90;            // 90 seconds window for active visitor tracking
 
 $dataDir = __DIR__;
 $dataFile        = $dataDir . '/counter_data.json';
@@ -64,6 +64,17 @@ foreach ($badBots as $bot) {
 }
 
 // 4. ACTIVE VISITORS TRACKING (Realistic, bot-clean concurrent count)
+$rawVid = $_GET['vid'] ?? '';
+if (empty($rawVid) && $_SERVER['REQUEST_METHOD'] === 'POST') {
+    $rawBody = @file_get_contents('php://input');
+    if ($rawBody) {
+        $pBody = json_decode($rawBody, true);
+        $rawVid = $pBody['vid'] ?? '';
+    }
+}
+$sanitizedVid = preg_replace('/[^a-zA-Z0-9_\-]/', '', substr($rawVid, 0, 48));
+$visitorKey = md5($clientIP . '_' . ($sanitizedVid ?: 'default'));
+
 $activeCount = 1;
 try {
     $now = time();
@@ -76,12 +87,12 @@ try {
     }
     
     // Register / update current visitor
-    $activeData[$clientIP] = $now;
+    $activeData[$visitorKey] = $now;
 
-    // Prune stale visitors (> 180s)
-    foreach ($activeData as $ip => $ts) {
+    // Prune stale visitors (> 90s)
+    foreach ($activeData as $k => $ts) {
         if ($now - $ts > $ACTIVE_WINDOW) {
-            unset($activeData[$ip]);
+            unset($activeData[$k]);
         }
     }
 

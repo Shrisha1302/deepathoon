@@ -2,9 +2,22 @@ import { useEffect, useRef, useState, useCallback } from 'react'
 import { io } from 'socket.io-client'
 
 // ── HARD RESET BASELINE REQUESTED BY USER ─────────────────────────────────
-const BASELINE_COUNT = 207576
+const BASELINE_COUNT = 210753
 const MAX_VALID_COUNT = 50000000   // 5 crore sanity ceiling
-const LOCAL_STORAGE_KEY = 'deepathoon_sacred_count_v5'
+const LOCAL_STORAGE_KEY = 'deepathoon_sacred_count_v6'
+
+function getVisitorId() {
+  try {
+    let vid = sessionStorage.getItem('dp_visitor_id')
+    if (!vid) {
+      vid = 'v_' + Math.random().toString(36).substring(2, 9) + Date.now().toString(36)
+      sessionStorage.setItem('dp_visitor_id', vid)
+    }
+    return vid
+  } catch {
+    return 'anon'
+  }
+}
 
 // API endpoint on the hosting server (cPanel / Apache / LiteSpeed)
 const API_COUNTER = 'api/counter.php'
@@ -53,7 +66,8 @@ export function useSocket() {
   // Helper: Synchronize with server counter endpoint
   const syncWithServer = useCallback(async () => {
     try {
-      const res = await fetch(`${API_COUNTER}?t=${Date.now()}`, {
+      const vid = getVisitorId()
+      const res = await fetch(`${API_COUNTER}?t=${Date.now()}&vid=${encodeURIComponent(vid)}`, {
         cache: 'no-store',
         headers: { 'Accept': 'application/json' }
       })
@@ -135,7 +149,7 @@ export function useSocket() {
           'Content-Type': 'application/json',
           'Accept': 'application/json'
         },
-        body: JSON.stringify({ action: 'increment' })
+        body: JSON.stringify({ action: 'increment', vid: getVisitorId() })
       })
 
       if (res.ok) {
