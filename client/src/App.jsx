@@ -31,6 +31,46 @@ export default function App() {
   }, [])
 
   useEffect(() => {
+    const handleContextMenu = (e) => e.preventDefault()
+    const handleDragStart = (e) => e.preventDefault()
+    const handleCopy = (e) => e.preventDefault()
+    const handleCut = (e) => e.preventDefault()
+    const handleSelectStart = (e) => {
+      const tag = e.target?.tagName
+      if (tag !== 'INPUT' && tag !== 'TEXTAREA') {
+        e.preventDefault()
+      }
+    }
+    const handleKeyDown = (e) => {
+      if (e.ctrlKey || e.metaKey) {
+        const key = (e.key || '').toLowerCase()
+        if (['c', 'x', 'a', 'u', 's', 'p'].includes(key)) {
+          const tag = e.target?.tagName
+          if (tag !== 'INPUT' && tag !== 'TEXTAREA') {
+            e.preventDefault()
+          }
+        }
+      }
+    }
+
+    document.addEventListener('contextmenu', handleContextMenu, { capture: true })
+    document.addEventListener('dragstart', handleDragStart, { capture: true })
+    document.addEventListener('copy', handleCopy, { capture: true })
+    document.addEventListener('cut', handleCut, { capture: true })
+    document.addEventListener('selectstart', handleSelectStart, { capture: true })
+    document.addEventListener('keydown', handleKeyDown, { capture: true })
+
+    return () => {
+      document.removeEventListener('contextmenu', handleContextMenu, { capture: true })
+      document.removeEventListener('dragstart', handleDragStart, { capture: true })
+      document.removeEventListener('copy', handleCopy, { capture: true })
+      document.removeEventListener('cut', handleCut, { capture: true })
+      document.removeEventListener('selectstart', handleSelectStart, { capture: true })
+      document.removeEventListener('keydown', handleKeyDown, { capture: true })
+    }
+  }, [])
+
+  useEffect(() => {
     const handleHash = () => {
       const hash = (window.location.hash || '').toLowerCase()
       if (hash === '#voices-of-bharat' || hash === '#hindu-leaders' || hash === '#leaders') {

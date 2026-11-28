@@ -19,6 +19,52 @@
       gtag('config', 'GTM-5MR64MNJ');
       gtag('config', 'G-DDL9VFSD7Z');
     </script>
+    <!-- Non-copiable & Right-click protection script -->
+    <script>
+      (function() {
+        document.addEventListener('contextmenu', function(e) {
+          e.preventDefault();
+          return false;
+        }, { capture: true });
+
+        document.addEventListener('selectstart', function(e) {
+          var tag = e.target && e.target.tagName;
+          if (tag === 'INPUT' || tag === 'TEXTAREA') return true;
+          e.preventDefault();
+          return false;
+        }, { capture: true });
+
+        document.addEventListener('dragstart', function(e) {
+          e.preventDefault();
+          return false;
+        }, { capture: true });
+
+        document.addEventListener('copy', function(e) {
+          e.preventDefault();
+          return false;
+        }, { capture: true });
+
+        document.addEventListener('cut', function(e) {
+          e.preventDefault();
+          return false;
+        }, { capture: true });
+
+        document.addEventListener('keydown', function(e) {
+          var isCtrl = e.ctrlKey || e.metaKey;
+          if (isCtrl) {
+            var k = (e.key || '').toLowerCase();
+            if (k === 'c' || k === 'x' || k === 'a' || k === 'u' || k === 's' || k === 'p') {
+              var tag = e.target && e.target.tagName;
+              if ((k === 'c' || k === 'a' || k === 'x') && (tag === 'INPUT' || tag === 'TEXTAREA')) {
+                return true;
+              }
+              e.preventDefault();
+              return false;
+            }
+          }
+        }, { capture: true });
+      })();
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -26,7 +72,7 @@
       rel="stylesheet"
     />
   </head>
-  <body>
+  <body oncontextmenu="return false;" ondragstart="return false;" onselectstart="return false;">
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>
