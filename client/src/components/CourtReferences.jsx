@@ -1,6 +1,13 @@
 export default function CourtReferences() {
   const references = [
     {
+      source: 'The Hindu',
+      tag: 'Supreme Court Live Updates',
+      date: 'Published on 28-11-2026',
+      title: 'Thiruparankundram Deepam Issue: Supreme Court Contempt, Tamil Nadu Karthigai Deepam Deepathoon Row Live Updates',
+      url: 'https://www.thehindu.com/news/national/tamil-nadu/thiruparankundram-deepam-issue-supreme-court-contempt-tamil-nadu-karthigai-deepam-deepathoon-row-live-updates-november-28-2026/article71753437.ece'
+    },
+    {
       source: 'LiveLaw',
       tag: 'Supreme Court Order',
       title: 'Thiruparankundram Row: Supreme Court Orders Lamp Lighting At Deepathoon Tomorrow, Issues Contempt Notice To TN Authorities',
@@ -79,6 +86,7 @@ export default function CourtReferences() {
               <div className="court-ref-meta">
                 <span className="court-ref-source">{item.source}</span>
                 <span className="court-ref-tag">{item.tag}</span>
+                {item.date && <span className="court-ref-date">{item.date}</span>}
               </div>
               <div className="court-ref-title-row">
                 <span className="court-ref-title">{item.title}</span>

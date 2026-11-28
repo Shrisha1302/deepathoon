@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 }
 
 // 2. Constants & Data Paths
-$BASELINE_COUNT  = 205900;        // Hard reset baseline requested by user
+$BASELINE_COUNT  = 207576;        // Hard reset baseline requested by user
 $MAX_VALID_COUNT = 50000000;      // 5 crore sanity ceiling
 $RATE_LIMIT_SEC  = 2.5;           // Min seconds between increments per IP
 $ACTIVE_WINDOW   = 180;           // 3 minutes window for active visitor tracking

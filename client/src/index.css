@@ -1715,6 +1715,17 @@ body {
   border: 1px solid #FDE68A;
 }
 
+.court-ref-date {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--temple-red, #991b1b);
+  background: #FEE2E2;
+  padding: 1px 8px;
+  border-radius: 10px;
+  border: 1px solid #FECACA;
+  letter-spacing: 0.02em;
+}
+
 .court-ref-title-row {
   display: flex;
   align-items: flex-start;
