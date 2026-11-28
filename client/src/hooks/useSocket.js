@@ -2,9 +2,9 @@ import { useEffect, useRef, useState, useCallback } from 'react'
 import { io } from 'socket.io-client'
 
 // ── HARD RESET BASELINE REQUESTED BY USER ─────────────────────────────────
-const BASELINE_COUNT = 196783
+const BASELINE_COUNT = 192798
 const MAX_VALID_COUNT = 50000000   // 5 crore sanity ceiling
-const LOCAL_STORAGE_KEY = 'deepathoon_sacred_count_v2'
+const LOCAL_STORAGE_KEY = 'deepathoon_sacred_count_v3'
 
 // API endpoint on the hosting server (cPanel / Apache / LiteSpeed)
 const API_COUNTER = 'api/counter.php'

@@ -98,7 +98,7 @@ function getIP(req) {
 
 const CLOUD_KV_GET = 'https://keyvalue.immanuel.co/api/KeyVal/GetValue/rt4i17ti/deepathoon_count';
 const CLOUD_KV_SET = 'https://keyvalue.immanuel.co/api/KeyVal/UpdateValue/rt4i17ti/deepathoon_count/';
-const BASELINE_COUNT = 196783; // Hard reset baseline — never go below this
+const BASELINE_COUNT = 192798; // Hard reset baseline — never go below this
 const MAX_VALID_COUNT = 10000000; // 1 crore sanity ceiling — reject bot-inflated values
 
 // ── Counter persistence ───────────────────────────────────────────────────

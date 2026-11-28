@@ -13,8 +13,8 @@ function getAssetUrl(relPath) {
 const VIDEOS = [
   {
     id: 1,
-    title: 'Swathi Kr Iyengar',
-    tamilTitle: 'சுவாதி கே.ஆர். ஐயங்கார்',
+    title: 'Swathi Iyengar',
+    tamilTitle: 'சுவாதி ஐயங்கார்',
     description: 'Sacred discourses on Dharma, temple heritage, and defending Sanatana traditions at Thiruparankundram.',
     src: getAssetUrl('videos/video1.mp4')
   },
@@ -45,6 +45,27 @@ const VIDEOS = [
     tamilTitle: 'மூத்த வழக்கறிஞர் திரு. சாய் தீபக்',
     description: 'Legal defense of sacred traditions, civilizational rights, and constitutional protection for Thiruparankundram Deepathoon.',
     src: getAssetUrl('videos/video5.mp4')
+  },
+  {
+    id: 6,
+    title: 'Swathi Iyengar',
+    tamilTitle: 'சுவாதி ஐயங்கார்',
+    description: 'Discourse on the cultural significance and spiritual awakening around Thiruparankundram Deepathoon.',
+    src: getAssetUrl('videos/video6.mp4')
+  },
+  {
+    id: 7,
+    title: 'Swathi Iyengar',
+    tamilTitle: 'சுவாதி ஐயங்கார்',
+    description: 'Preserving Hindu rights, sacred hill traditions, and Dharmic unity across Tamil Nadu.',
+    src: getAssetUrl('videos/video7.mp4')
+  },
+  {
+    id: 8,
+    title: 'Swathi Iyengar',
+    tamilTitle: 'சுவாதி ஐயங்கார்',
+    description: 'Upholding Sanatana heritage, temple sovereignty, and unity under Lord Murugan’s blessings.',
+    src: getAssetUrl('videos/video8.mp4')
   }
 ]
 
